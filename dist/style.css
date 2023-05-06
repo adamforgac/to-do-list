@@ -1,0 +1,306 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* CUSTOMS STYLES */
+/* CUSTOMS STYLES */
+/* CUSTOMS STYLES */
+
+
+:root {
+    --clicked-purple: #341D70;
+    --background-purple: #26144F;
+    --round-active-purple: #725AFF;
+    --important-red: #E05059;
+    --heading-box-purple: #C5BAFE;
+}
+
+
+/* WRAPPER */
+/* WRAPPER */
+/* WRAPPER */
+
+
+.wrapper {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(330px, 1fr) 5fr;
+}
+
+.wrapper > div {
+
+}
+
+
+/* NAV */
+/* NAV */
+/* NAV */
+
+
+.nav {
+    display: grid;
+    grid-template-rows: 1.5fr 2fr 7fr 7fr 1.3fr;
+    padding: 15px 25px 10px 25px;
+    border-right: 0.5px solid var(--heading-box-purple);
+}
+
+.nav > div {
+
+}
+
+/* PROFILE */
+
+.profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile-icon i {
+    color: white;
+    font-size: 2.5rem;
+    margin-right: 12px;
+}
+
+.profile-name h2 {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.profile-mail h4 {
+    color: white;
+    font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* SEARCH */
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 40px;
+    background-color: #DEDADB;
+    border: none;
+    border-radius: 10px;
+    padding-left: 60px;
+    font-size: 1.3rem;
+    outline: none;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 0%;
+    font-size: 1.3rem;
+    margin-left: 15px;
+    color: #68696D;
+}
+
+/* OPTIONS */
+
+.options {
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    padding-left: 15px;
+    border-bottom: 1px solid #DEDADB;
+    padding-bottom: 10px;
+}
+
+.options h2, .options p {
+    font-family: 'Roboto', sans-serif;
+}
+
+.all, .today, .week, .notes {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.important {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: -3px;
+}
+
+.options-icon i {
+    color: white;
+    font-size: 1.4rem;
+}
+
+.options-heading {
+    margin-left: 25px;
+}
+
+.options-heading h2 {
+    color: white;
+    font-size: 1.4rem;
+}
+
+.options-count {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.options-count p {
+    color: white;
+    font-size: 1rem;
+}
+
+.notes {
+}
+
+/* PROJECTS */
+
+.projects {
+    display: grid;
+    grid-auto-rows: 65px;
+    overflow: auto;
+    height: 350px;
+    padding-left: 12px;
+    padding-top: 10px;
+    border-bottom: 1px solid #DEDADB;
+}
+
+.projects::-webkit-scrollbar {
+    width: 0.2vw;
+}
+
+.projects::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 20px;
+}
+
+.projects::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.project-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.project-num p, .project-name h2 {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 1.4rem;
+}
+
+.project-count p {
+    font-size: 1rem;
+    color: white;
+}
+
+.project-name {
+    margin-left: 25px;
+}
+
+.project-count {
+    font-family: 'Roboto', sans-serif;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+/* PROJECT CREATOR */
+
+.project-creator {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 12px;
+}
+
+.add-text {
+    margin-left: 25px;
+}
+
+.project-creator h2 {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+}
+
+.add i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+
+
