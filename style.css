@@ -31,7 +31,8 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
-    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
     height: 100%;
     background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
 }
@@ -48,6 +49,10 @@ blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
 	content: none;
+}
+
+.menu-active {
+    overflow: hidden;
 }
 
 table {
@@ -82,13 +87,8 @@ table {
 
 
 .wrapper {
-    height: 100vh;
     display: grid;
     grid-template-columns: minmax(330px, 1fr) 5fr;
-}
-
-.wrapper > div {
-
 }
 
 
@@ -103,9 +103,6 @@ table {
     padding: 15px 25px 10px 25px;
     border-right: 0.5px solid var(--heading-box-purple);
     max-height: 100vh;
-}
-
-.nav > div {
 }
 
 /* PROFILE */
@@ -178,7 +175,7 @@ table {
 
 .options {
     display: grid;
-    grid-template-rows: repeat(5, minmax(50px, 1fr));
+    grid-template-rows: repeat(5, minmax(65px, 1fr));
     padding-left: 15px;
     border-bottom: 1px solid #DEDADB;
     padding-bottom: 10px;
@@ -232,11 +229,10 @@ table {
 
 .projects {
     display: grid;
-    grid-auto-rows: 65px;
+    grid-auto-rows: minmax(65px, 1fr);
     overflow: auto;
     padding-left: 12px;
     padding-top: 10px;
-    border-bottom: 1px solid #DEDADB;
 }
 
 .projects::-webkit-scrollbar {
@@ -284,12 +280,18 @@ table {
 .project-creator {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    padding-left: 12px;
+    justify-content: center;
+    background-color: var(--round-active-purple);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    scale: 1;
 }
 
-.add-text {
-    margin-left: 25px;
+.project-creator:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transition: 0.3s;
+    scale: 1.05;
 }
 
 .project-creator h2 {
@@ -314,7 +316,7 @@ table {
 .task-board {
     display: grid;
     gap: 15px;
-    grid-template-rows: 1.6fr 7fr 1fr;
+    grid-template-rows: 1.6fr 7fr;
     padding: 25px 33px;
     padding: 25px 33px 25px 33px;
     max-height: 100vh;
@@ -384,6 +386,7 @@ table {
     overflow: auto;
     gap: 4px;
     padding-right: 10px;
+    border-radius: 20px;
 }
 
 .todos::-webkit-scrollbar {
@@ -408,9 +411,6 @@ table {
     grid-template-columns: 0.6fr 7fr 0.6fr;
     background-color: var(--round-active-purple);
     border-radius: 20px;
-}
-
-.task > div {
 }
 
 .task-status {
@@ -487,6 +487,236 @@ table {
 .add-task-text h2 {
     font-family: 'Roboto', sans-serif;
     font-size: 1.4rem;
+}
+
+
+/* MOBILE */
+/* MOBILE */
+/* MOBILE */
+
+
+.logo {
+    display: none;
+}
+
+.mobile-menu {
+    display: none;
+}
+
+.swapper-options {
+    display: none;
+}
+
+.search-bar-mobile {
+    display: none;
+}
+
+.round2 {
+    display: none;
+}
+
+.mobile-adder {
+    display: none;
+    z-index: 100;
+}
+
+.todo-create-mobile, .project-create-mobile, .note-create-mobile {
+    width: 45px;
+    height: 45px;
+    background-color: var(--clicked-purple);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    transition: 1s;  
+}
+
+.todo-create-mobile p, .project-create-mobile p, .note-create-mobile p {
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    font-size: 0.9rem;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.todo-create-mobile p.options-appear, .project-create-mobile p.options-appear, .note-create-mobile p.options-appear {
+    pointer-events: all;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.todo-create-mobile p {
+    left: -50px;
+}
+
+.project-create-mobile p {
+    left: -60px;
+}
+
+.note-create-mobile p {
+    left: -48px;
+}
+
+.todo-create-mobile i, .project-create-mobile i, .note-create-mobile i {
+    font-size: 1.2rem;
+}
+
+.todo-create-mobile.active-todo-mobile {
+    bottom: 90px;
+    transition: 1s;
+}
+
+.project-create-mobile.active-project-mobile {
+    bottom: 150px;
+    transition: 1s;
+}
+
+.note-create-mobile.active-note-mobile {
+    bottom: 210px;
+    transition: 1s;
+}
+
+.rotated {
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.creator-menu-mobile {
+    background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
+    left: 100%;
+    top: 200%;
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: 0.5s;
+    width: 0;
+    height: 0;
+}
+
+.creator-menu-mobile.active-menu-mobile {
+    height: 100vh;
+    width: 100vw;
+    left: 0%;
+    top: 0%;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    overflow: hidden;
+}
+
+
+/* CREATOR MENU */
+/* CREATOR MENU */
+/* CREATOR MENU */
+
+
+.creator-menu {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
+    grid-template-rows: 1fr 10fr;
+    padding: 20px 10px;
+    transition: 0.3s;
+    display: grid;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    scale: 0.5;
+}
+
+.active-menu {
+    transition: 0.3s;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    scale: 1;
+}
+
+.leave-creator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.leave-creator h1 {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 3rem;
+}
+
+.purple-creator {
+    color: var(--round-active-purple)
+}
+
+.leave-creator i:hover {
+    color: var(--heading-box-purple);
+    transition: 0.3s;
+}
+
+.leave-creator i {
+    font-size: 4rem;
+    color: white;
+    cursor: pointer;
+}
+
+.creator-options {
+    display: flex;
+    padding-left: 20%;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.one {
+    transition: 0.4s;
+}
+
+.todo-create:hover .one {
+    color: var(--round-active-purple);
+    transition: 0.2s;
+}
+
+.note-create:hover .three {
+    color: var(--round-active-purple);
+    transition: 0.2s;
+}
+
+.project-create:hover .two {
+    color: var(--round-active-purple);
+    transition: 0.2s;
+}
+
+.creator-options p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 7rem;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+.todo-create, .project-create, .note-create {
+    cursor: pointer;
+}
+
+.todo-create, .project-create {
+    margin-bottom: 80px;
+}
+
+.index-num {
+    font-size: 1.5rem;
+    margin-left: 10px;
 }
 
 

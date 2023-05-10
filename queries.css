@@ -1,0 +1,581 @@
+@media only screen and (max-height: 770px) {
+    .options {
+        grid-template-rows: repeat(5, minmax(50px, 1fr));
+    }
+
+    .projects {
+        grid-auto-rows: 50px;
+    }
+
+    .project-num p, .project-name h2 {
+        font-size: 1.2rem;
+    }
+
+    .options-heading h2 {
+        font-size: 1.2rem;
+    }
+    
+    .options-count p {
+        font-size: 0.8rem;
+    }
+
+    .project-count p {
+        font-size: 0.8rem;
+    }
+
+    .options-icon i {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (max-height: 630px) {
+    .options {
+        grid-template-rows: repeat(5, minmax(40px, 1fr));
+    }
+
+    .projects {
+        grid-auto-rows: 40px;
+    }
+
+    .project-num p, .project-name h2 {
+        font-size: 1rem;
+    }
+
+    .options-heading h2 {
+        font-size: 1rem;
+    }
+
+    .options-icon i {
+        font-size: 1rem;
+    }
+    
+    .options-count p {
+        font-size: 0.8rem;
+    }
+
+    .project-count p {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* WIDTH */
+/* WIDTH */
+/* WIDTH */
+
+
+@media only screen and (max-width: 1310px) {
+    .task-heading h2 {
+        font-size: 1.2rem;
+    }   
+
+    .todos {
+        grid-auto-rows: 90px;
+    }
+
+    .round {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+    }
+
+    .task-importance i {
+        font-size: 1.3rem;
+    }
+
+    .add-task i {
+        font-size: 1.6rem;
+    }
+
+    .add-task-text h2 {
+        font-size: 1.1rem;
+    }
+
+    .category-name h2 {
+        font-size: 2.3rem;
+    }   
+}
+
+@media only screen and (max-width: 1130px) {
+    .wrapper {
+        grid-template-columns: minmax(270px, 1fr) 5fr;
+    }
+}
+
+@media only screen and (max-width: 1060px) {
+    .task-heading h2 {
+        font-size: 1rem;
+    }   
+
+    .task-category p {
+        font-size: 0.8rem;
+    }
+
+    .todos {
+        grid-auto-rows: 70px;
+    }
+
+    .task-board-options i {
+        font-size: 1.4rem;
+    }
+
+    .round {
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+    }
+
+    .task-importance i {
+        font-size: 1.1rem;
+    }
+
+    .add-task i {
+        font-size: 1.3rem;
+    }
+
+    .add-task-text h2 {
+        font-size: 1rem;
+    }
+
+    .category-name h2 {
+        font-size: 1.8rem;
+    }
+
+    .board-date p {
+        font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 940px) {
+    .todos {
+        grid-auto-rows: 90px;
+    }
+
+    .task-category {
+        display: none;
+    }
+
+    .task-heading h2 {
+        margin: 0;
+        padding: 0 15px;
+        line-height: 20px;
+    }
+
+    .profile-icon i {
+        font-size: 2.2rem;
+    }
+
+    .profile-name h2 {
+        font-size: 1rem;
+    }
+
+    .search-bar input {
+        width: 100%;
+        height: 30px;
+        padding-left: 40px;
+        font-size: 1rem;
+    }
+
+    .search-bar i {
+        position: absolute;
+        left: 0%;
+        font-size: 0.9rem;
+        margin-left: 15px;
+        color: #68696D;
+    }
+
+    .project-creator h2 {
+        font-size: 0.9rem;
+    }
+
+    .add i {
+        font-size: 1rem;
+    }
+
+    .wrapper {
+        grid-template-columns: minmax(240px, 1fr) 5fr;
+    }
+
+    .task-adder {
+        padding: 0 20px;
+    }
+
+    .task {
+        padding: 0 20px;
+    }
+
+    .add-task i {
+        font-size: 1.2rem;
+        margin-right: 15px;
+    }
+
+    .creator-options p {
+        font-size: 5rem;
+    }
+
+    .todo-create, .project-create {
+        margin-bottom: 70px;
+    }
+
+    .leave-creator h1 {
+        font-size: 2.5rem;
+    }
+
+    .leave-creator i {
+        font-size: 3rem;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        grid-template-columns: minmax(200px, 1fr) 5fr;
+    }
+
+    .profile-icon i {
+        font-size: 1.3rem;
+    }
+
+    .profile-name h2 {
+        font-size: 0.7rem;
+        margin-bottom: 1px;
+    }
+
+    .profile-mail h4 {
+        font-size: 0.5rem;
+    }
+
+    .search-bar input {
+        height: 25px;
+        padding-left: 40px;
+        font-size: 0.8rem;
+    }
+
+    .search-bar i {
+        font-size: 0.7rem;
+        margin-left: 15px;
+        color: #68696D;
+    }
+
+    .nav {
+        padding: 15px 15px 10px 15px;
+    }
+
+    .options {
+        grid-template-rows: repeat(5, minmax(30px, 1fr));
+    }
+
+    .task-heading h2 {
+        font-size: 0.8rem;
+        line-height: 15px;
+    }
+
+    .round {
+        width: 13px;
+        height: 13px;
+    }
+
+    .category-name h2 {
+        font-size: 1.7rem;
+    }  
+
+    .board-date p {
+        font-size: 0.8rem;
+    }
+
+    .task-board-options i {
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .creator-options p {
+        font-size: 5rem;
+    }
+
+    .todos {
+        overflow:visible;
+    }
+
+    .wrapper {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .task-board {
+        grid-template-rows: min-content min-content min-content auto;
+        margin: 0;
+        gap: 40px;
+        padding: 30px 33px 70px 33px;
+        height: 100%;
+        max-height: none;
+    }
+
+    .task-board > div {
+
+    }
+
+    .task-board > div {
+    }
+
+    .logo {
+        display: unset;
+    }
+
+    .logo h1 {
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.5rem;
+    }
+
+    .category-name {
+        display: none;
+    }
+
+    .board-date {
+        display: none;
+    }
+
+    .background-option {
+        display: none;
+    }
+
+    .mobile-menu {
+        display: unset;
+    }
+
+    .sort {
+        padding: 0;
+        background-color: transparent;
+    }
+
+    .sort i, .mobile-menu i {
+        font-size: 1.2rem;
+    }
+
+    .purple {
+        color: var(--round-active-purple);
+        font-size: 2.5rem;
+    }
+
+    .swapper-options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swapper-options div {
+        border-top: 2px solid var(--clicked-purple);
+        border-bottom: 2px solid var(--clicked-purple);
+        width: 120px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 12px;
+    }
+
+    .swapper-all {
+        border-radius: 7px 0 0 7px;
+        border-right: 1.5px solid var(--clicked-purple);
+        border-left: 3px solid var(--clicked-purple);
+    }
+
+    .swapper-today {
+        border-radius: 0 7px 7px 0;
+        border-left: 1.5px solid var(--clicked-purple);
+        border-right: 3px solid var(--clicked-purple);
+    }
+
+    .swapper-options p  {
+        color: white;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        transform: translateY(5%);
+        font-size: 0.8rem;
+    }
+
+    .search-bar-mobile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .search-bar-mobile input {
+        width: 96%;
+        height: 40px;
+        padding-left: 55px;
+        border-radius: 20px;
+        border: none;
+        background-color: var(--heading-box-purple);
+        font-size: 1.1rem;
+        color: black;
+    }
+
+    .search-bar-mobile input::placeholder {
+        color: black;
+    }
+
+    .search-bar-mobile i {
+        position: absolute;
+        left: 0;
+        margin-left: 34px;
+    }
+
+    .add-task-text {
+        display: none;
+    }
+
+    .empty {
+        display: none;
+    }
+
+    .task-adder {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 0;
+        background-color: transparent;
+        border-radius: 0;
+        display: none;
+    }
+
+    .add-task i {
+        color: white;
+    }
+
+    .add-task {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+    }
+
+    .todos {
+        grid-auto-rows: 90px;
+        gap: 10px;
+        padding-right: 0;
+        border-radius: 7px;
+    }
+
+    .task {
+        padding: 0 20px;
+        border-radius: 7px;
+    }
+
+    .mobile-adder {
+        display: flex;
+        width: 45px;
+        height: 45px;
+        background-color: var(--clicked-purple);
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        cursor: pointer;
+    }
+
+    .mobile-adder i {
+        font-size: 1.5rem;
+        transition: 0.5s;
+    }
+
+    body {
+        background: black;
+    }
+    
+}
+
+@media only screen and (max-width: 400px) {
+    .creator-options p {
+        font-size: 3.5rem;
+    }
+
+    .creator-options {
+        padding-left: 15%;
+    }
+
+    .leave-creator i {
+        font-size: 2.5rem;
+    }
+
+    .leave-creator h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media only screen and (max-width: 310px) {
+    .search-bar-mobile input {
+        width: 96%;
+        height: 30px;
+        padding-left: 45px;
+        border-radius: 20px;
+        border: none;
+        background-color: var(--heading-box-purple);
+        font-size: 0.8rem;
+    }
+
+    .search-bar-mobile i {
+        position: absolute;
+        left: 0;
+        margin-left: 24px;
+        font-size: 0.8rem;
+        transform: translateY(5%);
+    }
+
+    .task {
+        display: grid;
+        grid-template-columns: 0.3fr 7fr 0.3fr;
+        background-color: var(--round-active-purple);
+        border-radius: 20px;
+        padding: 0 10px;
+
+    }
+
+    .task-heading h2 {
+        font-size: 0.8rem;
+        padding: 0 0 0 15px;
+    }
+
+    .creator-options p {
+        font-size: 3rem;
+    }
+
+    .creator-options {
+        padding-left: 11%;
+    }
+
+    .leave-creator i {
+        font-size: 2rem;
+    }
+
+    .leave-creator h1 {
+        font-size: 1.3rem;
+    }
+}
+
+@media only screen and (max-width: 273px) {
+    .task-importance i {
+        font-size: 0.8rem;
+    }
+
+    .swapper-options div {
+        width: 80px;
+        height: 20px;
+        padding: 10px 12px;
+    }
+
+    .swapper-today p, .swapper-all p {
+        font-size: 0.6rem;
+    }
+}
