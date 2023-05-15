@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -488,6 +490,121 @@
                 <i class="fa-solid fa-note-sticky"></i>
             </div>
         </div>
+    </div>
+
+    <div class="todo-setter">
+        <div class="todo-setter-wrap">
+            <div class="todo-setter-nav">
+               <div class="todo-setter-nav-arrow">
+                    <i class="fa-solid fa-arrow-left"></i>
+               </div>
+
+               <div class="todo-setter-nav-logo">
+                    <h2>no<span class="purple-creator">.</span>delay</h2>
+               </div>
+
+               <div class="todo-setter-nav-icons">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+               </div>
+            </div>
+
+            <div class="todo-setter-main-area">
+                <div class="todo-setter-form">
+                    <form autocomplete="off" class="todo-form" action="post">
+                        <div class="todo-setter-title">
+                            <div class="todo-setter-title-label setter-label">
+                                <label for="title_input">Task Title</label>
+                            </div>
+    
+                            <div class="todo-setter-title-input setter-input">
+                                <input type="text" id="title_input">
+                            </div>
+                        </div>
+    
+                        <div class="todo-setter-details">
+                            <div class="todo-setter-details-label setter-label">
+                                <label for="details_input">Task Details</label>
+                            </div>
+    
+                            <div class="todo-setter-details-input setter-input">
+                                <textarea name="text-details" id="details_input"></textarea>
+                            </div>
+                        </div>
+                
+                        <div class="todo-setter-projects">
+                            <div class="todo-setter-projects-label setter-label">
+                                <label for="projects_input">Choose the right project for your task</label>
+                            </div>
+    
+                            <div class="todo-setter-projects-input setter-input">
+                                <select name="projects" id="projects_input">
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="php">PHP</option>
+                                    <option value="java">Java</option>
+                                    <option value="golang">Golang</option>
+                                    <option value="python">Python</option>
+                                    <option value="c#">C#</option>
+                                    <option value="C++">C++</option>
+                                    <option value="erlang">Erlang</option>
+                                </select>
+                                <span class="custom-arrow"></span>
+                            </div>
+                        </div>
+
+                        <div class="todo-setter-area">
+                            <div class="todo-setter-date">
+                                <div class="todo-setter-date-label setter-label">
+                                    <label for="date_input">By when you want it done?</label>
+                                </div>
+        
+                                <div class="todo-setter-date-input setter-input">
+                                    <input type="date" value="2023-05-15" min="2023-05-14">
+                                </div>
+                            </div>
+
+                            <div class="todo-setter-importance">
+                                <div class="todo-setter-importance-area">
+                                    <label class="container">Important task
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="todo-setter-importance-phone">
+                            <div class="todo-setter-importance-area">
+                                <label class="container">Important task
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                
+                        <div class="todo-setter-accept">
+                            <div class="todo-setter-accept-button">
+                                <button type="submit">
+                                    Add Task
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="todo-setter-form-image">
+                    <img src="images/add-task-image.png" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="note-setter">
+        
+    </div>
+
+    <div class="project-setter">
+        
     </div>
 </body>
 <script type="module" src="main.js"></script>
