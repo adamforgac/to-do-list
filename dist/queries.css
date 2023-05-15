@@ -579,3 +579,165 @@
         font-size: 0.6rem;
     }
 }
+
+
+/* TODO SETTER */
+/* TODO SETTER */
+/* TODO SETTER */
+
+
+@media only screen and (max-width: 1160px) {
+    .todo-setter-form-image img {
+        width: 350px;
+    }
+}
+
+@media only screen and (max-width: 1040px) {
+    .todo-setter-form-image img {
+        width: 330px;
+    }
+
+    .todo-setter-main-area {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+    }
+
+    .todo-setter-form-image {
+        justify-content: flex-end;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .todo-setter-form-image img {
+        width: 280px;
+    }
+
+    .todo-setter-main-area {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+    }
+
+    .todo-setter-form-image {
+        justify-content: flex-end;
+    }
+
+    .todo-setter-wrap {
+        padding: 20px 20px;
+    }
+}
+
+@media only screen and (max-width: 870px) {
+    .todo-setter-main-area {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .todo-setter-form-image {
+        display: none;
+    }
+
+    .todo-setter-wrap {
+        padding: 20px 60px;
+    }
+
+    .todo-setter-nav-logo h2 {
+        font-size: 2rem;
+    }
+
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i {
+        font-size: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .todo-setter-wrap {
+        padding: 20px 20px;
+    }
+    
+    .setter-label label {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        font-size: 1.2rem;
+    }
+
+    .checkmark {
+        height: 18px;
+        width: 18px;
+    }
+
+    .container .checkmark:after {
+        left: 7px;
+        top: 3px;
+        width: 2px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2.5px 2.5px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .setter-input input, .setter-input textarea, .setter-input select {
+        font-size: 1.1rem;
+    }
+
+    .todo-form {
+        grid-template-rows: 90px 1.5fr 90px 90px 1fr;
+        gap: 15px;
+    }
+
+    .setter-label {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+    }
+
+    .todo-setter-importance {
+        transform: translate(-1%, 23%);
+    }
+}
+
+@media only screen and (max-width: 490px) {
+    .todo-form {
+        grid-template-rows: 90px 1.5fr 90px 90px 50px 1fr;
+        gap: 15px;
+    }
+
+    .todo-setter-importance {
+        display: none;
+    }
+
+    .todo-setter-importance-phone {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .container {
+        padding-left: 10px;
+    }
+
+    .todo-setter-area {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media only screen and (max-width: 390px) {
+    .setter-label label {
+        font-size: 0.9rem;
+    }
+
+    .setter-input input, .setter-input textarea, .setter-input select {
+        font-size: 1rem;
+    }
+
+    .todo-form {
+        grid-template-rows: 90px minmax(150px, 1.5fr) 90px 90px 50px 1fr;
+        gap: 10px;
+    }
+}
+

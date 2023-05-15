@@ -2,10 +2,12 @@ const menu = document.querySelector('.creator-menu');
 const creator = document.querySelector('.project-creator');
 creator.addEventListener('click', () => {
   menu.classList.add('active-menu');
+  document.querySelector('body').classList.add('menu-active');
 });
 const cross = document.querySelector('.leave-creator i');
 cross.addEventListener('click', () => {
   menu.classList.remove('active-menu');
+  document.querySelector('body').classList.remove('menu-active');
 });
 
 // MOBILE MENU ANIMATION
@@ -29,3 +31,23 @@ mobileAdder.addEventListener('click', () => {
   notePar.classList.toggle('options-appear');
   document.querySelector('body').classList.toggle('menu-active');
 });
+
+// TASK CREATOR
+
+const todoCreator = document.querySelector('.todo-create');
+const todoSetter = document.querySelector('.todo-setter');
+const exitCreator = document.querySelector('.todo-setter-nav-arrow');
+const exitToMenu = document.querySelector('.todo-setter-nav-icons i');
+todoCreator.addEventListener('click', () => {
+  todoSetter.classList.add('active-todo-setter');
+});
+exitCreator.addEventListener('click', () => {
+  todoSetter.classList.remove('active-todo-setter');
+  menu.classList.add('active-menu');
+});
+exitToMenu.addEventListener('click', () => {
+  todoSetter.classList.remove('active-todo-setter');
+  menu.classList.remove('active-menu');
+});
+
+// TASK CREATOR FOR MOBILE
