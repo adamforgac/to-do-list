@@ -315,6 +315,10 @@
         max-height: none;
     }
 
+    .creator-menu, .active-menu {
+        display: none;
+    }
+
     .task-board > div {
 
     }
@@ -493,6 +497,14 @@
     body {
         background: black;
     }
+
+    .creator-menu-mobile {
+        display: unset;
+    }
+    
+    .creator-menu-mobile.active-menu-mobile {
+       display: unset;
+    }
     
 }
 
@@ -587,70 +599,70 @@
 
 
 @media only screen and (max-width: 1160px) {
-    .todo-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img {
         width: 350px;
     }
 }
 
 @media only screen and (max-width: 1040px) {
-    .todo-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img {
         width: 330px;
     }
 
-    .todo-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image {
         justify-content: flex-end;
     }
 }
 
 @media only screen and (max-width: 980px) {
-    .todo-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img {
         width: 280px;
     }
 
-    .todo-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image  {
         justify-content: flex-end;
     }
 
-    .todo-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap {
         padding: 20px 20px;
     }
 }
 
 @media only screen and (max-width: 870px) {
-    .todo-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area {
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .todo-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image {
         display: none;
     }
 
-    .todo-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap {
         padding: 20px 60px;
     }
 
-    .todo-setter-nav-logo h2 {
+    .todo-setter-nav-logo h2, .note-setter-nav-logo h2 {
         font-size: 2rem;
     }
 
-    .todo-setter-nav-icons i, .todo-setter-nav-arrow i {
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .note-setter-nav-icons i {
         font-size: 1.6rem;
     }
 }
 
 @media only screen and (max-width: 650px) {
-    .todo-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap {
         padding: 20px 20px;
     }
     
@@ -688,28 +700,32 @@
         gap: 15px;
     }
 
+    .note-form {
+        grid-template-rows: 90px 1.5fr 1fr;
+    }
+
     .setter-label {
         display: flex;
         align-items: center;
         margin-left: 16px;
     }
 
-    .todo-setter-importance {
+    .todo-setter-importance, .note-setter-importance {
         transform: translate(-1%, 23%);
     }
 }
 
 @media only screen and (max-width: 490px) {
     .todo-form {
-        grid-template-rows: 90px 1.5fr 90px 90px 50px 1fr;
+        grid-template-rows: 90px minmax(180px, 1.5fr)  90px 90px 50px 1fr;
         gap: 15px;
     }
 
-    .todo-setter-importance {
+    .todo-setter-importance, .note-setter-importance {
         display: none;
     }
 
-    .todo-setter-importance-phone {
+    .todo-setter-importance-phone, .note-setter-importance-phone {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -719,11 +735,10 @@
         padding-left: 10px;
     }
 
-    .todo-setter-area {
+    .todo-setter-area, .note-setter-area {
         display: grid;
         grid-template-columns: 1fr;
     }
-
 }
 
 @media only screen and (max-width: 390px) {
@@ -735,9 +750,30 @@
         font-size: 1rem;
     }
 
+    .todo-setter-accept button, .note-setter-accept button {
+        height: 50px;
+        font-size: 1.1rem;
+    }
+
     .todo-form {
-        grid-template-rows: 90px minmax(150px, 1.5fr) 90px 90px 50px 1fr;
+        grid-template-rows: 90px minmax(180px, 1.5fr) 90px 90px 50px 1fr;
         gap: 10px;
+    }
+
+    .note-form {
+        gap: 10px;
+    }
+
+    .todo-setter-nav-logo h2, .note-setter-nav-logo h2 {
+        font-size: 1.4rem;
+    }
+
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i {
+        font-size: 1.3rem;
+    }
+
+    .todo-setter-wrap, .note-setter-wrap {
+        grid-template-rows: 0.8fr 9fr;
     }
 }
 
