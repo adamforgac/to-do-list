@@ -554,11 +554,11 @@
                         <div class="todo-setter-area">
                             <div class="todo-setter-date">
                                 <div class="todo-setter-date-label setter-label">
-                                    <label for="date_input">By when you want it done?</label>
+                                    <label for="date_input">End date</label>
                                 </div>
         
                                 <div class="todo-setter-date-input setter-input">
-                                    <input type="date" value="2023-05-15" min="2023-05-14">
+                                    <input id="date_input" type="date" value="2023-05-15" min="2023-05-14">
                                 </div>
                             </div>
 
@@ -600,7 +600,60 @@
     </div>
 
     <div class="note-setter">
-        
+        <div class="note-setter-wrap">
+            <div class="note-setter-nav">
+               <div class="note-setter-nav-arrow">
+                    <i class="fa-solid fa-arrow-left"></i>
+               </div>
+
+               <div class="note-setter-nav-logo">
+                    <h2>no<span class="purple-creator">.</span>delay</h2>
+               </div>
+
+               <div class="note-setter-nav-icons">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+               </div>
+            </div>
+
+            <div class="note-setter-main-area">
+                <div class="note-setter-form">
+                    <form autocomplete="off" class="note-form" action="post">
+                        <div class="note-setter-title">
+                            <div class="note-setter-title-label setter-label">
+                                <label for="title_input">Task Title</label>
+                            </div>
+    
+                            <div class="note-setter-title-input setter-input">
+                                <input type="text" id="title_input">
+                            </div>
+                        </div>
+    
+                        <div class="note-setter-details">
+                            <div class="note-setter-details-label setter-label">
+                                <label for="details_input">Task Details</label>
+                            </div>
+    
+                            <div class="note-setter-details-input setter-input">
+                                <textarea name="text-details" id="details_input"></textarea>
+                            </div>
+                        </div>
+                
+                        <div class="note-setter-accept">
+                            <div class="note-setter-accept-button">
+                                <button type="submit">
+                                    Add Task
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="note-setter-form-image">
+                    <img src="images/note main image.png" alt="">
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <div class="project-setter">
