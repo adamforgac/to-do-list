@@ -52,26 +52,33 @@ mobileAdder.addEventListener('click', () => {
 
 const todoCreator = document.querySelector('.todo-create');
 const noteCreator = document.querySelector('.note-create');
+const projectCreator = document.querySelector('.project-create');
 
 // FORM PAGE
 
 const todoSetter = document.querySelector('.todo-setter');
 const noteSetter = document.querySelector('.note-setter');
+const projectSetter = document.querySelector('.project-setter');
 
 // STEP BACK BUTTON
 
 const exitCreator = document.querySelector('.todo-setter-nav-arrow i');
 const exitNoteCreator = document.querySelector('.note-setter-nav-arrow i');
+const exitProjectCreator = document.querySelector('.project-setter-nav-arrow i');
 
 // EXIT BUTTON
 
 const exitToMenu = document.querySelector('.todo-setter-nav-icons i');
 const exitToMenuNote = document.querySelector('.note-setter-nav-icons i');
+const exitToMenuProject = document.querySelector('.project-setter-nav-icons i');
 todoCreator.addEventListener('click', () => {
   todoSetter.classList.add('active-todo-setter');
 });
 noteCreator.addEventListener('click', () => {
   noteSetter.classList.add('active-note-setter');
+});
+projectCreator.addEventListener('click', () => {
+  projectSetter.classList.add('active-project-setter');
 });
 exitCreator.addEventListener('click', () => {
   todoSetter.classList.remove('active-todo-setter');
@@ -81,12 +88,20 @@ exitNoteCreator.addEventListener('click', () => {
   noteSetter.classList.remove('active-note-setter');
   menu.classList.add('active-menu');
 });
+exitProjectCreator.addEventListener('click', () => {
+  projectSetter.classList.remove('active-project-setter');
+  menu.classList.add('active-menu');
+});
 exitToMenu.addEventListener('click', () => {
   todoSetter.classList.remove('active-todo-setter');
   menu.classList.remove('active-menu');
 });
 exitToMenuNote.addEventListener('click', () => {
   noteSetter.classList.remove('active-note-setter');
+  menu.classList.remove('active-menu');
+});
+exitToMenuProject.addEventListener('click', () => {
+  projectSetter.classList.remove('active-project-setter');
   menu.classList.remove('active-menu');
 });
 
@@ -94,11 +109,15 @@ exitToMenuNote.addEventListener('click', () => {
 
 const todoMobileCreator = document.querySelector('.todo-create-mobile');
 const noteMobileCreator = document.querySelector('.note-create-mobile');
+const projectMobileCreator = document.querySelector('.project-create-mobile');
 todoMobileCreator.addEventListener('click', () => {
   todoSetter.classList.add('active-todo-setter');
 });
 noteMobileCreator.addEventListener('click', () => {
   noteSetter.classList.add('active-note-setter');
+});
+projectMobileCreator.addEventListener('click', () => {
+  projectSetter.classList.add('active-project-setter');
 });
 exitCreator.addEventListener('click', () => {
   todoSetter.classList.remove('active-todo-setter');
@@ -114,6 +133,18 @@ exitCreator.addEventListener('click', () => {
 });
 exitNoteCreator.addEventListener('click', () => {
   noteSetter.classList.remove('active-note-setter');
+  mobileMenu.classList.add('active-menu-mobile');
+  document.querySelector('.mobile-adder i').classList.add('rotated');
+  mobileTodoIcon.classList.add('active-todo-mobile');
+  mobileProjectIcon.classList.add('active-project-mobile');
+  mobileNoteIcon.classList.add('active-note-mobile');
+  todoPar.classList.add('options-appear');
+  projectPar.classList.add('options-appear');
+  notePar.classList.add('options-appear');
+  document.querySelector('body').classList.add('menu-active');
+});
+exitProjectCreator.addEventListener('click', () => {
+  projectSetter.classList.remove('active-project-setter');
   mobileMenu.classList.add('active-menu-mobile');
   document.querySelector('.mobile-adder i').classList.add('rotated');
   mobileTodoIcon.classList.add('active-todo-mobile');
@@ -148,5 +179,15 @@ exitToMenuNote.addEventListener('click', () => {
   notePar.classList.remove('options-appear');
   document.querySelector('body').classList.remove('menu-active');
 });
-
-// NOTE CREATOR
+exitToMenuProject.addEventListener('click', () => {
+  projectSetter.classList.remove('active-project-setter');
+  mobileMenu.classList.remove('active-menu-mobile');
+  document.querySelector('.mobile-adder i').classList.remove('rotated');
+  mobileTodoIcon.classList.remove('active-todo-mobile');
+  mobileProjectIcon.classList.remove('active-project-mobile');
+  mobileNoteIcon.classList.remove('active-note-mobile');
+  todoPar.classList.remove('options-appear');
+  projectPar.classList.remove('options-appear');
+  notePar.classList.remove('options-appear');
+  document.querySelector('body').classList.remove('menu-active');
+});

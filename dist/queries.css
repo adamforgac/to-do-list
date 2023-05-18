@@ -58,6 +58,13 @@
     }
 }
 
+@media only screen and (max-height: 570px) {
+    .nav {
+        grid-template-rows: 1.5fr 2fr 200px 200px 1fr;
+        max-height: 100%;
+    }
+}
+
 
 /* WIDTH */
 /* WIDTH */
@@ -599,70 +606,70 @@
 
 
 @media only screen and (max-width: 1160px) {
-    .todo-setter-form-image img, .note-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
         width: 350px;
     }
 }
 
 @media only screen and (max-width: 1040px) {
-    .todo-setter-form-image img, .note-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
         width: 330px;
     }
 
-    .todo-setter-main-area, .note-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image {
         justify-content: flex-end;
     }
 }
 
 @media only screen and (max-width: 980px) {
-    .todo-setter-form-image img, .note-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
         width: 280px;
     }
 
-    .todo-setter-main-area, .note-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image  {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image  {
         justify-content: flex-end;
     }
 
-    .todo-setter-wrap, .note-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
         padding: 20px 20px;
     }
 }
 
 @media only screen and (max-width: 870px) {
-    .todo-setter-main-area, .note-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image {
         display: none;
     }
 
-    .todo-setter-wrap, .note-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
         padding: 20px 60px;
     }
 
-    .todo-setter-nav-logo h2, .note-setter-nav-logo h2 {
+    .todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2 {
         font-size: 2rem;
     }
 
-    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .note-setter-nav-icons i {
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .note-setter-nav-icons i, .project-setter-nav-arrow i, .project-setter-nav-icons i {
         font-size: 1.6rem;
     }
 }
 
 @media only screen and (max-width: 650px) {
-    .todo-setter-wrap, .note-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
         padding: 20px 20px;
     }
     
@@ -710,7 +717,7 @@
         margin-left: 16px;
     }
 
-    .todo-setter-importance, .note-setter-importance {
+    .todo-setter-importance {
         transform: translate(-1%, 23%);
     }
 }
@@ -718,14 +725,13 @@
 @media only screen and (max-width: 490px) {
     .todo-form {
         grid-template-rows: 90px minmax(180px, 1.5fr)  90px 90px 50px 1fr;
-        gap: 15px;
     }
 
-    .todo-setter-importance, .note-setter-importance {
+    .todo-setter-importance {
         display: none;
     }
 
-    .todo-setter-importance-phone, .note-setter-importance-phone {
+    .todo-setter-importance-phone {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -735,7 +741,7 @@
         padding-left: 10px;
     }
 
-    .todo-setter-area, .note-setter-area {
+    .todo-setter-area, .note-setter-area, .project-setter-area {
         display: grid;
         grid-template-columns: 1fr;
     }
@@ -750,7 +756,7 @@
         font-size: 1rem;
     }
 
-    .todo-setter-accept button, .note-setter-accept button {
+    .todo-setter-accept button, .note-setter-accept button, .project-setter-accept button {
         height: 50px;
         font-size: 1.1rem;
     }
@@ -760,19 +766,19 @@
         gap: 10px;
     }
 
-    .note-form {
+    .note-form, .project-form {
         gap: 10px;
     }
 
-    .todo-setter-nav-logo h2, .note-setter-nav-logo h2 {
+    .todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2 {
         font-size: 1.4rem;
     }
 
-    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i {
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i, .project-setter-nav-icons i, .project-setter-nav-arrow i {
         font-size: 1.3rem;
     }
 
-    .todo-setter-wrap, .note-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
         grid-template-rows: 0.8fr 9fr;
     }
 }

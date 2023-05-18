@@ -99,7 +99,7 @@ table {
 
 .nav {
     display: grid;
-    grid-template-rows: 1.5fr 2fr 7fr 7fr 1.3fr;
+    grid-template-rows: 1.2fr 1.5fr 8fr 8fr 1.3fr;
     padding: 15px 25px 10px 25px;
     border-right: 0.5px solid var(--heading-box-purple);
     max-height: 100vh;
@@ -175,7 +175,7 @@ table {
 
 .options {
     display: grid;
-    grid-template-rows: repeat(5, minmax(65px, 1fr));
+    grid-template-rows: repeat(5, minmax(55px, 1fr));
     padding-left: 15px;
     border-bottom: 1px solid #DEDADB;
     padding-bottom: 10px;
@@ -229,7 +229,7 @@ table {
 
 .projects {
     display: grid;
-    grid-auto-rows: minmax(65px, 1fr);
+    grid-auto-rows: minmax(55px, 1fr);
     overflow: auto;
     padding-left: 12px;
     padding-top: 10px;
@@ -286,6 +286,7 @@ table {
     cursor: pointer;
     transition: 0.3s;
     scale: 1;
+    margin-top: 10px;
 }
 
 .project-creator:hover {
@@ -773,7 +774,21 @@ table {
     overflow: hidden;
 }
 
-.active-todo-setter, .active-note-setter {
+.project-setter {
+    transition: all 0.3s;
+    width: 100vw;
+    height: 100%;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    visibility: hidden;
+    pointer-events: none;
+    left: 0;
+    scale: 0.2;
+    overflow: hidden;
+}
+
+.active-todo-setter, .active-note-setter, .active-project-setter {
     width: 100vw;
     height: 100%;
     background: black;
@@ -787,7 +802,7 @@ table {
     overflow: scroll;
 }
 
-.todo-setter-wrap, .note-setter-wrap {
+.todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
     display: grid;
     grid-template-rows: 1fr 9fr;
     min-height: 100%;
@@ -805,39 +820,39 @@ table {
 
 
 
-.todo-setter-nav, .note-setter-nav {
+.todo-setter-nav, .note-setter-nav, .project-setter-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
 }
 
-.todo-setter-nav-arrow i, .note-setter-nav-arrow i {
+.todo-setter-nav-arrow i, .note-setter-nav-arrow i, .project-setter-nav-arrow i {
     font-size: 2rem;
     color: white;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover {
+.todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover, .project-setter-nav-arrow i:hover {
     color: var(--round-active-purple);
     transition: 0.2s;
 }
 
-.todo-setter-nav-logo h2, .note-setter-nav-logo h2 {
+.todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2 {
     font-size: 2.7rem;
     font-family: 'Roboto', sans-serif;
     color: white;
 }
 
-.todo-setter-nav-icons i, .note-setter-nav-icons i {
+.todo-setter-nav-icons i, .note-setter-nav-icons i, .project-setter-nav-icons i {
     color: white;
     font-size: 1.8rem;
     transition: 0.2s;
     cursor: pointer;
 }
 
-.todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover {
+.todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover, .project-setter-nav-icons i:hover {
     color: var(--round-active-purple);
     transition: 0.2s;
 }
@@ -865,6 +880,14 @@ table {
     grid-template-rows: 100px 1.5fr 1fr;
 }
 
+.project-form {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+    grid-template-rows: 1fr;
+}
+
 
 
 /* ALL */
@@ -873,21 +896,21 @@ table {
 
 
 
-.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .note-setter-projects, .todo-setter-date, .note-setter-date {
+.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .todo-setter-date, .project-setter-title {
     display: grid;
     grid-template-rows: 40px 1fr;
     gap: 5px;
 }
 
-.todo-setter-date, .note-setter-date {
+.todo-setter-date {
     width: 100%;
 }
 
-.todo-setter-date-input, .note-setter-date-input {
+.todo-setter-date-input {
     width: 100%;
 }
 
-.todo-setter-date input[type=date], .note-setter-date input[type=date] {
+.todo-setter-date input[type=date] {
     width: 100%;
     border-radius: 21px;
     -webkit-appearance: none;
@@ -926,7 +949,7 @@ form input:focus, form textarea:focus, form select:focus {
     border: 2px solid var(--round-active-purple);
 }
 
-.todo-setter-main-area, .note-setter-main-area {
+.todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -938,7 +961,7 @@ form input:focus, form textarea:focus, form select:focus {
 
 
 
-.todo-setter-area, .note-setter-area {
+.todo-setter-area {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -951,7 +974,7 @@ form input:focus, form textarea:focus, form select:focus {
 
 
 
-.todo-setter-importance, .note-setter-importance {
+.todo-setter-importance {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -960,7 +983,7 @@ form input:focus, form textarea:focus, form select:focus {
     transform: translate(-1%, 20%);
 }
 
-.todo-setter-importance-phone, .note-setter-importance-phone {
+.todo-setter-importance-phone {
     display: none;
     justify-content: center;
     align-items: center;
@@ -1032,11 +1055,11 @@ form input:focus, form textarea:focus, form select:focus {
     transform: rotate(45deg);
 }
 
-.todo-setter-importance label, .note-setter-importance label {
+.todo-setter-importance label {
     color: white;
 }
 
-.todo-setter-importance-phone label, .note-setter-importance-phone label {
+.todo-setter-importance-phone label {
     color: white;
 }
 
@@ -1052,7 +1075,7 @@ form input:focus, form textarea:focus, form select:focus {
     padding: 10px 25px;
 }
 
-.todo-form input, .note-form input {
+.todo-form input, .note-form input, .project-form input {
     padding: 0 25px 0 25px;
 }
 
@@ -1062,7 +1085,7 @@ form input:focus, form textarea:focus, form select:focus {
 /* OPTIONS SELECTOR */
 
 
-.todo-form select, .note-form select {
+.todo-form select {
     padding: 0 45px 0 25px;
     border: none;
     -webkit-appearance: none;
@@ -1103,7 +1126,7 @@ form input:focus, form textarea:focus, form select:focus {
     top: 52%;
 }
 
-.todo-setter-projects-input, .note-setter-projects-input {
+.todo-setter-projects-input {
     position: relative;
 }
 
@@ -1114,7 +1137,7 @@ form input:focus, form textarea:focus, form select:focus {
 /* TEXTAREA */
 
 
-.todo-form textarea, .note-form textarea {
+.todo-form textarea, .note-form textarea, .project-form textarea {
     padding: 10px 25px;
     resize: none;
 }
@@ -1124,14 +1147,14 @@ form input:focus, form textarea:focus, form select:focus {
 /* BUTTON */
 
 
-.todo-setter-accept, .note-setter-accept {
+.todo-setter-accept, .note-setter-accept, .project-setter-accept {
     display: grid;
     align-items: center;
     grid-template-columns: 1fr;
     position: relative;
 }
 
-.todo-setter-accept button, .note-setter-accept button {
+.todo-setter-accept button, .note-setter-accept button, .project-setter-accept button {
     height: 64px;
     width: 100%;
     border-radius: 30px;
@@ -1145,7 +1168,7 @@ form input:focus, form textarea:focus, form select:focus {
     cursor: pointer;
 }
 
-.todo-setter-accept button:hover, .note-setter-accept button:hover {
+.todo-setter-accept button:hover, .note-setter-accept button:hover, .project-setter-accept button:hover {
     box-shadow: rgba(73, 24, 156, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     transition: 0.7s;
     scale: 1.07;
@@ -1155,13 +1178,13 @@ form input:focus, form textarea:focus, form select:focus {
 /* ADD TODO IMAGE */
 
 
-.todo-setter-form-image, .note-setter-form-image  {
+.todo-setter-form-image, .note-setter-form-image, .project-setter-form-image  {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.todo-setter-form-image img, .note-setter-form-image img {
+.todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
     width: clamp(400px, 70%, 500px);
     transform: translateY(-10%);
 }
