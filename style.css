@@ -35,6 +35,7 @@ body {
     overflow-x: hidden;
     height: 100%;
     background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
+    background-color: black;
 }
 
 ol, ul {
@@ -88,7 +89,7 @@ table {
 
 .wrapper {
     display: grid;
-    grid-template-columns: minmax(330px, 1fr) 5fr;
+    grid-template-columns: minmax(275px, 1fr) 5fr;
 }
 
 
@@ -99,10 +100,16 @@ table {
 
 .nav {
     display: grid;
-    grid-template-rows: 1.2fr 1.5fr 8fr 8fr 1.3fr;
-    padding: 15px 25px 10px 25px;
+    grid-template-rows: min-content min-content 1fr min-content;
+    padding: 30px 0px 10px 0px; 
+    /* 15px */
     border-right: 0.5px solid var(--heading-box-purple);
-    max-height: 100vh;
+    height: 100vh;
+    gap: 20px;
+}
+
+.active-nav {
+    
 }
 
 /* PROFILE */
@@ -111,13 +118,13 @@ table {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px 0;
+    position: relative;
+    padding: 0 20px;
 }
 
-.profile-icon i {
-    color: white;
-    font-size: 2.5rem;
-    margin-right: 12px;
+.profile-icon img {
+    width: 41px;
+    margin-right: 20px;
 }
 
 .profile-name h2 {
@@ -149,43 +156,62 @@ table {
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 10px 0;
+    padding: 0 10px;
 }
 
 .search-bar input {
     width: 100%;
-    height: 40px;
+    height: 30px;
     background-color: #DEDADB;
     border: none;
     border-radius: 10px;
-    padding-left: 60px;
-    font-size: 1.3rem;
+    padding-top: 2px;
+    padding-left: 39px;
+    font-size: 1rem;
     outline: none;
 }
 
 .search-bar i {
     position: absolute;
     left: 0%;
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin-left: 15px;
     color: #68696D;
 }
 
 /* OPTIONS */
 
+.all-options-section {
+    display: grid;
+    grid-template-rows: min-content min-content;
+    overflow: auto;
+}
+
+.all-options-section > div > div {
+   padding: 0 10px;
+   width: 100%;
+   padding: 0 15px 0 25px;
+   cursor: default;
+}
+
+.all-options-section > div > div:hover {
+    background-color: rgba(256, 256, 256, 0.3);
+}
+
 .options {
     display: grid;
-    grid-template-rows: repeat(5, minmax(55px, 1fr));
-    padding-left: 15px;
+    grid-auto-rows: 45px;
+    /* padding-left: 15px; */
+    padding-left: 0;
     border-bottom: 1px solid #DEDADB;
     padding-bottom: 10px;
 }
 
 .options h2, .options p {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
 }
 
-.all, .today, .week, .notes {
+.all, .today, .week, .notes, .completed {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -195,12 +221,35 @@ table {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-left: -3px;
 }
 
 .options-icon i {
     color: white;
-    font-size: 1.4rem;
+    font-size: 0.85rem;
+}
+
+.today-icon i {
+    color: rgb(200, 92, 10);
+}
+
+.completed-icon i {
+    color: rgb(19, 171, 19);
+}
+
+.week-icon i {
+    color: rgb(175, 65, 211)
+}
+
+.notes-icon i {
+    color: rgb(39, 130, 196);
+}
+
+.important-icon i {
+    color: yellow;
+}
+
+.all-icon i {
+    color: rgb(24, 203, 176)
 }
 
 .options-heading {
@@ -209,7 +258,7 @@ table {
 
 .options-heading h2 {
     color: white;
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
 
 .options-count {
@@ -219,20 +268,28 @@ table {
 
 .options-count p {
     color: white;
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
-.notes {
+/* LISTS */
+
+.list-heading {
+    padding: 20px 0 9px 0;
+}
+
+.list-heading h5 {
+    color: white;
+    padding-left: 15px;
+    font-size: 1rem;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
 }
 
 /* PROJECTS */
 
 .projects {
     display: grid;
-    grid-auto-rows: minmax(55px, 1fr);
-    overflow: auto;
-    padding-left: 12px;
-    padding-top: 10px;
+    grid-auto-rows: 45px;
 }
 
 .projects::-webkit-scrollbar {
@@ -254,14 +311,23 @@ table {
     align-items: center;
 }
 
-.project-num p, .project-name h2 {
-    font-family: 'Roboto', sans-serif;
+.project-name h2 {
     color: white;
-    font-size: 1.4rem;
+    font-size: 1rem;
+}
+
+.project-name h2, .project-count p, .project-num p {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+.project-num p {
+    font-size: 0.85rem;
+    color: white;
+    transform: translateY(2px);
 }
 
 .project-count p {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: white;
 }
 
@@ -286,7 +352,8 @@ table {
     cursor: pointer;
     transition: 0.3s;
     scale: 1;
-    margin-top: 10px;
+    height: 50px;
+    margin: 0 10px;
 }
 
 .project-creator:hover {
@@ -317,13 +384,11 @@ table {
 .task-board {
     display: grid;
     gap: 15px;
-    grid-template-rows: 1.3fr 7fr;
-    padding: 25px 33px;
-    padding: 25px 33px 25px 33px;
-    max-height: 100vh;
-}
-
-.task-board > div {
+    grid-template-rows: 85px 1fr;
+    padding: 13px 25px 10px 25px;
+    min-height: 100vh;
+    gap: 42px;
+    transition: 1s;
 }
 
 /* HEADING BOX */
@@ -343,7 +408,8 @@ table {
 .task-board-options {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end;
+    transform: translateY(3.5px);
 }
 
 .task-board-options i {
@@ -368,7 +434,7 @@ table {
 .category-name h2 {
     color: white;
     font-family: 'Roboto', sans-serif;
-    font-size: 2.7rem;
+    font-size: 2rem;
     margin-bottom: 7px;
 }
 
@@ -383,7 +449,7 @@ table {
 
 .todos {
     display: grid;
-    grid-auto-rows: 100px;
+    grid-auto-rows: 80px;
     overflow: auto;
     gap: 4px;
     padding-right: 10px;
@@ -403,13 +469,9 @@ table {
     background-color: transparent;
 }
 
-.todos > div {
-    
-}
-
 .task {
     display: grid;
-    grid-template-columns: 0.6fr 7fr 0.6fr;
+    grid-template-columns: 70px auto 70px;
     background-color: var(--round-active-purple);
     border-radius: 20px;
 }
@@ -421,8 +483,8 @@ table {
 }
 
 .round {
-    width: 30px;
-    height: 30px;
+    width: 23px;
+    height: 23px;
     border-radius: 50%;
     background-color: white;
 }
@@ -435,7 +497,7 @@ table {
 
 .task-importance i {
     color: white;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
 }
 
 .task-text {
@@ -443,19 +505,25 @@ table {
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    overflow: hidden;
+    white-space: nowrap;
+    display:inline-block;
+    margin-top: 22px;
 }
 
 .task-heading h2 {
     color: white;
     font-family: 'Roboto', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .task-category p {
     color: rgb(187, 187, 187);
     font-family: 'Roboto', sans-serif;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
 }
 
 /* TASK-ADDER */
@@ -518,7 +586,7 @@ table {
 
 .mobile-adder {
     display: none;
-    z-index: 100;
+    z-index: 300;
 }
 
 .todo-create-mobile, .project-create-mobile, .note-create-mobile {
@@ -559,7 +627,7 @@ table {
 }
 
 .project-create-mobile p {
-    left: -60px;
+    left: -45px;
 }
 
 .note-create-mobile p {
@@ -598,6 +666,7 @@ table {
 .rotated {
     transform: rotate(45deg);
     transition: 0.5s;
+    z-index: 300;
 }
 
 .creator-menu-mobile {
@@ -605,7 +674,7 @@ table {
     left: 100%;
     top: 200%;
     position: fixed;
-    height: 100vh;
+    min-height: 100vh;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -614,6 +683,7 @@ table {
     height: 0;
     display: none;
     overflow: scroll;
+    z-index: 200;
 }
 
 .creator-menu-mobile.active-menu-mobile {
@@ -624,7 +694,7 @@ table {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
-    display: none;
+    display: unset;
 }
 
 
@@ -797,7 +867,7 @@ table {
     opacity: 1;
     scale: 1;
     transition: all 0.3s;
-    z-index: 200;
+    z-index: 400;
     position: fixed;
     overflow: scroll;
 }
@@ -896,7 +966,7 @@ table {
 
 
 
-.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .todo-setter-date, .project-setter-title {
+.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .todo-setter-date, .project-setter-title, .project-setter-color {
     display: grid;
     grid-template-rows: 40px 1fr;
     gap: 5px;
@@ -1188,6 +1258,29 @@ form input:focus, form textarea:focus, form select:focus {
     width: clamp(400px, 70%, 500px);
     transform: translateY(-10%);
 }
+
+/* ERROR MESSAGE */
+/* ERROR MESSAGE */
+/* ERROR MESSAGE */
+
+.message {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 80vh;
+    opacity: 0;
+    pointer-events: none;
+    background: black;
+    z-index: 300;
+}
+
+.message img {
+    width: 200px;
+}
+
+
 
 
 
