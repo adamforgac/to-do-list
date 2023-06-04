@@ -1,193 +1,80 @@
-const menu = document.querySelector('.creator-menu');
-const creator = document.querySelector('.project-creator');
-creator.addEventListener('click', () => {
-  menu.classList.add('active-menu');
-  document.querySelector('body').classList.add('menu-active');
-});
-const cross = document.querySelector('.leave-creator i');
-cross.addEventListener('click', () => {
-  menu.classList.remove('active-menu');
-  document.querySelector('body').classList.remove('menu-active');
-});
+/* eslint-disable no-plusplus */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable max-len */
+import callDom from './modules/dom';
+import createPhoneMenu from './modules/phoneMenu';
 
-// MOBILE MENU ANIMATION
+callDom();
 
-const mobileAdder = document.querySelector('.mobile-adder');
-// ADD BUTTON
-const mobileMenu = document.querySelector('.creator-menu-mobile');
-// WHOLE MENU PAGE FOR MOBILE
-const mobileTodoIcon = document.querySelector('.todo-create-mobile');
-// TODO ICON
-const mobileProjectIcon = document.querySelector('.project-create-mobile');
-// PROJECT ICON
-const mobileNoteIcon = document.querySelector('.note-create-mobile');
-// NOTE ICON
-const todoPar = document.querySelector('.todo-create-mobile p');
-// TODO NAME
-const projectPar = document.querySelector('.project-create-mobile p');
-// PROJECT NAME
-const notePar = document.querySelector('.note-create-mobile p');
-// NOTE NAME
+createPhoneMenu();
 
-mobileAdder.addEventListener('click', () => {
-  // OPENS THE WHOLE MENU
-  mobileMenu.classList.toggle('active-menu-mobile');
-  // ROTATES THE ADD MENU ICON
-  document.querySelector('.mobile-adder i').classList.toggle('rotated');
-  // MOVES THE ICONS
-  mobileTodoIcon.classList.toggle('active-todo-mobile');
-  mobileProjectIcon.classList.toggle('active-project-mobile');
-  mobileNoteIcon.classList.toggle('active-note-mobile');
-  // MOVES THE ICONS
-  todoPar.classList.toggle('options-appear');
-  projectPar.classList.toggle('options-appear');
-  notePar.classList.toggle('options-appear');
-  // BODY DOES NOT MOVE
-  document.querySelector('body').classList.toggle('menu-active');
-});
+const allTasks = [];
+const todos = document.querySelector('.todos');
 
-// OPTIONS MENU
+const taskDoneButton = document.querySelector('.todo-setter-accept button');
 
-// TODO MENU BUTTON
+function Task(title, details, project, date, importance) {
+  this.title = title;
+  this.details = details;
+  this.project = project;
+  this.date = date;
+  this.importance = importance;
+}
 
-const todoCreator = document.querySelector('.todo-create');
-const noteCreator = document.querySelector('.note-create');
-const projectCreator = document.querySelector('.project-create');
+function addAttribute() {
+  const everyTask = todos.querySelectorAll('.task');
 
-// FORM PAGE
+  for (let i = 0; i <= everyTask.length - 1; i++) {
+    everyTask[i].setAttribute('data-card', [i]);
+  }
+}
 
-const todoSetter = document.querySelector('.todo-setter');
-const noteSetter = document.querySelector('.note-setter');
-const projectSetter = document.querySelector('.project-setter');
+function loopThroughtTasks(num) {
+  for (let i = num - 1; i < allTasks.length; i++) {
+    todos.appendChild(document.createElement('div')).classList.add('task');
+    const task = todos.querySelectorAll('.task');
+    task[i].appendChild(document.createElement('div')).classList.add('task-status');
+    task[i].appendChild(document.createElement('div')).classList.add('task-text');
+    task[i].appendChild(document.createElement('div')).classList.add('task-category');
+    task[i].appendChild(document.createElement('div')).classList.add('task-importance');
 
-// STEP BACK BUTTON
+    addAttribute();
+  }
+}
 
-const exitCreator = document.querySelector('.todo-setter-nav-arrow i');
-const exitNoteCreator = document.querySelector('.note-setter-nav-arrow i');
-const exitProjectCreator = document.querySelector('.project-setter-nav-arrow i');
+function addToAllTasks(title, details, project, date, importance) {
+  allTasks.push(new Task(title, details, project, date, importance));
 
-// EXIT BUTTON
+  loopThroughtTasks(allTasks.length);
+}
 
-const exitToMenu = document.querySelector('.todo-setter-nav-icons i');
-const exitToMenuNote = document.querySelector('.note-setter-nav-icons i');
-const exitToMenuProject = document.querySelector('.project-setter-nav-icons i');
-todoCreator.addEventListener('click', () => {
-  todoSetter.classList.add('active-todo-setter');
-});
-noteCreator.addEventListener('click', () => {
-  noteSetter.classList.add('active-note-setter');
-});
-projectCreator.addEventListener('click', () => {
-  projectSetter.classList.add('active-project-setter');
-});
-exitCreator.addEventListener('click', () => {
-  todoSetter.classList.remove('active-todo-setter');
-  menu.classList.add('active-menu');
-});
-exitNoteCreator.addEventListener('click', () => {
-  noteSetter.classList.remove('active-note-setter');
-  menu.classList.add('active-menu');
-});
-exitProjectCreator.addEventListener('click', () => {
-  projectSetter.classList.remove('active-project-setter');
-  menu.classList.add('active-menu');
-});
-exitToMenu.addEventListener('click', () => {
-  todoSetter.classList.remove('active-todo-setter');
-  menu.classList.remove('active-menu');
-});
-exitToMenuNote.addEventListener('click', () => {
-  noteSetter.classList.remove('active-note-setter');
-  menu.classList.remove('active-menu');
-});
-exitToMenuProject.addEventListener('click', () => {
-  projectSetter.classList.remove('active-project-setter');
-  menu.classList.remove('active-menu');
-});
+taskDoneButton.addEventListener('click', (event) => {
+  // GET THE FORMS INFO
+  // GET THE FORMS INFO
 
-// TASK CREATOR FOR MOBILE
+  event.preventDefault();
+  const allTaskInputs = document.querySelectorAll('.todo-setter-form input');
+  allTaskInputs.forEach((input) => {
+    input.checkValidity();
+    input.reportValidity();
+  });
+  const taskTitle = document.querySelector('.todo-setter-title-input input');
+  const taskDetails = document.querySelector('.todo-setter-details-input textarea');
+  const taskProjects = document.querySelector('.todo-setter-projects-input select');
+  const taskDate = document.querySelector('.todo-setter-date-input input');
+  const taskImportance = document.querySelector('.container input');
 
-const todoMobileCreator = document.querySelector('.todo-create-mobile');
-const noteMobileCreator = document.querySelector('.note-create-mobile');
-const projectMobileCreator = document.querySelector('.project-create-mobile');
-todoMobileCreator.addEventListener('click', () => {
-  todoSetter.classList.add('active-todo-setter');
-});
-noteMobileCreator.addEventListener('click', () => {
-  noteSetter.classList.add('active-note-setter');
-});
-projectMobileCreator.addEventListener('click', () => {
-  projectSetter.classList.add('active-project-setter');
-});
-exitCreator.addEventListener('click', () => {
-  todoSetter.classList.remove('active-todo-setter');
-  mobileMenu.classList.add('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.add('rotated');
-  mobileTodoIcon.classList.add('active-todo-mobile');
-  mobileProjectIcon.classList.add('active-project-mobile');
-  mobileNoteIcon.classList.add('active-note-mobile');
-  todoPar.classList.add('options-appear');
-  projectPar.classList.add('options-appear');
-  notePar.classList.add('options-appear');
-  document.querySelector('body').classList.add('menu-active');
-});
-exitNoteCreator.addEventListener('click', () => {
-  noteSetter.classList.remove('active-note-setter');
-  mobileMenu.classList.add('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.add('rotated');
-  mobileTodoIcon.classList.add('active-todo-mobile');
-  mobileProjectIcon.classList.add('active-project-mobile');
-  mobileNoteIcon.classList.add('active-note-mobile');
-  todoPar.classList.add('options-appear');
-  projectPar.classList.add('options-appear');
-  notePar.classList.add('options-appear');
-  document.querySelector('body').classList.add('menu-active');
-});
-exitProjectCreator.addEventListener('click', () => {
-  projectSetter.classList.remove('active-project-setter');
-  mobileMenu.classList.add('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.add('rotated');
-  mobileTodoIcon.classList.add('active-todo-mobile');
-  mobileProjectIcon.classList.add('active-project-mobile');
-  mobileNoteIcon.classList.add('active-note-mobile');
-  todoPar.classList.add('options-appear');
-  projectPar.classList.add('options-appear');
-  notePar.classList.add('options-appear');
-  document.querySelector('body').classList.add('menu-active');
-});
-exitToMenu.addEventListener('click', () => {
-  todoSetter.classList.remove('active-todo-setter');
-  mobileMenu.classList.remove('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.remove('rotated');
-  mobileTodoIcon.classList.remove('active-todo-mobile');
-  mobileProjectIcon.classList.remove('active-project-mobile');
-  mobileNoteIcon.classList.remove('active-note-mobile');
-  todoPar.classList.remove('options-appear');
-  projectPar.classList.remove('options-appear');
-  notePar.classList.remove('options-appear');
-  document.querySelector('body').classList.remove('menu-active');
-});
-exitToMenuNote.addEventListener('click', () => {
-  noteSetter.classList.remove('active-note-setter');
-  mobileMenu.classList.remove('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.remove('rotated');
-  mobileTodoIcon.classList.remove('active-todo-mobile');
-  mobileProjectIcon.classList.remove('active-project-mobile');
-  mobileNoteIcon.classList.remove('active-note-mobile');
-  todoPar.classList.remove('options-appear');
-  projectPar.classList.remove('options-appear');
-  notePar.classList.remove('options-appear');
-  document.querySelector('body').classList.remove('menu-active');
-});
-exitToMenuProject.addEventListener('click', () => {
-  projectSetter.classList.remove('active-project-setter');
-  mobileMenu.classList.remove('active-menu-mobile');
-  document.querySelector('.mobile-adder i').classList.remove('rotated');
-  mobileTodoIcon.classList.remove('active-todo-mobile');
-  mobileProjectIcon.classList.remove('active-project-mobile');
-  mobileNoteIcon.classList.remove('active-note-mobile');
-  todoPar.classList.remove('options-appear');
-  projectPar.classList.remove('options-appear');
-  notePar.classList.remove('options-appear');
-  document.querySelector('body').classList.remove('menu-active');
+  if (taskTitle.value === '') {
+    false;
+  } else {
+    addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+    // REMOVES MENUS
+    document.querySelector('.creator-menu').classList.remove('active-menu');
+    document.querySelector('.todo-setter').classList.remove('active-todo-setter');
+    // REMOVES ALL CONTENT FROM FORMS
+    taskTitle.value = '';
+    taskDetails.value = '';
+    taskDate.value = '';
+    taskImportance.checked = false;
+  }
 });
