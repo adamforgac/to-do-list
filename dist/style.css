@@ -867,7 +867,7 @@ table {
     opacity: 1;
     scale: 1;
     transition: all 0.3s;
-    z-index: 400;
+    z-index: 500;
     position: fixed;
     overflow: scroll;
 }
@@ -928,6 +928,8 @@ table {
 }
 
 
+
+
 /* FORM */
 /* FORM */
 /* FORM */
@@ -955,7 +957,7 @@ table {
     width: 100%;
     height: 100%;
     gap: 15px;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 100px;
 }
 
 
@@ -970,6 +972,12 @@ table {
     display: grid;
     grid-template-rows: 40px 1fr;
     gap: 5px;
+}
+
+input[type="color"] {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
 }
 
 .todo-setter-date {
@@ -1145,7 +1153,7 @@ form input:focus, form textarea:focus, form select:focus {
     padding: 10px 25px;
 }
 
-.todo-form input, .note-form input, .project-form input {
+.todo-form input, .note-form input {
     padding: 0 25px 0 25px;
 }
 
