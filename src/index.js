@@ -44,12 +44,15 @@ function addAttribute() {
 // CONTENT ADDERS
 // CONTENT ADDERS
 
+// ADDS TO IMPORTANT -->
+
 function loopThroughtAll(num) {
   for (let i = num - 1; i < allTasks.length; i++) {
     // CREATES THE MAIN SHAPE
 
     todos.appendChild(document.createElement('div')).classList.add('task');
     const task = todos.querySelectorAll('.task');
+
     task[i].appendChild(document.createElement('div')).classList.add('task-status');
     task[i].appendChild(document.createElement('div')).classList.add('task-text');
     task[i].appendChild(document.createElement('div')).classList.add('task-importance');
@@ -118,9 +121,84 @@ function loopThroughtImportant(num) {
   }
 }
 
-// CONTENT ADDERS END
-// CONTENT ADDERS END
-// CONTENT ADDERS END
+// WHOLE CONTENT GENERATORS
+// WHOLE CONTENT GENERATORS
+// WHOLE CONTENT GENERATORS
+
+function generateImportant() {
+  for (let i = 0; i < importantTasks.length; i++) {
+    // CREATES THE MAIN SHAPE
+
+    todos.appendChild(document.createElement('div')).classList.add('task');
+    const task = todos.querySelectorAll('.task');
+
+    task[i].appendChild(document.createElement('div')).classList.add('task-status');
+    task[i].appendChild(document.createElement('div')).classList.add('task-text');
+    task[i].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[i].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[i].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[i].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = importantTasks[i].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[i].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
+
+    addAttribute();
+  }
+}
+
+function generateAll() {
+  for (let i = 0; i < allTasks.length; i++) {
+    // CREATES THE MAIN SHAPE
+
+    todos.appendChild(document.createElement('div')).classList.add('task');
+    const task = todos.querySelectorAll('.task');
+    task[i].appendChild(document.createElement('div')).classList.add('task-status');
+    task[i].appendChild(document.createElement('div')).classList.add('task-text');
+    task[i].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[i].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[i].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[i].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = allTasks[i].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[i].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
+
+    addAttribute();
+  }
+}
 
 // ARRAYS CREATOR
 // ARRAYS CREATOR
@@ -140,12 +218,23 @@ function addToImportant(title, details, project, date, importance) {
   importantTasks.push(new Task(title, details, project, date, importance));
 }
 
-// ARRAYS CREATOR END
-// ARRAYS CREATOR END
-// ARRAYS CREATOR END
+// FUNCTION THAT SWITCH BACK TO ALL SECTION
+
+function swichToAll() {
+  todos.innerHTML = '';
+  generateAll();
+}
+
+// ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
+// ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
+// ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
 
 taskDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
+
+  // SWITCHES TO ALL SECTION
+  swichToAll();
+
   const allTaskInputs = document.querySelectorAll('.todo-setter-form input');
   allTaskInputs.forEach((input) => {
     input.checkValidity();
@@ -161,9 +250,7 @@ taskDoneButton.addEventListener('click', (event) => {
     false;
   } else {
     addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-
     // SETTING TODOS INTO RIGHT ARRAY
-
     if (taskImportance.checked === true) {
       addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     }
@@ -176,8 +263,6 @@ taskDoneButton.addEventListener('click', (event) => {
     taskDate.value = '';
     taskImportance.checked = false;
   }
-
-  console.log(allTasks);
 });
 
 // CREATES THE OPTIONS FOR SELECT INPUT
@@ -204,9 +289,28 @@ listAcceptButton.addEventListener('click', (e) => {
 
 // IF THE USER CLICKS ON DIFFERENT CATEGORY, SHOW THE CONTENT
 
+// ADDS CONTENT TO IMPORTANT
+
 const importantSection = document.querySelector('.important');
 
 importantSection.addEventListener('click', () => {
-  todos.innerHTML = '';
-  loopThroughtImportant(importantTasks.length);
+  if (importantTasks.length === 0) {
+    todos.innerHTML = '';
+  } else {
+    todos.innerHTML = '';
+    generateImportant();
+  }
+});
+
+// ADDS CONTENT TO ALL
+
+const allSection = document.querySelector('.all');
+
+allSection.addEventListener('click', () => {
+  if (allTasks.length === 0) {
+    todos.innerHTML = '';
+  } else {
+    todos.innerHTML = '';
+    generateAll();
+  }
 });
