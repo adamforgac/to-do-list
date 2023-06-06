@@ -14,11 +14,12 @@ const allTasks = [];
 const todayTasks = [];
 const weekTasks = [];
 const importantTasks = [];
-const notesTasks = [];
+const allNotes = [];
 const completedTasks = [];
 const todos = document.querySelector('.todos');
 
 const taskDoneButton = document.querySelector('.todo-setter-accept button');
+const noteDoneButton = document.querySelector('.note-setter-accept-button');
 
 // CONSTRUCTOR
 
@@ -30,13 +31,50 @@ function Task(title, details, project, date, importance) {
   this.importance = importance;
 }
 
+function Note(title, details) {
+  this.title = title;
+  this.details = details;
+}
+
 // ATTRIBUTE ADDER
 
-function addAttribute() {
-  const everyTask = todos.querySelectorAll('.task');
+function addTaskAttribute() {
+  const everyTask = todos.querySelectorAll('.not-important');
 
   for (let i = 0; i <= everyTask.length - 1; i++) {
     everyTask[i].setAttribute('data-card', [i]);
+
+    const everyTaskChildren = everyTask[i].querySelectorAll(
+      '.task-status, .round',
+    );
+
+    everyTaskChildren.forEach((child) => {
+      child.setAttribute('data-card', [i]);
+    });
+  }
+}
+
+function addNoteAttribute() {
+  const everyNote = todos.querySelectorAll('.note');
+
+  for (let i = 0; i <= everyNote.length - 1; i++) {
+    everyNote[i].setAttribute('data-card', [i]);
+  }
+}
+
+function addImportantAttribute() {
+  const everyImportant = todos.querySelectorAll('.important-task');
+
+  for (let i = 0; i <= everyImportant.length - 1; i++) {
+    everyImportant[i].setAttribute('data-card', [i]);
+
+    const everyImportantChildren = everyImportant[i].querySelectorAll(
+      '.task-status, .round',
+    );
+
+    everyImportantChildren.forEach((child) => {
+      child.setAttribute('data-card', [i]);
+    });
   }
 }
 
@@ -44,14 +82,12 @@ function addAttribute() {
 // CONTENT ADDERS
 // CONTENT ADDERS
 
-// ADDS TO IMPORTANT -->
-
-function loopThroughtAll(num) {
+function loopThroughtTasks(num) {
   for (let i = num - 1; i < allTasks.length; i++) {
     // CREATES THE MAIN SHAPE
 
-    todos.appendChild(document.createElement('div')).classList.add('task');
-    const task = todos.querySelectorAll('.task');
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
+    const task = todos.querySelectorAll('.not-important');
 
     task[i].appendChild(document.createElement('div')).classList.add('task-status');
     task[i].appendChild(document.createElement('div')).classList.add('task-text');
@@ -80,7 +116,43 @@ function loopThroughtAll(num) {
     const taskImportance = task[i].querySelector('.task-importance');
     taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
 
-    addAttribute();
+    addTaskAttribute();
+  }
+}
+
+function loopThroughtNotes(num) {
+  for (let i = num - 1; i < allNotes.length; i++) {
+    // CREATES THE MAIN SHAPE
+
+    todos.appendChild(document.createElement('div')).classList.add('note', 'item');
+    const item = todos.querySelectorAll('.note');
+
+    item[i].appendChild(document.createElement('div')).classList.add('note-status');
+    item[i].appendChild(document.createElement('div')).classList.add('note-text');
+    item[i].appendChild(document.createElement('div')).classList.add('note-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const itemStatus = item[i].querySelector('.note-status');
+    itemStatus.appendChild(document.createElement('div')).classList.add('note-icon');
+
+    const noteIcon = item[i].querySelector('.note-icon');
+    noteIcon.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-note-sticky');
+
+    // ADDS TITLE AND CATEGORY
+
+    const itemText = item[i].querySelector('.note-text');
+    itemText.appendChild(document.createElement('div')).classList.add('note-heading');
+
+    itemText.appendChild(document.createElement('div')).classList.add('note-category');
+
+    const itemHeading = item[i].querySelector('.note-heading');
+    itemHeading.appendChild(document.createElement('h2')).textContent = allNotes[i].title;
+
+    const itemCategory = itemText.querySelector('.note-category');
+    itemCategory.appendChild(document.createElement('p')).textContent = 'Notes';
+
+    addNoteAttribute();
   }
 }
 
@@ -88,8 +160,8 @@ function loopThroughtImportant(num) {
   for (let i = num - 1; i < importantTasks.length; i++) {
     // CREATES THE MAIN SHAPE
 
-    todos.appendChild(document.createElement('div')).classList.add('task');
-    const task = todos.querySelectorAll('.task');
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'important-task');
+    const task = todos.querySelectorAll('.important-task');
     task[i].appendChild(document.createElement('div')).classList.add('task-status');
     task[i].appendChild(document.createElement('div')).classList.add('task-text');
     task[i].appendChild(document.createElement('div')).classList.add('task-importance');
@@ -117,7 +189,7 @@ function loopThroughtImportant(num) {
     const taskImportance = task[i].querySelector('.task-importance');
     taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
 
-    addAttribute();
+    addImportantAttribute();
   }
 }
 
@@ -129,8 +201,8 @@ function generateImportant() {
   for (let i = 0; i < importantTasks.length; i++) {
     // CREATES THE MAIN SHAPE
 
-    todos.appendChild(document.createElement('div')).classList.add('task');
-    const task = todos.querySelectorAll('.task');
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'important-task');
+    const task = todos.querySelectorAll('.important-task');
 
     task[i].appendChild(document.createElement('div')).classList.add('task-status');
     task[i].appendChild(document.createElement('div')).classList.add('task-text');
@@ -159,16 +231,16 @@ function generateImportant() {
     const taskImportance = task[i].querySelector('.task-importance');
     taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
 
-    addAttribute();
+    addImportantAttribute();
   }
 }
 
-function generateAll() {
+function generateAllTasks() {
   for (let i = 0; i < allTasks.length; i++) {
     // CREATES THE MAIN SHAPE
 
-    todos.appendChild(document.createElement('div')).classList.add('task');
-    const task = todos.querySelectorAll('.task');
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
+    const task = todos.querySelectorAll('.not-important');
     task[i].appendChild(document.createElement('div')).classList.add('task-status');
     task[i].appendChild(document.createElement('div')).classList.add('task-text');
     task[i].appendChild(document.createElement('div')).classList.add('task-importance');
@@ -196,7 +268,43 @@ function generateAll() {
     const taskImportance = task[i].querySelector('.task-importance');
     taskImportance.appendChild(document.createElement('i')).classList.add('fa-regular', 'fa-star');
 
-    addAttribute();
+    addTaskAttribute();
+  }
+}
+
+function generateAllNotes() {
+  for (let i = 0; i < allNotes.length; i++) {
+    // CREATES THE MAIN SHAPE
+
+    todos.appendChild(document.createElement('div')).classList.add('note', 'item');
+    const item = todos.querySelectorAll('.note');
+
+    item[i].appendChild(document.createElement('div')).classList.add('note-status');
+    item[i].appendChild(document.createElement('div')).classList.add('note-text');
+    item[i].appendChild(document.createElement('div')).classList.add('note-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const itemStatus = item[i].querySelector('.note-status');
+    itemStatus.appendChild(document.createElement('div')).classList.add('note-icon');
+
+    const noteIcon = item[i].querySelector('.note-icon');
+    noteIcon.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-note-sticky');
+
+    // ADDS TITLE AND CATEGORY
+
+    const itemText = item[i].querySelector('.note-text');
+    itemText.appendChild(document.createElement('div')).classList.add('note-heading');
+
+    itemText.appendChild(document.createElement('div')).classList.add('note-category');
+
+    const itemHeading = item[i].querySelector('.note-heading');
+    itemHeading.appendChild(document.createElement('h2')).textContent = allNotes[i].title;
+
+    const itemCategory = itemText.querySelector('.note-category');
+    itemCategory.appendChild(document.createElement('p')).textContent = 'Notes';
+
+    addNoteAttribute();
   }
 }
 
@@ -204,25 +312,35 @@ function generateAll() {
 // ARRAYS CREATOR
 // ARRAYS CREATOR
 
-// ADDS CONTENT TO ALL CATEGORY
+// ADDS CONTENT TO TASK CATEGORY
 
 function addToAllTasks(title, details, project, date, importance) {
   allTasks.push(new Task(title, details, project, date, importance));
 
-  loopThroughtAll(allTasks.length);
+  loopThroughtTasks(allTasks.length);
+}
+
+// ADDS CONTENT TO NOTE CATEGORY
+
+function addToAllNotes(title, details) {
+  allNotes.push(new Note(title, details));
+  loopThroughtNotes(allNotes.length);
 }
 
 // ADDS CONTENT TO IMPORTANT CATEGORY
 
 function addToImportant(title, details, project, date, importance) {
   importantTasks.push(new Task(title, details, project, date, importance));
+  loopThroughtImportant(importantTasks.length);
 }
 
 // FUNCTION THAT SWITCH BACK TO ALL SECTION
 
 function swichToAll() {
   todos.innerHTML = '';
-  generateAll();
+  generateImportant();
+  generateAllTasks();
+  generateAllNotes();
 }
 
 // ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
@@ -249,10 +367,11 @@ taskDoneButton.addEventListener('click', (event) => {
   if (taskTitle.value === '') {
     false;
   } else {
-    addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     // SETTING TODOS INTO RIGHT ARRAY
     if (taskImportance.checked === true) {
       addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+    } else if (taskImportance.checked === false) {
+      addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     }
     // REMOVES MENUS
     document.querySelector('.creator-menu').classList.remove('active-menu');
@@ -262,6 +381,34 @@ taskDoneButton.addEventListener('click', (event) => {
     taskDetails.value = '';
     taskDate.value = '';
     taskImportance.checked = false;
+  }
+});
+
+noteDoneButton.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  // SWITCHES TO ALL SECTION
+  swichToAll();
+
+  const allNoteInputs = document.querySelectorAll('.note-setter-form input');
+  allNoteInputs.forEach((input) => {
+    input.checkValidity();
+    input.reportValidity();
+  });
+  const noteTitle = document.querySelector('.note-setter-title-input input');
+
+  const noteDetails = document.querySelector('.note-setter-details-input textarea');
+
+  if (noteTitle.value === '') {
+    false;
+  } else {
+    addToAllNotes(noteTitle.value, noteDetails.value);
+    // REMOVES MENUS
+    document.querySelector('.creator-menu').classList.remove('active-menu');
+    document.querySelector('.note-setter').classList.remove('active-note-setter');
+    // REMOVES ALL CONTENT FROM FORMS
+    noteTitle.value = '';
+    noteDetails.value = '';
   }
 });
 
@@ -311,6 +458,8 @@ allSection.addEventListener('click', () => {
     todos.innerHTML = '';
   } else {
     todos.innerHTML = '';
-    generateAll();
+    generateImportant();
+    generateAllTasks();
+    generateAllNotes();
   }
 });
