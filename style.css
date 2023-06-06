@@ -456,27 +456,34 @@ table {
     border-radius: 20px;
 }
 
-.todos::-webkit-scrollbar {
+.todos::-webkit-scrollbar, .todos::-webkit-scrollbar {
     width: 0.2vw;
 }
 
-.todos::-webkit-scrollbar-thumb {
+.todos::-webkit-scrollbar-thumb, .todos::-webkit-scrollbar-thumb {
     background-color: white;
     border-radius: 20px;
 }
 
-.todos::-webkit-scrollbar-track {
+.todos::-webkit-scrollbar-track, .todos::-webkit-scrollbar-track {
     background-color: transparent;
 }
 
 .task {
     display: grid;
     grid-template-columns: 70px auto 70px;
-    background-color: var(--round-active-purple);
+    background-color: var(--clicked-purple);
     border-radius: 20px;
 }
 
-.task-status {
+.note {
+    display: grid;
+    grid-template-columns: 70px auto 70px;
+    background-color: rgb(78, 7, 105);
+    border-radius: 20px;
+}
+
+.task-status, .note-status {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -489,7 +496,7 @@ table {
     background-color: white;
 }
 
-.task-importance {
+.task-importance, .note-importance {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -500,7 +507,12 @@ table {
     font-size: 1.3rem;
 }
 
-.task-text {
+.note-icon i {
+    font-size: 1.3rem;
+    color: white;
+}
+
+.task-text, .note-text {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -508,10 +520,10 @@ table {
     overflow: hidden;
     white-space: nowrap;
     display:inline-block;
-    margin-top: 22px;
+    margin-top: 21px;
 }
 
-.task-heading h2 {
+.task-heading h2, .note-heading h2 {
     color: white;
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
@@ -520,11 +532,12 @@ table {
     text-overflow: ellipsis;
 }
 
-.task-category p {
+.task-category p, .note-category p {
     color: rgb(187, 187, 187);
     font-family: 'Roboto', sans-serif;
     font-size: 0.9rem;
 }
+
 
 /* TASK-ADDER */
 
