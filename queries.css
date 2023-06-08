@@ -29,7 +29,7 @@
         grid-auto-rows: 50px;
     }
 
-    .project-num p, .project-name h2 {
+    .project-name h2 {
         font-size: 1.2rem;
     }
 
@@ -59,7 +59,7 @@
         grid-auto-rows: 40px;
     }
 
-    .project-num p, .project-name h2 {
+    .project-name h2 {
         font-size: 1rem;
     }
 
