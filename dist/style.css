@@ -316,14 +316,15 @@ table {
     font-size: 1rem;
 }
 
-.project-name h2, .project-count p, .project-num p {
+.project-name h2, .project-count p {
     font-family: 'Titillium Web', sans-serif;
 }
 
-.project-num p {
-    font-size: 0.85rem;
-    color: white;
-    transform: translateY(2px);
+.project-color > div {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
 }
 
 .project-count p {
