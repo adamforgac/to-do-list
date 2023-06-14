@@ -37,7 +37,7 @@
             </div>
 
             <div class="search-bar">
-                <input type="text" placeholder="Search">
+                <input id="normal_search" type="text" placeholder="Search">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
@@ -53,7 +53,7 @@
                         </div>
     
                         <div class="all-count options-count">
-                            <p>8</p>
+                            <p>0</p>
                         </div>
                     </div>
     
@@ -67,7 +67,7 @@
                         </div>
     
                         <div class="today-count options-count">
-                            <p>1</p>
+                            <p>0</p>
                         </div>
                     </div>
     
@@ -81,7 +81,7 @@
                         </div>
     
                         <div class="week-count options-count">
-                            <p>3</p>
+                            <p>0</p>
                         </div>
                     </div>
     
@@ -95,7 +95,7 @@
                         </div>
     
                         <div class="important-count options-count">
-                            <p>2</p>
+                            <p>0</p>
                         </div>
                     </div>
     
@@ -109,7 +109,7 @@
                         </div>
     
                         <div class="notes-count options-count">
-                            <p>2</p>
+                            <p>0</p>
                         </div>
                     </div>
 
@@ -122,8 +122,8 @@
                             <h2>Completed</h2>
                         </div>
     
-                        <div class="notes-count options-count">
-                            <p>9</p>
+                        <div class="completed-count options-count">
+                            <p>0</p>
                         </div>
                     </div>
                 </div>
@@ -148,11 +148,11 @@
             <div class="heading-box">
                 <div class="task-board-text">
                     <div class="category-name">
-                        <h2>All Tasks</h2>
+                        <h2>All Entries</h2>
                     </div>
 
                     <div class="board-date">
-                        <p>Saturday, 6 May</p>
+                        <p></p>
                     </div>
 
                     <div class="logo">
@@ -186,7 +186,7 @@
             </div>
 
             <div class="search-bar-mobile">
-                <input type="text" placeholder="Search">
+                <input id="search_phone" type="text" placeholder="Search">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
 
@@ -284,7 +284,7 @@
         
                                 <div class="todo-setter-projects-input setter-input">
                                     <select name="projects" id="projects_input">
-                                        
+                                        <option class="none-clicked" value="none">none</option>
                                     </select>
                                     <span class="custom-arrow"></span>
                                 </div>
@@ -303,8 +303,8 @@
 
                                 <div class="todo-setter-importance">
                                     <div class="todo-setter-importance-area">
-                                        <label class="container">Important task
-                                            <input type="checkbox">
+                                        <label for="normal_checkbox" class="container">Important task
+                                            <input id="normal_checkbox" type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -313,8 +313,8 @@
 
                             <div class="todo-setter-importance-phone">
                                 <div class="todo-setter-importance-area">
-                                    <label class="container">Important task
-                                        <input type="checkbox">
+                                    <label for="phone_checkbox" class="container">Important task
+                                        <input id="phone_checkbox" type="checkbox">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -428,7 +428,7 @@
                                 </div>
         
                                 <div class="project-setter-color-input">
-                                    <input type="color" id="details_input_project_color">
+                                    <input value="#FFFFFF" type="color" id="details_input_project_color">
                                 </div>
                             </div>
                     
