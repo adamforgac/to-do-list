@@ -387,9 +387,10 @@ table {
     gap: 15px;
     grid-template-rows: 85px 1fr;
     padding: 13px 25px 10px 25px;
-    min-height: 100vh;
     gap: 42px;
+    height: 100vh;
     transition: 1s;
+    overflow: auto;
 }
 
 /* HEADING BOX */
@@ -501,6 +502,10 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.important-task .task-importance i {
+    color: yellow;
 }
 
 .task-importance i {
@@ -989,9 +994,23 @@ table {
 }
 
 input[type="color"] {
+    border-radius: 30px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     width: 100%;
     height: 40px;
-    border-radius: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="color"]:focus {
+    border: none;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border-radius: 30px;
+    border: none;
 }
 
 .todo-setter-date {
@@ -1154,6 +1173,8 @@ form input:focus, form textarea:focus, form select:focus {
 .todo-setter-importance-phone label {
     color: white;
 }
+
+
 
 
 
