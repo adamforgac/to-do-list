@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-expressions */
@@ -39,7 +40,10 @@ const notImportantRoundArr = [];
 const allLists = [];
 let allListOptions = [];
 const ownLists = [];
-const everyItem = [];
+let generateArray = [];
+let notImportantDataCards = [];
+let importantDataCards = [];
+let generateArrayImportant = [];
 
 // BOARDS VARIABLES
 
@@ -335,46 +339,121 @@ function generateAllNotes() {
   }
 }
 
-function generateCustom(number) {
-  console.log(ownLists);
-  console.log(ownLists[number]);
-  console.log(ownLists[number].length);
-  for (let i = 0; i < ownLists[number].length; i++) {
-    // CREATES THE MAIN SHAPE
-
-    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
-    const task = todos.querySelectorAll('.item');
-    task[i].appendChild(document.createElement('div')).classList.add('task-status');
-    task[i].appendChild(document.createElement('div')).classList.add('task-text');
-    task[i].appendChild(document.createElement('div')).classList.add('task-importance');
-
-    // ADDS COMPLETE CHECKBOX
-
-    const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
-
-    // ADDS TITLE AND CATEGORY
-
-    const taskText = task[i].querySelector('.task-text');
-    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
-
-    taskText.appendChild(document.createElement('div')).classList.add('task-category');
-
-    const positionInArray = ownLists[number];
-
-    const taskHeading = task[i].querySelector('.task-heading');
-    taskHeading.appendChild(document.createElement('h2')).textContent = positionInArray[i].title;
-
-    const taskCategory = taskText.querySelector('.task-category');
-    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
-
-    // ADDS TASK IMPORTANCE
-
-    const taskImportance = task[i].querySelector('.task-importance');
-    taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
-
-    addTaskAttribute();
+function generateCustom(projectName) {
+  generateArray = [];
+  notImportantDataCards = [];
+  importantDataCards = [];
+  generateArrayImportant = [];
+  for (let a = 0; a < allTasks.length; a++) {
+    if (allTasks[a].project === projectName) {
+      generateArray.push(allTasks[a]);
+      const dataCardNi = a;
+      notImportantDataCards.push(dataCardNi);
+    }
   }
+
+  for (let b = 0; b < importantTasks.length; b++) {
+    if (importantTasks[b].project === projectName) {
+      generateArrayImportant.push(importantTasks[b]);
+      const dataCardImp = b;
+      importantDataCards.push(dataCardImp);
+    }
+  }
+
+  function generateNotImportantInner() {
+    for (let i = 0; i < generateArray.length; i++) {
+      todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
+      const task = todos.querySelectorAll('.not-important');
+      task[i].appendChild(document.createElement('div')).classList.add('task-status');
+      task[i].appendChild(document.createElement('div')).classList.add('task-text');
+      task[i].appendChild(document.createElement('div')).classList.add('task-importance');
+
+      // ADDS COMPLETE CHECKBOX
+
+      const taskStatus = task[i].querySelector('.task-status');
+      taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+
+      // ADDS TITLE AND CATEGORY
+
+      const taskText = task[i].querySelector('.task-text');
+      taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+      taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+      const taskHeading = task[i].querySelector('.task-heading');
+      taskHeading.appendChild(document.createElement('h2')).textContent = generateArray[i].title;
+
+      const taskCategory = taskText.querySelector('.task-category');
+      taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+      // ADDS TASK IMPORTANCE
+
+      const taskImportance = task[i].querySelector('.task-importance');
+      taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+
+      // GIVES THE RIGHT ATTRIBUTE
+    }
+
+    const everyNiTask = todos.querySelectorAll('.not-important');
+
+    for (let c = 0; c < everyNiTask.length; c++) {
+      everyNiTask[c].setAttribute('data-card', notImportantDataCards[c]);
+      const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star');
+      everyTaskChildren.forEach((child) => {
+        child.setAttribute('data-card', notImportantDataCards[c]);
+      });
+    }
+  }
+
+  generateNotImportantInner();
+
+  function generateImportantInner() {
+    for (let i = 0; i < generateArrayImportant.length; i++) {
+      // CREATES THE MAIN SHAPE
+
+      todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'important-task');
+      const task = todos.querySelectorAll('.important-task');
+
+      task[i].appendChild(document.createElement('div')).classList.add('task-status');
+      task[i].appendChild(document.createElement('div')).classList.add('task-text');
+      task[i].appendChild(document.createElement('div')).classList.add('task-importance');
+
+      // ADDS COMPLETE CHECKBOX
+
+      const taskStatus = task[i].querySelector('.task-status');
+      taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+
+      // ADDS TITLE AND CATEGORY
+
+      const taskText = task[i].querySelector('.task-text');
+      taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+      taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+      const taskHeading = task[i].querySelector('.task-heading');
+      taskHeading.appendChild(document.createElement('h2')).textContent = generateArrayImportant[i].title;
+
+      const taskCategory = taskText.querySelector('.task-category');
+      taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+      // ADDS TASK IMPORTANCE
+
+      const taskImportance = task[i].querySelector('.task-importance');
+      taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+    }
+
+    const everyImportant = todos.querySelectorAll('.important-task');
+
+    for (let c = 0; c < everyImportant.length; c++) {
+      everyImportant[c].setAttribute('data-card', importantDataCards[c]);
+      const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star');
+      everyTaskChildren.forEach((child) => {
+        child.setAttribute('data-card', importantDataCards[c]);
+      });
+    }
+  }
+
+  generateImportantInner();
 }
 
 // FUNCTIONS FOR PREPARING DIFFERENT SECTIONS
@@ -418,10 +497,9 @@ function prepareCompleted() {
 
 // ADDS NEW ARRAY TO OWN PROJECTS ARRAY EVERY TIME USER CREATES NEW LIST
 
-function addListToArr(list) {
+function addListToArr() {
   const newArr = [];
   ownLists.push(newArr);
-  console.log(ownLists);
 }
 
 // GENERATES THE CONTENT FOR DIFFERENT CATEGORIES
@@ -619,24 +697,9 @@ function addToImportant(title, details, project, date, importance) {
   loopThroughtImportant(importantTasks.length);
 }
 
-function addToEveryItem(title, details, project, date, importance) {
-  everyItem.push(new Task(title, details, project, date, importance));
-  console.log(everyItem);
-}
-
-function addToEveryItemNote() {
-  everyItem.push(new Note(title, details));
-  console.log(everyItem);
-}
-
 function addToAllLists(title, color) {
   allLists.push(new List(title, color));
   loopThroughtLists(allLists.length);
-}
-
-function addToCustomList(title, details, project, date, importance, arrayNum) {
-  ownLists[arrayNum].push(new Task(title, details, project, date, importance));
-  console.log(ownLists);
 }
 
 // ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
@@ -671,16 +734,6 @@ taskDoneButton.addEventListener('click', (event) => {
       addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     }
 
-    addToEveryItem(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-
-    // ADDS CONTENT TO RIGHT LIST
-
-    if (taskProjects.value !== 'none') {
-      const selectedOption = select.options[select.selectedIndex];
-      const dataAttribute = selectedOption.getAttribute('list-attribute');
-      console.log(dataAttribute);
-      addToCustomList(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value, dataAttribute);
-    }
     // REMOVES MENUS
     document.querySelector('.creator-menu').classList.remove('active-menu');
     document.querySelector('.todo-setter').classList.remove('active-todo-setter');
@@ -718,8 +771,6 @@ noteDoneButton.addEventListener('click', (event) => {
     noteTitle.value = '';
     noteDetails.value = '';
   }
-
-  addToEveryItemNote();
 });
 
 listDoneButton.addEventListener('click', (event) => {
@@ -742,7 +793,7 @@ listDoneButton.addEventListener('click', (event) => {
     false;
   } else {
     addToAllLists(projectTitle.value, projectColor.value);
-    addListToArr(projectTitle.value);
+    addListToArr();
 
     // REMOVES MENUS
     document.querySelector('.creator-menu').classList.remove('active-menu');
@@ -752,17 +803,16 @@ listDoneButton.addEventListener('click', (event) => {
     projectColor.value = '#FFFFFF';
   }
 
-  document.addEventListener('click', (event) => {
-    const clickedElement = event.target;
-    event.stopImmediatePropagation();
-    event.stopPropagation();
+  document.addEventListener('click', (e) => {
+    const clickedElement = e.target;
+    e.stopImmediatePropagation();
+    e.stopPropagation();
     if (clickedElement.classList.contains('project-list')) {
       const customListAtt = clickedElement.getAttribute('data-card');
       const heading = clickedElement.querySelector('h2').textContent;
       categoryHeading.textContent = heading;
       todos.innerHTML = '';
-      console.log(customListAtt);
-      generateCustom(customListAtt);
+      generateCustom(heading);
     } else {
       false;
     }
@@ -826,7 +876,12 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else {
+      const currentText = categoryHeading.textContent;
+      generateCustom(currentText);
     }
+
+    updateArrayNumbers();
   } else if (classArray.includes('important-round')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = importantTasks[roundAtt];
@@ -840,12 +895,23 @@ document.addEventListener('click', (event) => {
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
     }
+
+    updateArrayNumbers();
   } else if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
     const task = todos.querySelectorAll('.not-important');
-    task[roundAtt].classList.remove('not-important');
-    task[roundAtt].classList.add('important-task');
+    const taskSpecial = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
+    console.log(task);
+    // VISUAL
+    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
+      task[roundAtt].classList.remove('not-important');
+      task[roundAtt].classList.add('important-task');
+    } else {
+      taskSpecial.classList.remove('not-important');
+      taskSpecial.classList.add('important-task');
+    }
+    // VISUAL
     importantTasks.push(movingObject);
     allTasks.splice(roundAtt, 1);
 
@@ -856,5 +922,6 @@ document.addEventListener('click', (event) => {
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
     }
+    updateArrayNumbers();
   }
 });
