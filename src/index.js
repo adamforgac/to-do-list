@@ -877,6 +877,7 @@ document.addEventListener('click', (event) => {
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
     } else {
+      todos.innerHTML = '';
       const currentText = categoryHeading.textContent;
       generateCustom(currentText);
     }
@@ -914,6 +915,32 @@ document.addEventListener('click', (event) => {
     // VISUAL
     importantTasks.push(movingObject);
     allTasks.splice(roundAtt, 1);
+
+    if (categoryHeading.textContent === 'All Entries') {
+      prepareAll();
+    } else if (categoryHeading.textContent === 'Important Tasks') {
+      prepareImportant();
+    } else if (categoryHeading.textContent === 'All Notes') {
+      prepareNotes();
+    }
+    updateArrayNumbers();
+  } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
+    const roundAtt = clickedElement2.getAttribute('data-card');
+    const movingObject = importantTasks[roundAtt];
+    const task = todos.querySelectorAll('.important-task');
+    const taskSpecial = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
+    console.log(task);
+    // VISUAL
+    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
+      task[roundAtt].classList.remove('important-task');
+      task[roundAtt].classList.add('not-important');
+    } else {
+      taskSpecial.classList.remove('important-task');
+      taskSpecial.classList.add('not-important');
+    }
+    // VISUAL
+    allTasks.push(movingObject);
+    importantTasks.splice(roundAtt, 1);
 
     if (categoryHeading.textContent === 'All Entries') {
       prepareAll();
