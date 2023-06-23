@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -199,6 +201,72 @@
             </div>
         </div>
 
+        <div class="task-details">
+            <div class="details-info">
+                <div class="details-info-heading">
+                    <div class="details-info-heading-heading">
+                        <p>Title</p>
+
+                        <i class="fa-solid fa-xmark details-xmark"></i>
+                    </div>
+
+                    <div class="details-info-text">
+                        <div class="details-info-heading-text">
+                            <h2></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-info-details">
+                    <div class="details-info-details-heading">
+                        <p>Details</p>
+                    </div>
+
+                    <div class="details-info-details-content">    
+                        <div class="details-info-details-text">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-info-date">
+                    <div class="details-info-date-till">
+                        <p>Due Date</p>
+                    </div>
+
+                    <div class="details-info-date-number">
+                        <p></p>
+                    </div>
+                </div>
+
+                <div class="details-info-status">
+                    <div class="details-info-status-heading">
+                        <p>Status</p>
+                    </div>
+
+                    <div class="details-info-status-text">
+                        <p>Not done yet</p>
+                    </div>
+                </div>
+
+                <div class="details-info-importance">
+                    <div class="details-info-status-heading">
+                        <p>Task importance</p>
+                    </div>
+
+                    <div class="details-info-importance-text">
+                        <p>Not important</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details-list">
+                <p>Random list</p>
+
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+
         <div class="creator-menu">
             <div class="leave-creator">
                 <i class="fa-solid fa-xmark"></i>
@@ -263,7 +331,7 @@
                                 </div>
         
                                 <div class="todo-setter-title-input setter-input">
-                                    <input required type="text" id="title_input">
+                                    <input maxlength="100" required type="text" id="title_input">
                                 </div>
                             </div>
         
@@ -273,7 +341,7 @@
                                 </div>
         
                                 <div class="todo-setter-details-input setter-input">
-                                    <textarea required name="text-details" id="details_input"></textarea>
+                                    <textarea maxlength="800" required name="text-details" id="details_input"></textarea>
                                 </div>
                             </div>
                     
@@ -293,7 +361,7 @@
                             <div class="todo-setter-area">
                                 <div class="todo-setter-date">
                                     <div class="todo-setter-date-label setter-label">
-                                        <label for="date_input">End date</label>
+                                        <label for="date_input">Due date</label>
                                     </div>
             
                                     <div class="todo-setter-date-input setter-input">
@@ -362,7 +430,7 @@
                                 </div>
         
                                 <div class="note-setter-title-input setter-input">
-                                    <input minlength="1" type="text" id="title_input">
+                                    <input minlength="1" maxlength="100" type="text" id="title_input">
                                 </div>
                             </div>
         
@@ -372,7 +440,7 @@
                                 </div>
         
                                 <div class="note-setter-details-input setter-input">
-                                    <textarea name="text-details" id="details_input"></textarea>
+                                    <textarea maxlength="800" name="text-details" id="details_input"></textarea>
                                 </div>
                             </div>
                     
@@ -418,7 +486,7 @@
                                 </div>
         
                                 <div class="project-setter-title-input setter-input">
-                                    <textarea minlength="1" name="text-details" id="details_input_project"></textarea>
+                                    <textarea minlength="1" maxlength="80" placeholder="Type Windows logo key + .(period) or Conrtol + Command + Space on Mac to open emoji palette"       name="text-details" id="details_input_project"></textarea>
                                 </div>
                             </div>
 
