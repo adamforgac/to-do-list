@@ -101,7 +101,7 @@ function addTaskAttribute() {
     everyTask[i].setAttribute('data-card', [i]);
 
     const everyTaskChildren = everyTask[i].querySelectorAll(
-      '.task-status, .not-important-round, .fa-star',
+      '.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
     );
 
     everyTaskChildren.forEach((child) => {
@@ -133,7 +133,7 @@ function addImportantAttribute() {
     everyImportant[i].setAttribute('data-card', [i]);
 
     const everyImportantChildren = everyImportant[i].querySelectorAll(
-      '.task-status, .round, .fa-star',
+      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
     );
 
     everyImportantChildren.forEach((child) => {
@@ -149,7 +149,7 @@ function addCompletedAttribute() {
     everyCompleted[i].setAttribute('data-card', [i]);
 
     const everyCompletedChildren = everyCompleted[i].querySelectorAll(
-      '.task-status, .round, .fa-star',
+      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
     );
 
     everyCompletedChildren.forEach((child) => {
@@ -345,7 +345,9 @@ function generateCustom(projectName) {
   importantDataCards = [];
   generateArrayImportant = [];
   for (let a = 0; a < allTasks.length; a++) {
-    if (allTasks[a].project === projectName) {
+    const originalText = allTasks[a].project;
+    const customizedText = originalText.replace(/[ .]/g, '');
+    if (customizedText === projectName) {
       generateArray.push(allTasks[a]);
       const dataCardNi = a;
       notImportantDataCards.push(dataCardNi);
@@ -398,7 +400,7 @@ function generateCustom(projectName) {
 
     for (let c = 0; c < everyNiTask.length; c++) {
       everyNiTask[c].setAttribute('data-card', notImportantDataCards[c]);
-      const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star');
+      const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text');
       everyTaskChildren.forEach((child) => {
         child.setAttribute('data-card', notImportantDataCards[c]);
       });
@@ -446,7 +448,7 @@ function generateCustom(projectName) {
 
     for (let c = 0; c < everyImportant.length; c++) {
       everyImportant[c].setAttribute('data-card', importantDataCards[c]);
-      const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star');
+      const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text');
       everyTaskChildren.forEach((child) => {
         child.setAttribute('data-card', importantDataCards[c]);
       });
@@ -683,7 +685,7 @@ function loopThroughtImportant(num) {
 
 function addToAllTasks(title, details, project, date, importance) {
   allTasks.push(new Task(title, details, project, date, importance));
-
+  console.log(allTasks);
   loopThroughtTasks(allTasks.length);
 }
 
@@ -694,6 +696,7 @@ function addToAllNotes(title, details) {
 
 function addToImportant(title, details, project, date, importance) {
   importantTasks.push(new Task(title, details, project, date, importance));
+  console.log(importantTasks);
   loopThroughtImportant(importantTasks.length);
 }
 
@@ -722,15 +725,16 @@ taskDoneButton.addEventListener('click', (event) => {
   const taskProjects = document.querySelector('.todo-setter-projects-input select');
   const taskDate = document.querySelector('.todo-setter-date-input input');
   const taskImportance = document.querySelector('.container input');
-  const select = document.getElementById('projects_input');
 
   if (taskTitle.value === '') {
     false;
   } else {
     // SETTING TODOS INTO RIGHT ARRAY
     if (taskImportance.checked === true) {
+      taskImportance.value = 'important';
       addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     } else if (taskImportance.checked === false) {
+      taskImportance.value = 'not-important';
       addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
     }
 
@@ -812,7 +816,9 @@ listDoneButton.addEventListener('click', (event) => {
       const heading = clickedElement.querySelector('h2').textContent;
       categoryHeading.textContent = heading;
       todos.innerHTML = '';
-      generateCustom(heading);
+      const originalText = heading;
+      const customizedText = originalText.replace(/[ .]/g, '');
+      generateCustom(customizedText);
     } else {
       false;
     }
@@ -879,7 +885,8 @@ document.addEventListener('click', (event) => {
     } else {
       todos.innerHTML = '';
       const currentText = categoryHeading.textContent;
-      generateCustom(currentText);
+      const currentTextCustomized = currentText.replace(/[ .]/g, '');
+      generateCustom(currentTextCustomized);
     }
 
     updateArrayNumbers();
@@ -898,12 +905,18 @@ document.addEventListener('click', (event) => {
     }
 
     updateArrayNumbers();
-  } else if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
+  }
+
+  // SHOW TASK DETAILS
+  // SHOW TASK DETAILS
+  // SHOW TASK DETAILS
+
+  if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
+    movingObject.importance = "important";
     const task = todos.querySelectorAll('.not-important');
     const taskSpecial = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
-    console.log(task);
     // VISUAL
     if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
       task[roundAtt].classList.remove('not-important');
@@ -927,9 +940,9 @@ document.addEventListener('click', (event) => {
   } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = importantTasks[roundAtt];
+    movingObject.importance = "not-important";
     const task = todos.querySelectorAll('.important-task');
     const taskSpecial = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
-    console.log(task);
     // VISUAL
     if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
       task[roundAtt].classList.remove('important-task');
@@ -951,4 +964,84 @@ document.addEventListener('click', (event) => {
     }
     updateArrayNumbers();
   }
+
+  // SHOWS TASK DETAILS
+  // SHOWS TASK DETAILS
+  // SHOWS TASK DETAILS
+
+  if (parentClasses.includes('task') && (parentClasses.includes('not-important')) && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
+    const wrapper = document.querySelector('.wrapper');
+    const taskDetails = document.querySelector('.task-details');
+    wrapper.classList.add('details');
+    taskDetails.style.opacity = '1';
+    taskDetails.style.pointerEvents = 'all';
+    taskDetails.style.visibility = 'visible';
+    taskDetails.style.position = 'static';
+    taskDetails.style.height = '100vh';
+
+    const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const infoHeading = document.querySelector('.details-info-heading-text h2');
+    const infoDetails = document.querySelector('.details-info-details-text p');
+    const detailsList = document.querySelector('.details-list p');
+    const infoDate = document.querySelector('.details-info-date-number p');
+    const infoImportance = document.querySelector('.details-info-importance-text p');
+
+    infoHeading.textContent = allTasks[roundAtt].title;
+    infoDetails.textContent = allTasks[roundAtt].details;
+    infoDate.textContent = allTasks[roundAtt].date;
+    infoImportance.textContent = 'Not important task';
+
+    if (allTasks[roundAtt].project === 'none') {
+      detailsList.textContent = 'All Entries';
+    } else {
+      detailsList.textContent = allTasks[roundAtt].project;
+    }
+
+    if (allTasks[roundAtt].date == '') {
+      infoDate.textContent = 'The date has not been set';
+    }
+  } else if (parentClasses.includes('task') && parentClasses.includes('important-task') && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
+    const wrapper = document.querySelector('.wrapper');
+    const taskDetails = document.querySelector('.task-details');
+    wrapper.classList.add('details');
+    taskDetails.style.opacity = '1';
+    taskDetails.style.pointerEvents = 'all';
+    taskDetails.style.visibility = 'visible';
+    taskDetails.style.position = 'static';
+
+    const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const infoHeading = document.querySelector('.details-info-heading-text h2');
+    const infoDetails = document.querySelector('.details-info-details-text p');
+    const detailsList = document.querySelector('.details-list p');
+    const infoDate = document.querySelector('.details-info-date-number p');
+    const infoImportance = document.querySelector('.details-info-importance-text p');
+
+    infoHeading.textContent = importantTasks[roundAtt].title;
+    infoDetails.textContent = importantTasks[roundAtt].details;
+    infoDate.textContent = importantTasks[roundAtt].date;
+    infoImportance.textContent = 'Important task';
+    if (importantTasks[roundAtt].date == '') {
+      infoDate.textContent = 'The date has not been set';
+    }
+
+    if (importantTasks[roundAtt].project === 'none') {
+      detailsList.textContent = 'All Entries';
+    } else {
+      detailsList.textContent = importantTasks[roundAtt].project;
+    }
+  }
+});
+
+const detailsCross = document.querySelector('.details-xmark');
+detailsCross.addEventListener('click', () => {
+  const taskDetails = document.querySelector('.task-details');
+  const wrapper = document.querySelector('.wrapper');
+  wrapper.classList.remove('details');
+  taskDetails.style.opacity = '0';
+  taskDetails.style.pointerEvents = 'none';
+  taskDetails.style.visibility = 'hidden';
+  taskDetails.style.position = 'absolute';
+  taskDetails.style.height = '0';
 });
