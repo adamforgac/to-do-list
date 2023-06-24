@@ -230,7 +230,7 @@ table {
 }
 
 .today-icon i {
-    color: rgb(200, 92, 10);
+    color: var(--heading-box-purple);
 }
 
 .completed-icon i {
@@ -238,11 +238,11 @@ table {
 }
 
 .week-icon i {
-    color: rgb(175, 65, 211)
+    color: var(--heading-box-purple);
 }
 
 .notes-icon i {
-    color: rgb(39, 130, 196);
+    color: rgb(99, 29, 127);
 }
 
 .important-icon i {
@@ -250,7 +250,7 @@ table {
 }
 
 .all-icon i {
-    color: rgb(24, 203, 176)
+    color: var(--heading-box-purple);
 }
 
 .options-heading {
@@ -691,17 +691,18 @@ table {
     align-items: center;
 }
 
-.details-info-heading-heading i {
-    color: white;
-    font-size: 2rem;
-}
-
 .details-info-date-till p, .details-info-details-heading p, .details-info-heading-heading p, .details-info-status-heading p, .details-info-status-heading p {
     color: white;
     font-family: 'Rubik', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--heading-box-purple);
+}
+
+.details-info-date-till i, .details-info-details-heading i, .details-info-heading-heading i, .details-info-status-heading i, .details-info-status-heading i {
+    color: var(--heading-box-purple);
+    margin-left: 15px;
+    font-size: 1.5rem;
 }
 
 .details-info-date-number {
@@ -1524,6 +1525,17 @@ form input:focus, form textarea:focus, form select:focus {
 
 .message img {
     width: 200px;
+}
+
+/* ANIMATIONS */
+
+.transition-fade {
+    opacity: 1;
+    transition: 500ms;
+}
+
+html.is-animating .transition-fade {
+    opacity: 0;
 }
 
 

@@ -3,6 +3,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable max-len */
+
 import callDom from './modules/dom';
 import createPhoneMenu from './modules/phoneMenu';
 
@@ -101,7 +102,7 @@ function addTaskAttribute() {
     everyTask[i].setAttribute('data-card', [i]);
 
     const everyTaskChildren = everyTask[i].querySelectorAll(
-      '.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
+      '.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance',
     );
 
     everyTaskChildren.forEach((child) => {
@@ -133,7 +134,7 @@ function addImportantAttribute() {
     everyImportant[i].setAttribute('data-card', [i]);
 
     const everyImportantChildren = everyImportant[i].querySelectorAll(
-      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
+      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance',
     );
 
     everyImportantChildren.forEach((child) => {
@@ -149,7 +150,7 @@ function addCompletedAttribute() {
     everyCompleted[i].setAttribute('data-card', [i]);
 
     const everyCompletedChildren = everyCompleted[i].querySelectorAll(
-      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text',
+      '.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance',
     );
 
     everyCompletedChildren.forEach((child) => {
@@ -355,7 +356,9 @@ function generateCustom(projectName) {
   }
 
   for (let b = 0; b < importantTasks.length; b++) {
-    if (importantTasks[b].project === projectName) {
+    const originalText = importantTasks[b].project;
+    const customizedText = originalText.replace(/[ .]/g, '');
+    if (customizedText === projectName) {
       generateArrayImportant.push(importantTasks[b]);
       const dataCardImp = b;
       importantDataCards.push(dataCardImp);
@@ -400,7 +403,7 @@ function generateCustom(projectName) {
 
     for (let c = 0; c < everyNiTask.length; c++) {
       everyNiTask[c].setAttribute('data-card', notImportantDataCards[c]);
-      const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text');
+      const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
       everyTaskChildren.forEach((child) => {
         child.setAttribute('data-card', notImportantDataCards[c]);
       });
@@ -448,7 +451,7 @@ function generateCustom(projectName) {
 
     for (let c = 0; c < everyImportant.length; c++) {
       everyImportant[c].setAttribute('data-card', importantDataCards[c]);
-      const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text');
+      const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
       everyTaskChildren.forEach((child) => {
         child.setAttribute('data-card', importantDataCards[c]);
       });
@@ -473,6 +476,16 @@ function prepareAll() {
   categoryHeading.textContent = 'All Entries';
 }
 
+function prepareWithoutName() {
+  todos.innerHTML = '';
+  generateImportant();
+  generateAllNotes();
+  generateAllTasks();
+  generateCompleted();
+
+  updateArrayNumbers();
+}
+
 function prepareImportant() {
   todos.innerHTML = '';
   generateImportant();
@@ -492,6 +505,14 @@ function prepareNotes() {
 function prepareCompleted() {
   todos.innerHTML = '';
   generateCompleted();
+
+  for (let i = 0; i < completedTasks.length; i++) {
+    if (completedTasks[i].importance === 'important') {
+      const task = todos.querySelectorAll('.completed-task');
+
+      task[i].querySelector('.fa-star').style.color = 'yellow';
+    }
+  }
 
   updateArrayNumbers();
   categoryHeading.textContent = 'Completed Tasks';
@@ -685,7 +706,6 @@ function loopThroughtImportant(num) {
 
 function addToAllTasks(title, details, project, date, importance) {
   allTasks.push(new Task(title, details, project, date, importance));
-  console.log(allTasks);
   loopThroughtTasks(allTasks.length);
 }
 
@@ -696,7 +716,6 @@ function addToAllNotes(title, details) {
 
 function addToImportant(title, details, project, date, importance) {
   importantTasks.push(new Task(title, details, project, date, importance));
-  console.log(importantTasks);
   loopThroughtImportant(importantTasks.length);
 }
 
@@ -902,19 +921,20 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else {
+      todos.innerHTML = '';
+      const currentText = categoryHeading.textContent;
+      const currentTextCustomized = currentText.replace(/[ .]/g, '');
+      generateCustom(currentTextCustomized);
     }
 
     updateArrayNumbers();
   }
 
-  // SHOW TASK DETAILS
-  // SHOW TASK DETAILS
-  // SHOW TASK DETAILS
-
   if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
-    movingObject.importance = "important";
+    movingObject.importance = 'important';
     const task = todos.querySelectorAll('.not-important');
     const taskSpecial = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
     // VISUAL
@@ -935,15 +955,22 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else {
+      prepareWithoutName();
+      todos.innerHTML = '';
+      const currentText = categoryHeading.textContent;
+      const currentTextCustomized = currentText.replace(/[ .]/g, '');
+      generateCustom(currentTextCustomized);
     }
     updateArrayNumbers();
   } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = importantTasks[roundAtt];
-    movingObject.importance = "not-important";
+    movingObject.importance = 'not-important';
+    allTasks.push(movingObject);
+    importantTasks.splice(roundAtt, 1);
     const task = todos.querySelectorAll('.important-task');
     const taskSpecial = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
-    // VISUAL
     if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
       task[roundAtt].classList.remove('important-task');
       task[roundAtt].classList.add('not-important');
@@ -951,9 +978,6 @@ document.addEventListener('click', (event) => {
       taskSpecial.classList.remove('important-task');
       taskSpecial.classList.add('not-important');
     }
-    // VISUAL
-    allTasks.push(movingObject);
-    importantTasks.splice(roundAtt, 1);
 
     if (categoryHeading.textContent === 'All Entries') {
       prepareAll();
@@ -961,6 +985,12 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else {
+      prepareWithoutName();
+      todos.innerHTML = '';
+      const currentText = categoryHeading.textContent;
+      const currentTextCustomized = currentText.replace(/[ .]/g, '');
+      generateCustom(currentTextCustomized);
     }
     updateArrayNumbers();
   }
@@ -998,7 +1028,11 @@ document.addEventListener('click', (event) => {
       detailsList.textContent = allTasks[roundAtt].project;
     }
 
-    if (allTasks[roundAtt].date == '') {
+    if (allTasks[roundAtt].details === '') {
+      infoDetails.textContent = 'This task has no description';
+    }
+
+    if (allTasks[roundAtt].date === '') {
       infoDate.textContent = 'The date has not been set';
     }
   } else if (parentClasses.includes('task') && parentClasses.includes('important-task') && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
@@ -1009,6 +1043,7 @@ document.addEventListener('click', (event) => {
     taskDetails.style.pointerEvents = 'all';
     taskDetails.style.visibility = 'visible';
     taskDetails.style.position = 'static';
+    taskDetails.style.height = '100vh';
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -1022,14 +1057,53 @@ document.addEventListener('click', (event) => {
     infoDetails.textContent = importantTasks[roundAtt].details;
     infoDate.textContent = importantTasks[roundAtt].date;
     infoImportance.textContent = 'Important task';
-    if (importantTasks[roundAtt].date == '') {
+    if (importantTasks[roundAtt].date === '') {
       infoDate.textContent = 'The date has not been set';
     }
-
+    if (importantTasks[roundAtt].details === '') {
+      infoDetails.textContent = 'This task has no description';
+    }
     if (importantTasks[roundAtt].project === 'none') {
       detailsList.textContent = 'All Entries';
     } else {
       detailsList.textContent = importantTasks[roundAtt].project;
+    }
+  } else if (parentClasses.includes('task') && parentClasses.includes('completed-task') && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
+    const wrapper = document.querySelector('.wrapper');
+    const taskDetails = document.querySelector('.task-details');
+    wrapper.classList.add('details');
+    taskDetails.style.opacity = '1';
+    taskDetails.style.pointerEvents = 'all';
+    taskDetails.style.visibility = 'visible';
+    taskDetails.style.position = 'static';
+    taskDetails.style.height = '100vh';
+
+    const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const infoHeading = document.querySelector('.details-info-heading-text h2');
+    const infoDetails = document.querySelector('.details-info-details-text p');
+    const detailsList = document.querySelector('.details-list p');
+    const infoDate = document.querySelector('.details-info-date-number p');
+    const infoImportance = document.querySelector('.details-info-importance-text p');
+
+    infoHeading.textContent = completedTasks[roundAtt].title;
+    infoDetails.textContent = completedTasks[roundAtt].details;
+    infoDate.textContent = completedTasks[roundAtt].date;
+    if (completedTasks[roundAtt].importance === 'important') {
+      infoImportance.textContent = 'Important task';
+    } else {
+      infoImportance.textContent = 'Not important task';
+    }
+    if (completedTasks[roundAtt].date === '') {
+      infoDate.textContent = 'The date has not been set';
+    }
+    if (completedTasks[roundAtt].details === '') {
+      infoDetails.textContent = 'This task has no description';
+    }
+    if (completedTasks[roundAtt].project === 'none') {
+      detailsList.textContent = 'All Entries';
+    } else {
+      detailsList.textContent = completedTasks[roundAtt].project;
     }
   }
 });

@@ -27,6 +27,6 @@
     "webpack-cli": "^5.0.2"
   },
   "dependencies": {
-    "swup": "^3.1.0"
+    "swup": "^3.1.1"
   }
 }
