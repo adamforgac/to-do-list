@@ -1,3 +1,8 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-lonely-if */
+/* eslint-disable eqeqeq */
+/* eslint-disable func-names */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-console */
 /* eslint-disable no-plusplus */
@@ -6,6 +11,8 @@
 
 import callDom from './modules/dom';
 import createPhoneMenu from './modules/phoneMenu';
+
+const { isSameDay, parseISO, differenceInDays } = require('date-fns');
 
 callDom();
 
@@ -32,17 +39,20 @@ window.onload = function () {
 // DEFAULT ARRAYS
 
 const allTasks = [];
-const todayTasks = [];
-const weekTasks = [];
+let todayTasks = [];
+let weekTasks = [];
 const importantTasks = [];
 const allNotes = [];
 const completedTasks = [];
-const notImportantRoundArr = [];
 const allLists = [];
 let allListOptions = [];
 const ownLists = [];
 let generateArray = [];
 let notImportantDataCards = [];
+let niDateAttributes = [];
+let niWeekAttributes = [];
+let impDateAttributes = [];
+let impWeekAttributes = [];
 let importantDataCards = [];
 let generateArrayImportant = [];
 
@@ -63,6 +73,8 @@ const allCount = document.querySelector('.all-count p');
 const importantCount = document.querySelector('.important-count p');
 const notesCount = document.querySelector('.notes-count p');
 const completedCount = document.querySelector('.completed-count p');
+const todayCount = document.querySelector('.today-count p');
+const weekCount = document.querySelector('.week-count p');
 
 const selectInput = document.querySelector('#projects_input');
 const categoryHeading = document.querySelector('.category-name h2');
@@ -70,6 +82,8 @@ const importantSection = document.querySelector('.important');
 const allSection = document.querySelector('.all');
 const completedSection = document.querySelector('.completed');
 const notesSection = document.querySelector('.notes');
+const todaySection = document.querySelector('.today');
+const weekSection = document.querySelector('.week');
 
 // CONSTRUCTORS
 
@@ -89,6 +103,242 @@ function Note(title, details) {
 function List(title, color) {
   this.title = title;
   this.color = color;
+}
+
+// FUNCTION THAT CHECKS FOR ALL DATES
+
+function checkForDateNotImportant() {
+  niDateAttributes = [];
+  impDateAttributes = [];
+  todayTasks = [];
+  for (let i = 0; i < allTasks.length; i++) {
+    const userDate = allTasks[i].date;
+    const currentDate = new Date();
+    const dueDate = parseISO(userDate);
+
+    if (isSameDay(dueDate, currentDate)) {
+      todayTasks.push(allTasks[i]);
+      const dataCard = i;
+      niDateAttributes.push(dataCard);
+    }
+  }
+
+  for (let a = 0; a < todayTasks.length; a++) {
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
+    const task = todos.querySelectorAll('.not-important');
+    task[a].appendChild(document.createElement('div')).classList.add('task-status');
+    task[a].appendChild(document.createElement('div')).classList.add('task-text');
+    task[a].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[a].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[a].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[a].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = todayTasks[a].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[a].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+  }
+
+  const everyNiTask = todos.querySelectorAll('.not-important');
+
+  for (let c = 0; c < everyNiTask.length; c++) {
+    everyNiTask[c].setAttribute('data-card', niDateAttributes[c]);
+    const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
+    everyTaskChildren.forEach((child) => {
+      child.setAttribute('data-card', niDateAttributes[c]);
+    });
+  }
+}
+
+function checkForWeekNotImportant() {
+  niWeekAttributes = [];
+  impWeekAttributes = [];
+  weekTasks = [];
+  for (let i = 0; i < allTasks.length; i++) {
+    const userDate = allTasks[i].date;
+    const currentDate = new Date();
+    const dueDate = parseISO(userDate);
+    const difference = differenceInDays(dueDate, currentDate);
+
+    if (difference < 8) {
+      weekTasks.push(allTasks[i]);
+      const dataCard = i;
+      niWeekAttributes.push(dataCard);
+    }
+  }
+
+  for (let a = 0; a < weekTasks.length; a++) {
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'not-important');
+    const task = todos.querySelectorAll('.not-important');
+    task[a].appendChild(document.createElement('div')).classList.add('task-status');
+    task[a].appendChild(document.createElement('div')).classList.add('task-text');
+    task[a].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[a].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[a].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[a].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = weekTasks[a].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[a].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+  }
+
+  const everyNiTask = todos.querySelectorAll('.not-important');
+
+  for (let c = 0; c < everyNiTask.length; c++) {
+    everyNiTask[c].setAttribute('data-card', niWeekAttributes[c]);
+    const everyTaskChildren = everyNiTask[c].querySelectorAll('.task-status, .not-important-round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
+    everyTaskChildren.forEach((child) => {
+      child.setAttribute('data-card', niWeekAttributes[c]);
+    });
+  }
+}
+
+function checkForDateImportant() {
+  niDateAttributes = [];
+  impDateAttributes = [];
+  todayTasks = [];
+  for (let i = 0; i < importantTasks.length; i++) {
+    const userDate = importantTasks[i].date;
+    const currentDate = new Date();
+    const dueDate = parseISO(userDate);
+
+    if (isSameDay(dueDate, currentDate)) {
+      todayTasks.push(importantTasks[i]);
+      const dataCard = i;
+      impDateAttributes.push(dataCard);
+    }
+  }
+
+  for (let a = 0; a < todayTasks.length; a++) {
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'important-task');
+    const task = todos.querySelectorAll('.important-task');
+    task[a].appendChild(document.createElement('div')).classList.add('task-status');
+    task[a].appendChild(document.createElement('div')).classList.add('task-text');
+    task[a].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[a].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[a].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[a].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = todayTasks[a].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[a].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+  }
+
+  const everyImportant = todos.querySelectorAll('.important-task');
+
+  for (let c = 0; c < everyImportant.length; c++) {
+    everyImportant[c].setAttribute('data-card', impDateAttributes[c]);
+    const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
+    everyTaskChildren.forEach((child) => {
+      child.setAttribute('data-card', impDateAttributes[c]);
+    });
+  }
+}
+
+function checkForWeekImportant() {
+  niWeekAttributes = [];
+  impWeekAttributes = [];
+  weekTasks = [];
+  for (let i = 0; i < importantTasks.length; i++) {
+    const userDate = importantTasks[i].date;
+    const currentDate = new Date();
+    const dueDate = parseISO(userDate);
+    const difference = differenceInDays(dueDate, currentDate);
+
+    if (difference < 8) {
+      weekTasks.push(importantTasks[i]);
+      const dataCard = i;
+      impWeekAttributes.push(dataCard);
+    }
+  }
+
+  for (let a = 0; a < weekTasks.length; a++) {
+    todos.appendChild(document.createElement('div')).classList.add('task', 'item', 'important-task');
+    const task = todos.querySelectorAll('.important-task');
+    task[a].appendChild(document.createElement('div')).classList.add('task-status');
+    task[a].appendChild(document.createElement('div')).classList.add('task-text');
+    task[a].appendChild(document.createElement('div')).classList.add('task-importance');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const taskStatus = task[a].querySelector('.task-status');
+    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+
+    // ADDS TITLE AND CATEGORY
+
+    const taskText = task[a].querySelector('.task-text');
+    taskText.appendChild(document.createElement('div')).classList.add('task-heading');
+
+    taskText.appendChild(document.createElement('div')).classList.add('task-category');
+
+    const taskHeading = task[a].querySelector('.task-heading');
+    taskHeading.appendChild(document.createElement('h2')).textContent = weekTasks[a].title;
+
+    const taskCategory = taskText.querySelector('.task-category');
+    taskCategory.appendChild(document.createElement('p')).textContent = 'Tasks';
+
+    // ADDS TASK IMPORTANCE
+
+    const taskImportance = task[a].querySelector('.task-importance');
+    taskImportance.appendChild(document.createElement('i')).classList.add('fa-solid', 'fa-star');
+  }
+
+  const everyImportant = todos.querySelectorAll('.important-task');
+
+  for (let c = 0; c < everyImportant.length; c++) {
+    everyImportant[c].setAttribute('data-card', impWeekAttributes[c]);
+    const everyTaskChildren = everyImportant[c].querySelectorAll('.task-status, .round, .fa-star, .task-heading, .task-category, .task-heading h2, .task-category p, .task-text, .task-importance');
+    everyTaskChildren.forEach((child) => {
+      child.setAttribute('data-card', impWeekAttributes[c]);
+    });
+  }
 }
 
 // ADDS / UPDATES ATTRIBUTE TO DIFFERENT CATEGORIES
@@ -184,6 +434,12 @@ function updateArrayNumbers() {
 
   const totalCompleted = completedTasks.length;
   completedCount.textContent = totalCompleted;
+
+  const totalToday = todayTasks.length;
+  todayCount.textContent = totalToday;
+
+  const totalWeek = weekTasks.length;
+  weekCount.textContent = totalWeek;
 }
 
 // WHOLE CONTENT GENERATORS (UPDATES CLASSES AND ATTRIBUTES)
@@ -410,8 +666,6 @@ function generateCustom(projectName) {
     }
   }
 
-  generateNotImportantInner();
-
   function generateImportantInner() {
     for (let i = 0; i < generateArrayImportant.length; i++) {
       // CREATES THE MAIN SHAPE
@@ -459,6 +713,7 @@ function generateCustom(projectName) {
   }
 
   generateImportantInner();
+  generateNotImportantInner();
 }
 
 // FUNCTIONS FOR PREPARING DIFFERENT SECTIONS
@@ -468,8 +723,8 @@ function generateCustom(projectName) {
 function prepareAll() {
   todos.innerHTML = '';
   generateImportant();
-  generateAllNotes();
   generateAllTasks();
+  generateAllNotes();
 
   updateArrayNumbers();
 
@@ -479,8 +734,8 @@ function prepareAll() {
 function prepareWithoutName() {
   todos.innerHTML = '';
   generateImportant();
-  generateAllNotes();
   generateAllTasks();
+  generateAllNotes();
   generateCompleted();
 
   updateArrayNumbers();
@@ -529,6 +784,24 @@ function addListToArr() {
 
 importantSection.addEventListener('click', () => {
   prepareImportant();
+});
+
+// ADDS CONTENT TO TODAY SECTION
+
+todaySection.addEventListener('click', () => {
+  todos.innerHTML = '';
+  checkForDateImportant();
+  checkForDateNotImportant();
+  categoryHeading.textContent = 'Today\'s tasks';
+});
+
+// ADDS CONTENT TO WEEK SECTION
+
+weekSection.addEventListener('click', () => {
+  todos.innerHTML = '';
+  checkForWeekImportant();
+  checkForWeekNotImportant();
+  categoryHeading.textContent = 'Week\'s tasks';
 });
 
 // ADDS CONTENT TO ALL
@@ -745,19 +1018,7 @@ taskDoneButton.addEventListener('click', (event) => {
   const taskDate = document.querySelector('.todo-setter-date-input input');
   const taskImportance = document.querySelector('.container input');
 
-  if (taskTitle.value === '') {
-    false;
-  } else {
-    // SETTING TODOS INTO RIGHT ARRAY
-    if (taskImportance.checked === true) {
-      taskImportance.value = 'important';
-      addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-    } else if (taskImportance.checked === false) {
-      taskImportance.value = 'not-important';
-      addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-    }
-
-    // REMOVES MENUS
+  function removeMenu() {
     document.querySelector('.creator-menu').classList.remove('active-menu');
     document.querySelector('.todo-setter').classList.remove('active-todo-setter');
     // REMOVES ALL CONTENT FROM FORMS
@@ -765,6 +1026,68 @@ taskDoneButton.addEventListener('click', (event) => {
     taskDetails.value = '';
     taskDate.value = '';
     taskImportance.checked = false;
+  }
+
+  function addTask() {
+    console.log('works');
+    if (taskTitle.value === '') {
+      false;
+    } else {
+      // SETTING TODOS INTO RIGHT ARRAY
+      if (taskImportance.checked === true) {
+        taskImportance.value = 'important';
+        const userDate = taskDate.value;
+        const currentDate = new Date();
+        const dueDate = parseISO(userDate);
+        const difference = differenceInDays(dueDate, currentDate);
+        if (difference < 0) {
+          alert('The due date is older than the current date.');
+        } else {
+          addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          removeMenu();
+        }
+      } else if (taskImportance.checked === false) {
+        taskImportance.value = 'not-important';
+        const userDate = taskDate.value;
+        const currentDate = new Date();
+        const dueDate = parseISO(userDate);
+        const difference = differenceInDays(dueDate, currentDate);
+        if (difference < 0) {
+          alert('The due date is older than the current date.');
+        } else {
+          addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          removeMenu();
+        }
+      }
+    }
+
+    todos.innerHTML = '';
+    checkForDateImportant();
+    checkForDateNotImportant();
+    checkForWeekImportant();
+    checkForWeekNotImportant();
+
+    updateArrayNumbers();
+  }
+
+  if (allTasks.length > 0 || importantTasks.length > 0) {
+    for (let b = 0; b < allTasks.length; b++) {
+      if (allTasks[b].title === taskTitle.value) {
+        alert('This task already exists');
+      } else {
+        addTask();
+      }
+    }
+
+    for (let c = 0; c < importantTasks.length; c++) {
+      if (importantTasks[c].title === taskTitle.value) {
+        alert('This task already exists');
+      } else {
+        addTask();
+      }
+    }
+  } else {
+    addTask();
   }
 });
 
@@ -831,7 +1154,6 @@ listDoneButton.addEventListener('click', (event) => {
     e.stopImmediatePropagation();
     e.stopPropagation();
     if (clickedElement.classList.contains('project-list')) {
-      const customListAtt = clickedElement.getAttribute('data-card');
       const heading = clickedElement.querySelector('h2').textContent;
       categoryHeading.textContent = heading;
       todos.innerHTML = '';
@@ -901,6 +1223,14 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+      todos.innerHTML = '';
+      checkForDateImportant();
+      checkForDateNotImportant();
+    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+      todos.innerHTML = '';
+      checkForWeekImportant();
+      checkForWeekNotImportant();
     } else {
       todos.innerHTML = '';
       const currentText = categoryHeading.textContent;
@@ -921,6 +1251,14 @@ document.addEventListener('click', (event) => {
       prepareImportant();
     } else if (categoryHeading.textContent === 'All Notes') {
       prepareNotes();
+    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+      todos.innerHTML = '';
+      checkForWeekImportant();
+      checkForWeekNotImportant();
+    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+      todos.innerHTML = '';
+      checkForDateImportant();
+      checkForDateNotImportant();
     } else {
       todos.innerHTML = '';
       const currentText = categoryHeading.textContent;
@@ -950,17 +1288,33 @@ document.addEventListener('click', (event) => {
     allTasks.splice(roundAtt, 1);
 
     if (categoryHeading.textContent === 'All Entries') {
-      prepareAll();
+      setTimeout(prepareAll, 250);
     } else if (categoryHeading.textContent === 'Important Tasks') {
-      prepareImportant();
+      setTimeout(prepareImportant, 250);
     } else if (categoryHeading.textContent === 'All Notes') {
-      prepareNotes();
+      setTimeout(prepareNotes, 250);
+    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+      setTimeout(() => {
+        todos.innerHTML = '';
+        checkForDateImportant();
+        checkForDateNotImportant();
+      }, 250);
+    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+      setTimeout(() => {
+        todos.innerHTML = '';
+        checkForWeekImportant();
+        checkForWeekNotImportant();
+      }, 250);
     } else {
-      prepareWithoutName();
-      todos.innerHTML = '';
+      setTimeout(() => {
+        prepareWithoutName();
+        todos.innerHTML = '';
+      }, 250);
       const currentText = categoryHeading.textContent;
       const currentTextCustomized = currentText.replace(/[ .]/g, '');
-      generateCustom(currentTextCustomized);
+      setTimeout(() => {
+        generateCustom(currentTextCustomized);
+      }, 250);
     }
     updateArrayNumbers();
   } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
@@ -980,17 +1334,33 @@ document.addEventListener('click', (event) => {
     }
 
     if (categoryHeading.textContent === 'All Entries') {
-      prepareAll();
+      setTimeout(prepareAll, 250);
     } else if (categoryHeading.textContent === 'Important Tasks') {
-      prepareImportant();
+      setTimeout(prepareImportant, 250);
     } else if (categoryHeading.textContent === 'All Notes') {
-      prepareNotes();
+      setTimeout(prepareNotes, 250);
+    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+      setTimeout(() => {
+        todos.innerHTML = '';
+        checkForDateImportant();
+        checkForDateNotImportant();
+      }, 250);
+    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+      setTimeout(() => {
+        todos.innerHTML = '';
+        checkForWeekImportant();
+        checkForWeekNotImportant();
+      }, 250);
     } else {
-      prepareWithoutName();
-      todos.innerHTML = '';
+      setTimeout(() => {
+        prepareWithoutName();
+        todos.innerHTML = '';
+      }, 250);
       const currentText = categoryHeading.textContent;
       const currentTextCustomized = currentText.replace(/[ .]/g, '');
-      generateCustom(currentTextCustomized);
+      setTimeout(() => {
+        generateCustom(currentTextCustomized);
+      }, 250);
     }
     updateArrayNumbers();
   }
@@ -1003,11 +1373,7 @@ document.addEventListener('click', (event) => {
     const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
-    taskDetails.style.opacity = '1';
-    taskDetails.style.pointerEvents = 'all';
-    taskDetails.style.visibility = 'visible';
-    taskDetails.style.position = 'static';
-    taskDetails.style.height = '100vh';
+    taskDetails.classList.add('active-task-details');
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -1039,11 +1405,7 @@ document.addEventListener('click', (event) => {
     const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
-    taskDetails.style.opacity = '1';
-    taskDetails.style.pointerEvents = 'all';
-    taskDetails.style.visibility = 'visible';
-    taskDetails.style.position = 'static';
-    taskDetails.style.height = '100vh';
+    taskDetails.classList.add('active-task-details');
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -1072,11 +1434,7 @@ document.addEventListener('click', (event) => {
     const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
-    taskDetails.style.opacity = '1';
-    taskDetails.style.pointerEvents = 'all';
-    taskDetails.style.visibility = 'visible';
-    taskDetails.style.position = 'static';
-    taskDetails.style.height = '100vh';
+    taskDetails.classList.add('active-task-details');
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -1112,10 +1470,18 @@ const detailsCross = document.querySelector('.details-xmark');
 detailsCross.addEventListener('click', () => {
   const taskDetails = document.querySelector('.task-details');
   const wrapper = document.querySelector('.wrapper');
-  wrapper.classList.remove('details');
-  taskDetails.style.opacity = '0';
-  taskDetails.style.pointerEvents = 'none';
-  taskDetails.style.visibility = 'hidden';
-  taskDetails.style.position = 'absolute';
-  taskDetails.style.height = '0';
+  setTimeout(() => {
+    wrapper.classList.remove('details');
+  }, 250);
+  taskDetails.classList.remove('active-task-details');
+});
+
+// MAKES USER UNABLE TO TYPE ENTER IN TEXTAREAS
+
+const textarea = document.querySelector('.project-setter-title-input textarea');
+
+textarea.addEventListener('keydown', (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  }
 });
