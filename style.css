@@ -534,11 +534,13 @@ table {
 
 .important-task .task-importance i {
     color: yellow;
+    padding: 8px;
 }
 
 .task-importance i {
     color: white;
     font-size: 1.3rem;
+    padding: 8px;
 }
 
 .note-icon i {
@@ -585,6 +587,15 @@ table {
     height: 0;
     overflow: auto;
     visibility: hidden;
+    transition: 0.3s;
+}
+
+.active-task-details {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+    height: 100vh;
+    transition: 0.3s;
 }
 
 .details-info {
@@ -594,6 +605,7 @@ table {
     overflow: auto;
     scrollbar-width: none; 
     -ms-overflow-style: none; 
+    padding: 20px 0;
 }
 
 .details-info::-webkit-scrollbar {
