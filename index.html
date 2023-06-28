@@ -22,20 +22,8 @@
 <body>
     <div class="wrapper transition-fade">
         <div class="nav">
-            <div class="profile">
-                <div class="profile-icon">
-                    <img src="images/circle-avatar1.png" alt="">
-                </div>
-
-                <div class="profile-text">
-                    <div class="profile-name">
-                        <h2>Adam Forgáč</h2>
-                    </div>
-
-                    <div class="profile-mail">
-                        <h4>aforg@email.cz</h4>
-                    </div>
-                </div>
+            <div class="logo-desktop">
+                <img src="images/3D logo.png" alt="">
             </div>
 
             <div class="search-bar">
@@ -158,7 +146,7 @@
                     </div>
 
                     <div class="logo">
-                        <h1>no<span class="purple">.</span>delay</h1>
+                        <img src="images/3D logo.png" alt="">
                     </div>
                 </div>
 
@@ -263,7 +251,10 @@
             <div class="details-list">
                 <p>Random list</p>
 
-                <i class="fa-solid fa-trash"></i>
+                <div class="details-list-icons">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
             </div>
         </div>
 
@@ -271,7 +262,7 @@
             <div class="leave-creator">
                 <i class="fa-solid fa-xmark"></i>
 
-                <h1>no<span class="purple-creator">.</span>delay</h1>
+                <img src="images/3D logo.png" alt="">
             </div>
 
             <div class="creator-options">
@@ -310,15 +301,15 @@
             <div class="todo-setter-wrap">
                 <div class="todo-setter-nav">
                     <div class="todo-setter-nav-arrow">
-                            <i class="fa-solid fa-arrow-left"></i>
+                        <i class="fa-solid fa-arrow-left"></i>
                     </div>
 
                     <div class="todo-setter-nav-logo">
-                            <h2>no<span class="purple-creator">.</span>delay</h2>
+                        <img src="images/3D logo.png" alt="">
                     </div>
 
                     <div class="todo-setter-nav-icons">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </div>
                 </div>
 
@@ -405,6 +396,105 @@
             </div>
         </div>
 
+        <div class="todo-editor">
+            <div class="todo-editor-wrap">
+                <div class="todo-editor-nav">
+                    <div class="todo-editor-nav-arrow">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </div>
+
+                    <div class="todo-editor-nav-logo">
+                        <h2></h2>
+                    </div>
+
+                    <div class="todo-editor-nav-icons">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </div>
+                </div>
+
+                <div class="todo-editor-main-area">
+                    <div class="todo-editor-form">
+                        <form autocomplete="off" class="todo-form" action="">
+                            <div class="todo-editor-title">
+                                <div class="todo-editor-title-label setter-label">
+                                    <label for="title_input">Task Title</label>
+                                </div>
+        
+                                <div class="todo-editor-title-input setter-input">
+                                    <input maxlength="100" required type="text" id="title_input">
+                                </div>
+                            </div>
+        
+                            <div class="todo-editor-details">
+                                <div class="todo-editor-details-label setter-label">
+                                    <label for="details_input">Task Details</label>
+                                </div>
+        
+                                <div class="todo-editor-details-input setter-input">
+                                    <textarea maxlength="800" required name="text-details" id="details_input"></textarea>
+                                </div>
+                            </div>
+                    
+                            <div class="todo-editor-projects">
+                                <div class="todo-editor-projects-label setter-label">
+                                    <label for="projects_input_edit">Choose the right list for your task</label>
+                                </div>
+        
+                                <div class="todo-editor-projects-input setter-input">
+                                    <select name="projects" id="projects_input_edit">
+                                        <option class="none" value="none">none</option>
+                                    </select>
+                                    <span class="custom-arrow"></span>
+                                </div>
+                            </div>
+
+                            <div class="todo-editor-area">
+                                <div class="todo-editor-date">
+                                    <div class="todo-editor-date-label setter-label">
+                                        <label for="date_input">Due date</label>
+                                    </div>
+            
+                                    <div class="todo-editor-date-input setter-input">
+                                        <input id="date_input" type="date" id="dueDateInput">
+                                    </div>
+                                </div>
+
+                                <div class="todo-editor-importance">
+                                    <div class="todo-editor-importance-area">
+                                        <label for="normal_checkbox_editor" class="container-edit">Important task
+                                            <input id="normal_checkbox_editor" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="todo-editor-importance-phone">
+                                <div class="todo-editor-importance-area">
+                                    <label for="phone_checkbox" class="container-edit">Important task
+                                        <input id="phone_checkbox" type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                    
+                            <div class="todo-editor-accept">
+                                <div class="todo-editor-accept-button">
+                                    <button type="submit">
+                                        Edit Task
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="todo-editor-form-image">
+                        <img src="images/add-task-image.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="note-setter">
             <div class="note-setter-wrap">
                 <div class="note-setter-nav">
@@ -413,7 +503,7 @@
                 </div>
 
                 <div class="note-setter-nav-logo">
-                        <h2>no<span class="purple-creator">.</span>delay</h2>
+                        <img src="images/3D logo.png" alt="">
                 </div>
 
                 <div class="note-setter-nav-icons">
@@ -469,7 +559,7 @@
                     </div>
 
                     <div class="project-setter-nav-logo">
-                        <h2>no<span class="purple-creator">.</span>delay</h2>
+                        <img src="images/3D logo.png" alt="">
                     </div>
 
                     <div class="project-setter-nav-icons">
