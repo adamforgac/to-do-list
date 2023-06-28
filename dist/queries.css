@@ -170,6 +170,11 @@
     .board-date p {
         font-size: 1rem;
     }
+
+    .logo-desktop img {
+        width: 155px;
+        margin-top: 6px;
+    }
 }
 
 @media only screen and (max-width: 940px) {
@@ -260,12 +265,21 @@
     .leave-creator i {
         font-size: 3rem;
     }
+
+    .leave-creator img {
+        width: 200px;
+    }
 }
 
 @media only screen and (max-width: 850px) {
     .wrapper {
         display: grid;
         grid-template-columns: 220px 5fr;
+    }
+
+    .logo-desktop img {
+        width: 130px;
+        margin-top: 8px;
     }
 }
 
@@ -368,10 +382,9 @@
         display: unset;
     }
 
-    .logo h1 {
-        color: white;
-        font-family: 'Roboto', sans-serif;
-        font-size: 1.5rem;
+    .logo img {
+        width: 120px;
+        margin-top: 5px;
     }
 
     .category-name {
@@ -401,11 +414,6 @@
         font-size: 1.2rem;
         cursor: pointer;
 
-    }
-
-    .purple {
-        color: var(--round-active-purple);
-        font-size: 2.5rem;
     }
 
     .swapper-options {
@@ -797,8 +805,9 @@
         gap: 10px;
     }
 
-    .todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2 {
-        font-size: 1.4rem;
+    .todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img {
+        margin-top: 5px;
+        width: 120px;
     }
 
     .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i, .project-setter-nav-icons i, .project-setter-nav-arrow i {

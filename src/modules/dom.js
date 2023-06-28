@@ -42,9 +42,11 @@ function callDom() {
   const noteCreator = document.querySelector('.note-create');
   const projectCreator = document.querySelector('.project-create');
   const todoSetter = document.querySelector('.todo-setter');
+  const todoEditor = document.querySelector('.todo-editor');
   const noteSetter = document.querySelector('.note-setter');
   const projectSetter = document.querySelector('.project-setter');
   const exitCreator = document.querySelector('.todo-setter-nav-arrow i');
+  const todoEditCreator = document.querySelector('.fa-pen-to-square');
   const exitNoteCreator = document.querySelector('.note-setter-nav-arrow i');
   const exitProjectCreator = document.querySelector('.project-setter-nav-arrow i');
   const exitToMenu = document.querySelector('.todo-setter-nav-icons i');
@@ -53,6 +55,9 @@ function callDom() {
 
   todoCreator.addEventListener('click', () => {
     todoSetter.classList.add('active-todo-setter');
+  });
+  todoEditCreator.addEventListener('click', () => {
+    todoEditor.classList.add('active-todo-editor');
   });
   noteCreator.addEventListener('click', () => {
     noteSetter.classList.add('active-note-setter');

@@ -39,6 +39,9 @@ window.onload = function () {
 // DEFAULT ARRAYS
 
 const allTasks = [];
+let allTasksTitles = [];
+let allListTitles = [];
+let allNotesTitles = [];
 let todayTasksNi = [];
 let todayTasksImp = [];
 let weekTasksNi = [];
@@ -48,7 +51,6 @@ const allNotes = [];
 const completedTasks = [];
 const allLists = [];
 let allListOptions = [];
-const ownLists = [];
 let generateArray = [];
 let notImportantDataCards = [];
 let niDateAttributes = [];
@@ -62,10 +64,13 @@ let generateArrayImportant = [];
 
 const todos = document.querySelector('.todos');
 const lists = document.querySelector('.projects');
+const wrapper = document.querySelector('.wrapper');
 
 // FORMS DONE BUTTONS
 
 const taskDoneButton = document.querySelector('.todo-setter-accept button');
+const taskEditButton = document.querySelector('.todo-editor-accept button');
+const startEditButton = document.querySelector('.fa-pen-to-square');
 const noteDoneButton = document.querySelector('.note-setter-accept-button');
 const listDoneButton = document.querySelector('.project-setter-accept-button');
 
@@ -79,6 +84,7 @@ const todayCount = document.querySelector('.today-count p');
 const weekCount = document.querySelector('.week-count p');
 
 const selectInput = document.querySelector('#projects_input');
+const selectInputEdit = document.querySelector('#projects_input_edit');
 const categoryHeading = document.querySelector('.category-name h2');
 const importantSection = document.querySelector('.important');
 const allSection = document.querySelector('.all');
@@ -140,7 +146,6 @@ function checkForDateNotImportant() {
     const userDate = allTasks[i].date;
     const currentDate = new Date();
     const dueDate = parseISO(userDate);
-    const difference = differenceInDays(dueDate, currentDate);
 
     if (isSameDay(dueDate, currentDate)) {
       todayTasksNi.push(allTasks[i]);
@@ -264,7 +269,6 @@ function checkForDateImportant() {
     const userDate = importantTasks[i].date;
     const currentDate = new Date();
     const dueDate = parseISO(userDate);
-    const difference = differenceInDays(dueDate, currentDate);
     if (isSameDay(dueDate, currentDate)) {
       todayTasksImp.push(importantTasks[i]);
       const dataCard = i;
@@ -413,6 +417,14 @@ function addNoteAttribute() {
 
   for (let i = 0; i <= everyNote.length - 1; i++) {
     everyNote[i].setAttribute('data-card', [i]);
+
+    const everyImportantChildren = everyNote[i].querySelectorAll(
+      '.note-status, .note-icon, .note-heading, .note-category, .note-heading h2, .note-category p, .note-text, .note-importance',
+    );
+
+    everyImportantChildren.forEach((child) => {
+      child.setAttribute('data-card', [i]);
+    });
   }
 }
 
@@ -801,55 +813,64 @@ function prepareCompleted() {
   categoryHeading.textContent = 'Completed Tasks';
 }
 
-// ADDS NEW ARRAY TO OWN PROJECTS ARRAY EVERY TIME USER CREATES NEW LIST
+// CLOSES THE PART WITH DETAILS
 
-function addListToArr() {
-  const newArr = [];
-  ownLists.push(newArr);
+function closeDetails() {
+  const taskDetails = document.querySelector('.task-details');
+  setTimeout(() => {
+    wrapper.classList.remove('details');
+  }, 250);
+  taskDetails.classList.remove('active-task-details');
 }
 
 // GENERATES THE CONTENT FOR DIFFERENT CATEGORIES
 
 importantSection.addEventListener('click', () => {
   prepareImportant();
+  closeDetails();
 });
 
 // ADDS CONTENT TO TODAY SECTION
 
 todaySection.addEventListener('click', () => {
   todos.innerHTML = '';
+  closeDetails();
   checkEveryDate();
   loopAllDaysImportant();
   loopAllDaysNotImportant();
-  categoryHeading.textContent = 'Today\'s tasks';
+  categoryHeading.textContent = 'Today\'s Tasks';
 });
 
 // ADDS CONTENT TO WEEK SECTION
 
 weekSection.addEventListener('click', () => {
   todos.innerHTML = '';
+  closeDetails();
   checkEveryDate();
   loopAllWeekImportant();
   loopAllWeekNotImportant();
-  categoryHeading.textContent = 'Week\'s tasks';
+  categoryHeading.textContent = 'Week\'s Tasks';
 });
 
 // ADDS CONTENT TO ALL
 
 allSection.addEventListener('click', () => {
   prepareAll();
+  closeDetails();
 });
 
 // ADDS CONTENT TO COMPLETED SECTION
 
 completedSection.addEventListener('click', () => {
   prepareCompleted();
+  closeDetails();
 });
 
 // ADDS CONTENT TO NOTES SECTION
 
 notesSection.addEventListener('click', () => {
   prepareNotes();
+  closeDetails();
 });
 
 // ADDS CONTENT TO CUSTOM LISTS
@@ -1010,6 +1031,7 @@ function loopThroughtImportant(num) {
 function addToAllTasks(title, details, project, date, importance) {
   allTasks.push(new Task(title, details, project, date, importance));
   loopThroughtTasks(allTasks.length);
+  allTasksTitles = [];
 }
 
 function addToAllNotes(title, details) {
@@ -1020,11 +1042,13 @@ function addToAllNotes(title, details) {
 function addToImportant(title, details, project, date, importance) {
   importantTasks.push(new Task(title, details, project, date, importance));
   loopThroughtImportant(importantTasks.length);
+  allTasksTitles = [];
 }
 
 function addToAllLists(title, color) {
   allLists.push(new List(title, color));
   loopThroughtLists(allLists.length);
+  allListTitles = [];
 }
 
 // ACTIONS THAT HAPPEN RIGHT AFTER CLICKING THE BUTTON
@@ -1063,13 +1087,13 @@ taskDoneButton.addEventListener('click', (event) => {
   function updateCustomNums(num) {
     const allProjectLists = document.querySelectorAll('.project-list');
 
-    const projectCount = allProjectLists[num].querySelector(".project-count p").textContent;
+    const projectCount = allProjectLists[num].querySelector('.project-count p').textContent;
 
     const projectNum = Number(projectCount);
 
     const addedNum = projectNum + 1;
 
-    allProjectLists[num].querySelector(".project-count p").textContent = addedNum;
+    allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
   }
 
   if (taskProjects.value !== 'none') {
@@ -1080,9 +1104,10 @@ taskDoneButton.addEventListener('click', (event) => {
       const listTitle = allLists[i].title;
       const customizedTitle = listTitle.replace(/\s/g, '');
 
-      if (listTitle === customizedTitle) {
+      if (customizedTitle === customizedProject) {
         const arrNum = i;
         updateCustomNums(arrNum);
+        break;
       }
     }
   }
@@ -1100,10 +1125,34 @@ taskDoneButton.addEventListener('click', (event) => {
       if (difference < 0) {
         alert('The due date is older than the current date.');
       } else {
-        addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-        checkEveryDate();
-        updateArrayNumbers();
-        removeMenu();
+        if (allTasksTitles.length > 0) {
+          const titleValue = taskTitle.value;
+          if (allTasksTitles.some((item) => item === titleValue)) {
+            alert('This task already exists');
+          } else {
+            addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+            for (let i = 0; i < importantTasks.length; i++) {
+              allTasksTitles.push(importantTasks[i].title);
+            }
+            for (let i = 0; i < allTasks.length; i++) {
+              allTasksTitles.push(allTasks[i].title);
+            }
+            checkEveryDate();
+            updateArrayNumbers();
+            removeMenu();
+          }
+        } else {
+          addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          for (let i = 0; i < importantTasks.length; i++) {
+            allTasksTitles.push(importantTasks[i].title);
+          }
+          for (let i = 0; i < allTasks.length; i++) {
+            allTasksTitles.push(allTasks[i].title);
+          }
+          checkEveryDate();
+          updateArrayNumbers();
+          removeMenu();
+        }
       }
     } else if (taskImportance.checked === false) {
       taskImportance.value = 'not-important';
@@ -1114,12 +1163,146 @@ taskDoneButton.addEventListener('click', (event) => {
       if (difference < 0) {
         alert('The due date is older than the current date.');
       } else {
-        addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
-        checkEveryDate();
-        updateArrayNumbers();
-        removeMenu();
+        if (allTasksTitles.length > 0) {
+          const titleValue = taskTitle.value;
+          if (allTasksTitles.some((item) => item === titleValue)) {
+            alert('This task already exists');
+          } else {
+            addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+            for (let i = 0; i < importantTasks.length; i++) {
+              allTasksTitles.push(importantTasks[i].title);
+            }
+            for (let i = 0; i < allTasks.length; i++) {
+              allTasksTitles.push(allTasks[i].title);
+            }
+            checkEveryDate();
+            updateArrayNumbers();
+            removeMenu();
+          }
+        } else {
+          addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          for (let i = 0; i < importantTasks.length; i++) {
+            allTasksTitles.push(importantTasks[i].title);
+          }
+          for (let i = 0; i < allTasks.length; i++) {
+            allTasksTitles.push(allTasks[i].title);
+          }
+          checkEveryDate();
+          updateArrayNumbers();
+          removeMenu();
+        }
       }
     }
+  }
+});
+
+startEditButton.addEventListener("click", (event) => {
+  const taskTitle = document.querySelector('.todo-editor-title-input input');
+  const taskDetails = document.querySelector('.todo-editor-details-input textarea');
+  const taskProjects = document.querySelector('.todo-editor-projects-input select');
+  const taskDate = document.querySelector('.todo-editor-date-input input');
+  const taskImportance = document.querySelector('.container-edit input');
+
+  const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
+
+  const originalDetails = document.querySelector('.details-info-details-text p').textContent;
+
+  const originalDueDate = document.querySelector('.details-info-date-number p').textContent;
+
+  const originalStatus = document.querySelector('.details-info-status-text p').textContent;
+
+  const originalImportance = document.querySelector('.details-info-importance-text p').textContent;
+
+  const originalProject = document.querySelector('.details-list p').textContent;
+
+  taskTitle.value = originalTitle;
+
+  if (originalDetails === 'This task has no description') {
+    taskDetails.value = '';
+  } else {
+    taskDetails.value = originalDetails;
+  }
+
+  if (originalDueDate === 'The date has not been set') {
+    taskDate.value = '';
+  } else {
+    taskDate.value = originalDueDate;
+  }
+
+  if (originalImportance === 'Not important task') {
+    taskImportance.checked = false;
+  } else {
+    taskImportance.checked = true;
+  }
+
+  if (originalProject === 'All Entries') {
+    taskProjects.value = 'none';
+  } else {
+    taskProjects.value = originalProject;
+  }
+})
+
+taskEditButton.addEventListener('click', (event) => {
+  event.preventDefault();
+
+  // SWITCHES TO ALL SECTION
+  prepareAll();
+
+  const allTaskInputs = document.querySelectorAll('.todo-editor-form input');
+  allTaskInputs.forEach((input) => {
+    input.checkValidity();
+    input.reportValidity();
+  });
+  const taskTitle = document.querySelector('.todo-editor-title-input input');
+  const taskDetails = document.querySelector('.todo-editor-details-input textarea');
+  const taskProjects = document.querySelector('.todo-editor-projects-input select');
+  const taskDate = document.querySelector('.todo-editor-date-input input');
+  const taskImportance = document.querySelector('.container-edit input');
+
+  function removeMenu() {
+    document.querySelector('.creator-menu').classList.remove('active-menu');
+    document.querySelector('.todo-editor').classList.remove('active-todo-editor');
+    // REMOVES ALL CONTENT FROM FORMS
+    taskTitle.value = '';
+    taskDetails.value = '';
+    taskDate.value = '';
+    taskImportance.checked = false;
+  }
+
+  // TAKES LIST NAME IF NOT EMPTY
+
+  function updateCustomNums(num) {
+    const allProjectLists = document.querySelectorAll('.project-list');
+
+    const projectCount = allProjectLists[num].querySelector('.project-count p').textContent;
+
+    const projectNum = Number(projectCount);
+
+    const addedNum = projectNum + 1;
+
+    allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
+  }
+
+  if (taskProjects.value !== 'none') {
+    const chosenProject = taskProjects.value;
+    const customizedProject = chosenProject.replace(/\s/g, '');
+
+    for (let i = 0; i < allLists.length; i++) {
+      const listTitle = allLists[i].title;
+      const customizedTitle = listTitle.replace(/\s/g, '');
+
+      if (customizedTitle === customizedProject) {
+        const arrNum = i;
+        updateCustomNums(arrNum);
+        break;
+      }
+    }
+  }
+
+  if (taskTitle.value === '') {
+    false;
+  } else {
+    const finalValue = taskTitle.value;
   }
 });
 
@@ -1141,13 +1324,34 @@ noteDoneButton.addEventListener('click', (event) => {
   if (noteTitle.value === '') {
     false;
   } else {
-    addToAllNotes(noteTitle.value, noteDetails.value);
-    // REMOVES MENUS
-    document.querySelector('.creator-menu').classList.remove('active-menu');
-    document.querySelector('.note-setter').classList.remove('active-note-setter');
-    // REMOVES ALL CONTENT FROM FORMS
-    noteTitle.value = '';
-    noteDetails.value = '';
+    if (allNotesTitles.length > 0) {
+      const noteValue = noteTitle.value;
+      if (allNotesTitles.some((item) => item === noteValue)) {
+        alert('This note already exists');
+      } else {
+        addToAllNotes(noteTitle.value, noteDetails.value);
+        for (let i = 0; i < allNotes.length; i++) {
+          allNotesTitles.push(allNotes[i].title);
+        }
+        // REMOVES MENUS
+        document.querySelector('.creator-menu').classList.remove('active-menu');
+        document.querySelector('.note-setter').classList.remove('active-note-setter');
+        // REMOVES ALL CONTENT FROM FORMS
+        noteTitle.value = '';
+        noteDetails.value = '';
+      }
+    } else {
+      addToAllNotes(noteTitle.value, noteDetails.value);
+      for (let i = 0; i < allNotes.length; i++) {
+        allNotesTitles.push(allNotes[i].title);
+      }
+      // REMOVES MENUS
+      document.querySelector('.creator-menu').classList.remove('active-menu');
+      document.querySelector('.note-setter').classList.remove('active-note-setter');
+      // REMOVES ALL CONTENT FROM FORMS
+      noteTitle.value = '';
+      noteDetails.value = '';
+    }
   }
 });
 
@@ -1170,15 +1374,88 @@ listDoneButton.addEventListener('click', (event) => {
   if (projectTitle.value === '') {
     false;
   } else {
-    addToAllLists(projectTitle.value, projectColor.value);
-    addListToArr();
+    if (allListTitles.length > 0) {
+      const listValue = projectTitle.value;
+      const customizedListValues = listValue.replace(/\s/g, '');
+      const modifiedArray = allListTitles.map((str) => str.replace(/\s/g, ''));
+      if (modifiedArray.some((item) => item === customizedListValues)) {
+        alert('This list already exists');
+      } else {
+        addToAllLists(projectTitle.value, projectColor.value);
 
-    // REMOVES MENUS
-    document.querySelector('.creator-menu').classList.remove('active-menu');
-    document.querySelector('.project-setter').classList.remove('active-project-setter');
-    // REMOVES ALL CONTENT FROM FORMS
-    projectTitle.value = '';
-    projectColor.value = '#FFFFFF';
+        for (let i = 0; i < allLists.length; i++) {
+          allListTitles.push(allLists[i].title);
+        }
+
+        // REMOVES MENUS
+        document.querySelector('.creator-menu').classList.remove('active-menu');
+        document.querySelector('.project-setter').classList.remove('active-project-setter');
+        // REMOVES ALL CONTENT FROM FORMS
+        projectTitle.value = '';
+        projectColor.value = '#FFFFFF';
+
+        const listMenuOptions = document.querySelectorAll('.project-name h2');
+        allListOptions = [];
+        listMenuOptions.forEach((listOption) => {
+          allListOptions.push(listOption.textContent);
+        });
+
+        const option = document.createElement('option');
+        const optionOther = document.createElement('option');
+        option.classList.add('list-item');
+
+        allListOptions.forEach((optionText) => {
+          option.text = '';
+          option.text = optionText;
+          selectInput.appendChild(option);
+        });
+
+        allListOptions.forEach((optionText) => {
+          optionOther.text = '';
+          optionOther.text = optionText;
+          selectInputEdit.appendChild(optionOther);
+        });
+
+        addOptionAttribute();
+      }
+    } else {
+      addToAllLists(projectTitle.value, projectColor.value);
+
+      for (let i = 0; i < allLists.length; i++) {
+        allListTitles.push(allLists[i].title);
+      }
+
+      const listMenuOptions = document.querySelectorAll('.project-name h2');
+      allListOptions = [];
+      listMenuOptions.forEach((listOption) => {
+        allListOptions.push(listOption.textContent);
+      });
+
+      const option = document.createElement('option');
+      const optionOther = document.createElement('option');
+      option.classList.add('list-item');
+
+      allListOptions.forEach((optionText) => {
+        option.text = '';
+        option.text = optionText;
+        selectInput.appendChild(option);
+      });
+
+      allListOptions.forEach((optionText) => {
+        optionOther.text = '';
+        optionOther.text = optionText;
+        selectInputEdit.appendChild(optionOther);
+      });
+
+      addOptionAttribute();
+
+      // REMOVES MENUS
+      document.querySelector('.creator-menu').classList.remove('active-menu');
+      document.querySelector('.project-setter').classList.remove('active-project-setter');
+      // REMOVES ALL CONTENT FROM FORMS
+      projectTitle.value = '';
+      projectColor.value = '#FFFFFF';
+    }
   }
 
   document.addEventListener('click', (e) => {
@@ -1192,34 +1469,57 @@ listDoneButton.addEventListener('click', (event) => {
       const originalText = heading;
       const customizedText = originalText.replace(/[ .]/g, '');
       generateCustom(customizedText);
+      closeDetails();
     } else {
       false;
     }
   });
-
-  // CREATES THE OPTIONS FOR SELECT INPUT
-
-  const listMenuOptions = document.querySelectorAll('.project-name h2');
-  allListOptions = [];
-  listMenuOptions.forEach((listOption) => {
-    allListOptions.push(listOption.textContent);
-  });
-
-  const option = document.createElement('option');
-  option.classList.add('list-item');
-
-  allListOptions.forEach((optionText) => {
-    option.text = '';
-    option.text = optionText;
-    selectInput.appendChild(option);
-  });
-
-  addOptionAttribute();
 });
 
 // MAKES THE TASK COMPLETED AFTER USER CLICKS THE TASK CHECKBOX
 // MAKES THE TASK COMPLETED AFTER USER CLICKS THE TASK CHECKBOX
 // MAKES THE TASK COMPLETED AFTER USER CLICKS THE TASK CHECKBOX
+
+function generateImmediately() {
+  if (categoryHeading.textContent === 'All Entries') {
+    prepareAll();
+  } else if (categoryHeading.textContent === 'Important Tasks') {
+    prepareImportant();
+  } else if (categoryHeading.textContent === 'All Notes') {
+    prepareNotes();
+  } else if (categoryHeading.textContent === 'Week\'s Tasks') {
+    todos.innerHTML = '';
+    checkEveryDate();
+    loopAllWeekImportant();
+    loopAllWeekNotImportant();
+  } else if (categoryHeading.textContent === 'Today\'s Tasks') {
+    todos.innerHTML = '';
+    checkEveryDate();
+    loopAllDaysImportant();
+    loopAllDaysNotImportant();
+  } else if (categoryHeading.textContent === 'Completed Tasks') {
+    todos.innerHTML = '';
+    prepareCompleted();
+  } else {
+    todos.innerHTML = '';
+    const currentText = categoryHeading.textContent;
+    const currentTextCustomized = currentText.replace(/[ .]/g, '');
+    generateCustom(currentTextCustomized);
+  }
+}
+
+function removeCustomNum(num) {
+  updateArrayNumbers();
+  const allProjectLists = document.querySelectorAll('.project-list');
+
+  const projectCount = allProjectLists[num].querySelector('.project-count p').textContent;
+
+  const projectNum = Number(projectCount);
+
+  const addedNum = projectNum - 1;
+
+  allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
+}
 
 document.addEventListener('click', (event) => {
   let clickedElement = event.target;
@@ -1246,31 +1546,29 @@ document.addEventListener('click', (event) => {
   if (classArray.includes('not-important-round')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
+    const chosenProject = allTasks[roundAtt].project;
+    if (chosenProject !== 'none') {
+      const customizedProject = chosenProject.replace(/\s/g, '');
+
+      for (let i = 0; i < allLists.length; i++) {
+        const listTitle = allLists[i].title;
+        const customizedTitle = listTitle.replace(/\s/g, '');
+
+        if (customizedTitle === customizedProject) {
+          const arrNum = i;
+          removeCustomNum(arrNum);
+          break;
+        }
+      }
+    }
     completedTasks.push(movingObject);
     allTasks.splice(roundAtt, 1);
 
-    if (categoryHeading.textContent === 'All Entries') {
-      prepareAll();
-    } else if (categoryHeading.textContent === 'Important Tasks') {
-      prepareImportant();
-    } else if (categoryHeading.textContent === 'All Notes') {
-      prepareNotes();
-    } else if (categoryHeading.textContent === 'Today\'s tasks') {
-      todos.innerHTML = '';
-      checkEveryDate();
-      loopAllDaysImportant();
-      loopAllDaysNotImportant();
-    } else if (categoryHeading.textContent === 'Week\'s tasks') {
-      todos.innerHTML = '';
-      checkEveryDate();
-      loopAllWeekImportant();
-      loopAllWeekNotImportant();
-    } else {
-      todos.innerHTML = '';
-      const currentText = categoryHeading.textContent;
-      const currentTextCustomized = currentText.replace(/[ .]/g, '');
-      generateCustom(currentTextCustomized);
+    if (wrapper.classList.contains('details')) {
+      document.querySelector('.details-info-status-text p').textContent = 'Completed task';
     }
+
+    generateImmediately();
 
     updateArrayNumbers();
   } else if (classArray.includes('important-round')) {
@@ -1279,28 +1577,7 @@ document.addEventListener('click', (event) => {
     completedTasks.push(movingObject);
     importantTasks.splice(roundAtt, 1);
 
-    if (categoryHeading.textContent === 'All Entries') {
-      prepareAll();
-    } else if (categoryHeading.textContent === 'Important Tasks') {
-      prepareImportant();
-    } else if (categoryHeading.textContent === 'All Notes') {
-      prepareNotes();
-    } else if (categoryHeading.textContent === 'Week\'s tasks') {
-      todos.innerHTML = '';
-      checkEveryDate();
-      loopAllWeekImportant();
-      loopAllWeekNotImportant();
-    } else if (categoryHeading.textContent === 'Today\'s tasks') {
-      todos.innerHTML = '';
-      checkEveryDate();
-      loopAllDaysImportant();
-      loopAllDaysNotImportant();
-    } else {
-      todos.innerHTML = '';
-      const currentText = categoryHeading.textContent;
-      const currentTextCustomized = currentText.replace(/[ .]/g, '');
-      generateCustom(currentTextCustomized);
-    }
+    generateImmediately();
 
     updateArrayNumbers();
   }
@@ -1311,6 +1588,9 @@ document.addEventListener('click', (event) => {
     movingObject.importance = 'important';
     const task = todos.querySelectorAll('.not-important');
     const taskSpecial = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
+    if (wrapper.classList.contains('details')) {
+      document.querySelector('.details-info-importance-text p').textContent = 'Important task';
+    }
     // VISUAL
     if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
       task[roundAtt].classList.remove('not-important');
@@ -1329,14 +1609,14 @@ document.addEventListener('click', (event) => {
       setTimeout(prepareImportant, 250);
     } else if (categoryHeading.textContent === 'All Notes') {
       setTimeout(prepareNotes, 250);
-    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+    } else if (categoryHeading.textContent === 'Today\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllDaysImportant();
         loopAllDaysNotImportant();
       }, 250);
-    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+    } else if (categoryHeading.textContent === 'Week\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
@@ -1363,6 +1643,9 @@ document.addEventListener('click', (event) => {
     importantTasks.splice(roundAtt, 1);
     const task = todos.querySelectorAll('.important-task');
     const taskSpecial = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
+    if (wrapper.classList.contains('details')) {
+      document.querySelector('.details-info-importance-text p').textContent = 'Not important task';
+    }
     if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
       task[roundAtt].classList.remove('important-task');
       task[roundAtt].classList.add('not-important');
@@ -1377,14 +1660,14 @@ document.addEventListener('click', (event) => {
       setTimeout(prepareImportant, 250);
     } else if (categoryHeading.textContent === 'All Notes') {
       setTimeout(prepareNotes, 250);
-    } else if (categoryHeading.textContent === 'Today\'s tasks') {
+    } else if (categoryHeading.textContent === 'Today\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllDaysImportant();
         loopAllDaysNotImportant();
       }, 250);
-    } else if (categoryHeading.textContent === 'Week\'s tasks') {
+    } else if (categoryHeading.textContent === 'Week\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
@@ -1410,7 +1693,6 @@ document.addEventListener('click', (event) => {
   // SHOWS TASK DETAILS
 
   if (parentClasses.includes('task') && (parentClasses.includes('not-important')) && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
-    const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
@@ -1422,11 +1704,17 @@ document.addEventListener('click', (event) => {
     const detailsList = document.querySelector('.details-list p');
     const infoDate = document.querySelector('.details-info-date-number p');
     const infoImportance = document.querySelector('.details-info-importance-text p');
+    const infoStatus = document.querySelector('.details-info-status-text p');
+
+    document.querySelector('.details-info-date').style.display = 'grid';
+    document.querySelector('.details-info-importance').style.display = 'grid';
+    document.querySelector('.details-info-status').style.display = 'grid';
 
     infoHeading.textContent = allTasks[roundAtt].title;
     infoDetails.textContent = allTasks[roundAtt].details;
     infoDate.textContent = allTasks[roundAtt].date;
     infoImportance.textContent = 'Not important task';
+    infoStatus.textContent = 'Not done yet';
 
     if (allTasks[roundAtt].project === 'none') {
       detailsList.textContent = 'All Entries';
@@ -1442,7 +1730,6 @@ document.addEventListener('click', (event) => {
       infoDate.textContent = 'The date has not been set';
     }
   } else if (parentClasses.includes('task') && parentClasses.includes('important-task') && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
-    const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
@@ -1454,11 +1741,17 @@ document.addEventListener('click', (event) => {
     const detailsList = document.querySelector('.details-list p');
     const infoDate = document.querySelector('.details-info-date-number p');
     const infoImportance = document.querySelector('.details-info-importance-text p');
+    const infoStatus = document.querySelector('.details-info-status-text p');
+
+    document.querySelector('.details-info-date').style.display = 'grid';
+    document.querySelector('.details-info-importance').style.display = 'grid';
+    document.querySelector('.details-info-status').style.display = 'grid';
 
     infoHeading.textContent = importantTasks[roundAtt].title;
     infoDetails.textContent = importantTasks[roundAtt].details;
     infoDate.textContent = importantTasks[roundAtt].date;
     infoImportance.textContent = 'Important task';
+    infoStatus.textContent = 'Not done yet';
     if (importantTasks[roundAtt].date === '') {
       infoDate.textContent = 'The date has not been set';
     }
@@ -1471,7 +1764,6 @@ document.addEventListener('click', (event) => {
       detailsList.textContent = importantTasks[roundAtt].project;
     }
   } else if (parentClasses.includes('task') && parentClasses.includes('completed-task') && !parentClasses.includes('fa-star') && !parentClasses.includes('round')) {
-    const wrapper = document.querySelector('.wrapper');
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
@@ -1483,10 +1775,16 @@ document.addEventListener('click', (event) => {
     const detailsList = document.querySelector('.details-list p');
     const infoDate = document.querySelector('.details-info-date-number p');
     const infoImportance = document.querySelector('.details-info-importance-text p');
+    const infoStatus = document.querySelector('.details-info-status-text p');
+
+    document.querySelector('.details-info-date').style.display = 'grid';
+    document.querySelector('.details-info-importance').style.display = 'grid';
+    document.querySelector('.details-info-status').style.display = 'grid';
 
     infoHeading.textContent = completedTasks[roundAtt].title;
     infoDetails.textContent = completedTasks[roundAtt].details;
     infoDate.textContent = completedTasks[roundAtt].date;
+    infoStatus.textContent = 'Completed task';
     if (completedTasks[roundAtt].importance === 'important') {
       infoImportance.textContent = 'Important task';
     } else {
@@ -1503,17 +1801,36 @@ document.addEventListener('click', (event) => {
     } else {
       detailsList.textContent = completedTasks[roundAtt].project;
     }
+  } else if (parentClasses.includes('note')) {
+    const taskDetails = document.querySelector('.task-details');
+    wrapper.classList.add('details');
+    taskDetails.classList.add('active-task-details');
+
+    const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const infoHeading = document.querySelector('.details-info-heading-text h2');
+    const infoDetails = document.querySelector('.details-info-details-text p');
+    const detailsList = document.querySelector('.details-list p');
+
+    const infoDate = document.querySelector('.details-info-date');
+    const infoImportance = document.querySelector('.details-info-importance');
+    const infoStatus = document.querySelector('.details-info-status');
+
+    detailsList.textContent = 'Notes';
+    infoHeading.textContent = allNotes[roundAtt].title;
+    infoDetails.textContent = allNotes[roundAtt].details;
+    infoDate.style.display = 'none';
+    infoStatus.style.display = 'none';
+    infoImportance.style.display = 'none';
+    if (allNotes[roundAtt].details === '') {
+      infoDetails.textContent = 'This note has no description';
+    }
   }
 });
 
 const detailsCross = document.querySelector('.details-xmark');
 detailsCross.addEventListener('click', () => {
-  const taskDetails = document.querySelector('.task-details');
-  const wrapper = document.querySelector('.wrapper');
-  setTimeout(() => {
-    wrapper.classList.remove('details');
-  }, 250);
-  taskDetails.classList.remove('active-task-details');
+  closeDetails();
 });
 
 // MAKES USER UNABLE TO TYPE ENTER IN TEXTAREAS
@@ -1524,4 +1841,75 @@ textarea.addEventListener('keydown', (event) => {
   if (event.keyCode === 13) {
     event.preventDefault();
   }
+});
+
+// REMOVES TODO
+// REMOVES TODO
+// REMOVES TODO
+
+const trash = document.querySelector('.fa-trash');
+trash.addEventListener('click', () => {
+  const importanceStatus = document.querySelector('.details-info-importance-text p').textContent;
+  const titleStatus = document.querySelector('.details-info-heading-text h2').textContent;
+  let statusStatus = document.querySelector('.details-info-status-text p').textContent;
+  const detailsList = document.querySelector('.details-list p').textContent;
+
+  if (detailsList === 'Notes') {
+    statusStatus = '';
+  }
+
+  const currentTitle = titleStatus;
+  if (statusStatus === 'Not done yet') {
+    if (importanceStatus === 'Not important task') {
+      for (let i = 0; i < allTasks.length; i++) {
+        if (allTasks[i].title === currentTitle) {
+          allTasks.splice(i, 1);
+          break;
+        }
+      }
+    } else {
+      for (let i = 0; i < importantTasks.length; i++) {
+        if (importantTasks[i].title === currentTitle) {
+          importantTasks.splice(i, 1);
+          break;
+        }
+      }
+    }
+  } else if (statusStatus === '') {
+    for (let i = 0; i < allNotes.length; i++) {
+      if (allNotes[i].title === currentTitle) {
+        allNotes.splice(i, 1);
+        break;
+      }
+    }
+  } else {
+    for (let i = 0; i < completedTasks.length; i++) {
+      if (completedTasks[i].title === currentTitle) {
+        completedTasks.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  const chosenProject = document.querySelector('.details-list p').textContent;
+  if (chosenProject !== 'All Entries') {
+    const customizedProject = chosenProject.replace(/\s/g, '');
+
+    for (let i = 0; i < allLists.length; i++) {
+      const listTitle = allLists[i].title;
+      const customizedTitle = listTitle.replace(/\s/g, '');
+
+      if (customizedTitle === customizedProject) {
+        const arrNum = i;
+        removeCustomNum(arrNum);
+        break;
+      }
+    }
+  }
+
+  generateImmediately();
+  allTasksTitles = [];
+  allListTitles = [];
+  allNotesTitles = [];
+  closeDetails();
 });
