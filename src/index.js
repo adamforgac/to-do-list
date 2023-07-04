@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable no-lonely-if */
 /* eslint-disable eqeqeq */
@@ -1196,7 +1197,262 @@ taskDoneButton.addEventListener('click', (event) => {
   }
 });
 
-startEditButton.addEventListener("click", (event) => {
+// EDITS THE TASK
+// EDITS THE TASK
+// EDITS THE TASK
+
+const task = {};
+
+function taskEditor(originalTitle, originalDetails, originalDueDate, originalImportance, originalProject, originalStatus) {
+  task.title = originalTitle;
+  task.details = originalDetails;
+  task.dueDate = originalDueDate;
+  task.importance = originalImportance;
+  task.project = originalProject;
+  task.status = originalStatus;
+
+  taskEditButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    event.preventDefault();
+
+    // SWITCHES TO ALL SECTION
+    prepareAll();
+
+    const allTaskInputs = document.querySelectorAll('.todo-editor-form input');
+    allTaskInputs.forEach((input) => {
+      input.checkValidity();
+      input.reportValidity();
+    });
+    const taskTitle = document.querySelector('.todo-editor-title-input input');
+    const taskDetails = document.querySelector('.todo-editor-details-input textarea');
+    const taskProject = document.querySelector('.todo-editor-projects-input select');
+    const taskDate = document.querySelector('.todo-editor-date-input input');
+    const taskImportance = document.querySelector('.container-edit input');
+
+    function removeMenu() {
+      document.querySelector('.creator-menu').classList.remove('active-menu');
+      document.querySelector('.todo-editor').classList.remove('active-todo-editor');
+      // REMOVES ALL CONTENT FROM FORMS
+      taskTitle.value = '';
+      taskDetails.value = '';
+      taskDate.value = '';
+      taskImportance.checked = false;
+    }
+
+    // ADDS ONE TO CHOSEN PROJECT
+
+    function updateCustomNums(num) {
+      const allProjectLists = document.querySelectorAll('.project-list');
+      const projectCount = allProjectLists[num].querySelector('.project-count p').textContent;
+      const projectNum = Number(projectCount);
+      const addedNum = projectNum + 1;
+      allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
+    }
+
+    if (task.importance === 'Not important task') {
+      const taskTitles = [];
+      for (let i = 0; i < allTasks.length; i++) {
+        taskTitles.push(allTasks[i].title);
+      }
+
+      const arrayCustomized = taskTitles.map((str) => str.replace(/\s/g, ''));
+      const titleCustomized = task.title.replace(/\s/g, '');
+
+      const includesValue = arrayCustomized.includes(titleCustomized);
+      const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+      if (includesValue) {
+        changeStatsNi(index);
+      } else {
+        false;
+      }
+    } else {
+      const taskTitlesImp = [];
+      for (let i = 0; i < importantTasks.length; i++) {
+        taskTitlesImp.push(importantTasks[i].title);
+      }
+
+      const arrayCustomized = taskTitlesImp.map((str) => str.replace(/\s/g, ''));
+      const titleCustomized = task.title.replace(/\s/g, '');
+
+      const includesValue = arrayCustomized.includes(titleCustomized);
+      const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+      if (includesValue) {
+        changeStatsImp(index);
+      } else {
+        false;
+      }
+    }
+
+    function changeStatsImp(num) {
+      importantTasks[num].title = taskTitle.value;
+      importantTasks[num].details = taskDetails.value;
+      importantTasks[num].date = taskDate.value;
+
+      if (task.project === 'All Entries' && taskProject.value === 'none') {
+        importantTasks[num].project = 'none';
+      } else if (task.project === 'All Entries' && taskProject.value !== 'none') {
+        importantTasks[num].project = taskProject.value;
+        const customizedProject = taskProject.value.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedProject);
+        const index = allTitleValues.findIndex((item) => item === customizedProject);
+
+        if (includesValue) {
+          const arrNum = index;
+          updateCustomNums(arrNum);
+        }
+      } else if ((task.project !== 'All Entries' && taskProject.value !== 'none') && (task.project !== taskProject.value)) {
+        const customizedOriginal = task.project.replace(/\s/g, ''); // original value from details
+        const customizedCurrent = taskProject.value.replace(/\s/g, ''); // current value from form
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        const includesValue2 = allTitleValues.includes(customizedCurrent);
+        const index2 = allTitleValues.findIndex((item) => item === customizedCurrent);
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+
+        if (includesValue2) {
+          const arrNum2 = index2;
+          updateCustomNums(arrNum2);
+        }
+
+        importantTasks[num].project = taskProject.value;
+      } else if (task.project !== 'All Entries' && taskProject.value === 'none') {
+        const customizedOriginal = task.project.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+
+        importantTasks[num].project = 'none';
+      }
+
+      if (taskImportance.checked === false) {
+        importantTasks[num].importance = 'not-important';
+        allTasks.push(importantTasks[num]);
+        importantTasks.splice(num, 1);
+      } else {
+        importantTasks[num].importance = 'important';
+      }
+
+      checkEveryDate();
+      removeMenu();
+      closeDetails();
+    }
+
+    function changeStatsNi(num) {
+      allTasks[num].title = taskTitle.value;
+      allTasks[num].details = taskDetails.value;
+      allTasks[num].date = taskDate.value;
+
+      if (task.project === 'All Entries' && taskProject.value === 'none') {
+        allTasks[num].project = 'none';
+      } else if (task.project === 'All Entries' && taskProject.value !== 'none') {
+        allTasks[num].project = taskProject.value;
+        const customizedProject = taskProject.value.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedProject);
+        const index = allTitleValues.findIndex((item) => item === customizedProject);
+
+        if (includesValue) {
+          const arrNum = index;
+          updateCustomNums(arrNum);
+        }
+      } else if ((task.project !== 'All Entries' && taskProject.value !== 'none') && (task.project !== taskProject.value)) {
+        const customizedOriginal = task.project.replace(/\s/g, ''); // original value from details
+        const customizedCurrent = taskProject.value.replace(/\s/g, ''); // current value from form
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        const includesValue2 = allTitleValues.includes(customizedCurrent);
+        const index2 = allTitleValues.findIndex((item) => item === customizedCurrent);
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+
+        if (includesValue2) {
+          const arrNum2 = index2;
+          updateCustomNums(arrNum2);
+        }
+        allTasks[num].project = taskProject.value;
+      } else if (task.project !== 'All Entries' && taskProject.value === 'none') {
+        const customizedOriginal = task.project.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+        allTasks[num].project = 'none';
+      }
+
+      if (taskImportance.checked === true) {
+        allTasks[num].importance = 'important';
+        importantTasks.push(allTasks[num]);
+        allTasks.splice(num, 1);
+      } else {
+        allTasks[num].importance = 'not-important';
+      }
+
+      checkEveryDate();
+      removeMenu();
+      closeDetails();
+    }
+  });
+}
+
+startEditButton.addEventListener('click', () => {
   const taskTitle = document.querySelector('.todo-editor-title-input input');
   const taskDetails = document.querySelector('.todo-editor-details-input textarea');
   const taskProjects = document.querySelector('.todo-editor-projects-input select');
@@ -1204,15 +1460,10 @@ startEditButton.addEventListener("click", (event) => {
   const taskImportance = document.querySelector('.container-edit input');
 
   const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
-
   const originalDetails = document.querySelector('.details-info-details-text p').textContent;
-
   const originalDueDate = document.querySelector('.details-info-date-number p').textContent;
-
   const originalStatus = document.querySelector('.details-info-status-text p').textContent;
-
   const originalImportance = document.querySelector('.details-info-importance-text p').textContent;
-
   const originalProject = document.querySelector('.details-list p').textContent;
 
   taskTitle.value = originalTitle;
@@ -1240,70 +1491,8 @@ startEditButton.addEventListener("click", (event) => {
   } else {
     taskProjects.value = originalProject;
   }
-})
 
-taskEditButton.addEventListener('click', (event) => {
-  event.preventDefault();
-
-  // SWITCHES TO ALL SECTION
-  prepareAll();
-
-  const allTaskInputs = document.querySelectorAll('.todo-editor-form input');
-  allTaskInputs.forEach((input) => {
-    input.checkValidity();
-    input.reportValidity();
-  });
-  const taskTitle = document.querySelector('.todo-editor-title-input input');
-  const taskDetails = document.querySelector('.todo-editor-details-input textarea');
-  const taskProjects = document.querySelector('.todo-editor-projects-input select');
-  const taskDate = document.querySelector('.todo-editor-date-input input');
-  const taskImportance = document.querySelector('.container-edit input');
-
-  function removeMenu() {
-    document.querySelector('.creator-menu').classList.remove('active-menu');
-    document.querySelector('.todo-editor').classList.remove('active-todo-editor');
-    // REMOVES ALL CONTENT FROM FORMS
-    taskTitle.value = '';
-    taskDetails.value = '';
-    taskDate.value = '';
-    taskImportance.checked = false;
-  }
-
-  // TAKES LIST NAME IF NOT EMPTY
-
-  function updateCustomNums(num) {
-    const allProjectLists = document.querySelectorAll('.project-list');
-
-    const projectCount = allProjectLists[num].querySelector('.project-count p').textContent;
-
-    const projectNum = Number(projectCount);
-
-    const addedNum = projectNum + 1;
-
-    allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
-  }
-
-  if (taskProjects.value !== 'none') {
-    const chosenProject = taskProjects.value;
-    const customizedProject = chosenProject.replace(/\s/g, '');
-
-    for (let i = 0; i < allLists.length; i++) {
-      const listTitle = allLists[i].title;
-      const customizedTitle = listTitle.replace(/\s/g, '');
-
-      if (customizedTitle === customizedProject) {
-        const arrNum = i;
-        updateCustomNums(arrNum);
-        break;
-      }
-    }
-  }
-
-  if (taskTitle.value === '') {
-    false;
-  } else {
-    const finalValue = taskTitle.value;
-  }
+  taskEditor(originalTitle, originalDetails, originalDueDate, originalImportance, originalProject, originalStatus);
 });
 
 noteDoneButton.addEventListener('click', (event) => {
