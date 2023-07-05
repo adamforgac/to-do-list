@@ -71,6 +71,7 @@ const wrapper = document.querySelector('.wrapper');
 
 const taskDoneButton = document.querySelector('.todo-setter-accept button');
 const taskEditButton = document.querySelector('.todo-editor-accept button');
+const noteEditButton = document.querySelector('.note-editor-accept-button');
 const startEditButton = document.querySelector('.fa-pen-to-square');
 const noteDoneButton = document.querySelector('.note-setter-accept-button');
 const listDoneButton = document.querySelector('.project-setter-accept-button');
@@ -1097,22 +1098,6 @@ taskDoneButton.addEventListener('click', (event) => {
     allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
   }
 
-  if (taskProjects.value !== 'none') {
-    const chosenProject = taskProjects.value;
-    const customizedProject = chosenProject.replace(/\s/g, '');
-
-    for (let i = 0; i < allLists.length; i++) {
-      const listTitle = allLists[i].title;
-      const customizedTitle = listTitle.replace(/\s/g, '');
-
-      if (customizedTitle === customizedProject) {
-        const arrNum = i;
-        updateCustomNums(arrNum);
-        break;
-      }
-    }
-  }
-
   if (taskTitle.value === '') {
     false;
   } else {
@@ -1131,6 +1116,21 @@ taskDoneButton.addEventListener('click', (event) => {
           if (allTasksTitles.some((item) => item === titleValue)) {
             alert('This task already exists');
           } else {
+            if (taskProjects.value !== 'none') {
+              const chosenProject = taskProjects.value;
+              const customizedProject = chosenProject.replace(/\s/g, '');
+
+              for (let i = 0; i < allLists.length; i++) {
+                const listTitle = allLists[i].title;
+                const customizedTitle = listTitle.replace(/\s/g, '');
+
+                if (customizedTitle === customizedProject) {
+                  const arrNum = i;
+                  updateCustomNums(arrNum);
+                  break;
+                }
+              }
+            }
             addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
             for (let i = 0; i < importantTasks.length; i++) {
               allTasksTitles.push(importantTasks[i].title);
@@ -1143,6 +1143,21 @@ taskDoneButton.addEventListener('click', (event) => {
             removeMenu();
           }
         } else {
+          if (taskProjects.value !== 'none') {
+            const chosenProject = taskProjects.value;
+            const customizedProject = chosenProject.replace(/\s/g, '');
+
+            for (let i = 0; i < allLists.length; i++) {
+              const listTitle = allLists[i].title;
+              const customizedTitle = listTitle.replace(/\s/g, '');
+
+              if (customizedTitle === customizedProject) {
+                const arrNum = i;
+                updateCustomNums(arrNum);
+                break;
+              }
+            }
+          }
           addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
           for (let i = 0; i < importantTasks.length; i++) {
             allTasksTitles.push(importantTasks[i].title);
@@ -1169,6 +1184,21 @@ taskDoneButton.addEventListener('click', (event) => {
           if (allTasksTitles.some((item) => item === titleValue)) {
             alert('This task already exists');
           } else {
+            if (taskProjects.value !== 'none') {
+              const chosenProject = taskProjects.value;
+              const customizedProject = chosenProject.replace(/\s/g, '');
+
+              for (let i = 0; i < allLists.length; i++) {
+                const listTitle = allLists[i].title;
+                const customizedTitle = listTitle.replace(/\s/g, '');
+
+                if (customizedTitle === customizedProject) {
+                  const arrNum = i;
+                  updateCustomNums(arrNum);
+                  break;
+                }
+              }
+            }
             addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
             for (let i = 0; i < importantTasks.length; i++) {
               allTasksTitles.push(importantTasks[i].title);
@@ -1181,6 +1211,21 @@ taskDoneButton.addEventListener('click', (event) => {
             removeMenu();
           }
         } else {
+          if (taskProjects.value !== 'none') {
+            const chosenProject = taskProjects.value;
+            const customizedProject = chosenProject.replace(/\s/g, '');
+
+            for (let i = 0; i < allLists.length; i++) {
+              const listTitle = allLists[i].title;
+              const customizedTitle = listTitle.replace(/\s/g, '');
+
+              if (customizedTitle === customizedProject) {
+                const arrNum = i;
+                updateCustomNums(arrNum);
+                break;
+              }
+            }
+          }
           addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
           for (let i = 0; i < importantTasks.length; i++) {
             allTasksTitles.push(importantTasks[i].title);
@@ -1250,40 +1295,85 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
       allProjectLists[num].querySelector('.project-count p').textContent = addedNum;
     }
 
-    if (task.importance === 'Not important task') {
-      const taskTitles = [];
-      for (let i = 0; i < allTasks.length; i++) {
-        taskTitles.push(allTasks[i].title);
+    function changeStatsNi(num) {
+      allTasks[num].title = taskTitle.value;
+      allTasks[num].details = taskDetails.value;
+      allTasks[num].date = taskDate.value;
+
+      if (task.project === 'All Entries' && taskProject.value === 'none') {
+        allTasks[num].project = 'none';
+      } else if (task.project === 'All Entries' && taskProject.value !== 'none') {
+        allTasks[num].project = taskProject.value;
+        const customizedProject = taskProject.value.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedProject);
+        const index = allTitleValues.findIndex((item) => item === customizedProject);
+
+        if (includesValue) {
+          const arrNum = index;
+          updateCustomNums(arrNum);
+        }
+      } else if ((task.project !== 'All Entries' && taskProject.value !== 'none') && (task.project !== taskProject.value)) {
+        const customizedOriginal = task.project.replace(/\s/g, ''); // original value from details
+        const customizedCurrent = taskProject.value.replace(/\s/g, ''); // current value from form
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        const includesValue2 = allTitleValues.includes(customizedCurrent);
+        const index2 = allTitleValues.findIndex((item) => item === customizedCurrent);
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+
+        if (includesValue2) {
+          const arrNum2 = index2;
+          updateCustomNums(arrNum2);
+        }
+        allTasks[num].project = taskProject.value;
+      } else if (task.project !== 'All Entries' && taskProject.value === 'none') {
+        const customizedOriginal = task.project.replace(/\s/g, '');
+        const allTitleValues = [];
+        for (let i = 0; i < allLists.length; i++) {
+          const listTitle = allLists[i].title;
+          const customizedValues = listTitle.replace(/\s/g, '');
+          allTitleValues.push(customizedValues);
+        }
+
+        const includesValue = allTitleValues.includes(customizedOriginal);
+        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
+
+        if (includesValue) {
+          const arrNum = index;
+          removeCustomNum(arrNum);
+        }
+        allTasks[num].project = 'none';
       }
 
-      const arrayCustomized = taskTitles.map((str) => str.replace(/\s/g, ''));
-      const titleCustomized = task.title.replace(/\s/g, '');
-
-      const includesValue = arrayCustomized.includes(titleCustomized);
-      const index = arrayCustomized.findIndex((item) => item === titleCustomized);
-
-      if (includesValue) {
-        changeStatsNi(index);
+      if (taskImportance.checked === true) {
+        allTasks[num].importance = 'important';
+        importantTasks.push(allTasks[num]);
+        allTasks.splice(num, 1);
       } else {
-        false;
-      }
-    } else {
-      const taskTitlesImp = [];
-      for (let i = 0; i < importantTasks.length; i++) {
-        taskTitlesImp.push(importantTasks[i].title);
+        allTasks[num].importance = 'not-important';
       }
 
-      const arrayCustomized = taskTitlesImp.map((str) => str.replace(/\s/g, ''));
-      const titleCustomized = task.title.replace(/\s/g, '');
-
-      const includesValue = arrayCustomized.includes(titleCustomized);
-      const index = arrayCustomized.findIndex((item) => item === titleCustomized);
-
-      if (includesValue) {
-        changeStatsImp(index);
-      } else {
-        false;
-      }
+      generateImmediately();
+      removeMenu();
+      closeDetails();
     }
 
     function changeStatsImp(num) {
@@ -1364,135 +1454,223 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
         importantTasks[num].importance = 'important';
       }
 
-      checkEveryDate();
+      generateImmediately();
       removeMenu();
       closeDetails();
     }
 
-    function changeStatsNi(num) {
-      allTasks[num].title = taskTitle.value;
-      allTasks[num].details = taskDetails.value;
-      allTasks[num].date = taskDate.value;
+    if (taskTitle.value === '') {
+      false;
+    } else {
+      if (taskDate.value === '') {
+        if (task.importance === 'Not important task') {
+          const taskTitles = [];
+          for (let i = 0; i < allTasks.length; i++) {
+            taskTitles.push(allTasks[i].title);
+          }
 
-      if (task.project === 'All Entries' && taskProject.value === 'none') {
-        allTasks[num].project = 'none';
-      } else if (task.project === 'All Entries' && taskProject.value !== 'none') {
-        allTasks[num].project = taskProject.value;
-        const customizedProject = taskProject.value.replace(/\s/g, '');
-        const allTitleValues = [];
-        for (let i = 0; i < allLists.length; i++) {
-          const listTitle = allLists[i].title;
-          const customizedValues = listTitle.replace(/\s/g, '');
-          allTitleValues.push(customizedValues);
+          const arrayCustomized = taskTitles.map((str) => str.replace(/\s/g, ''));
+          const titleCustomized = task.title.replace(/\s/g, '');
+
+          const includesValue = arrayCustomized.includes(titleCustomized);
+          const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+          if (includesValue) {
+            changeStatsNi(index);
+          } else {
+            false;
+          }
+        } else {
+          const taskTitlesImp = [];
+          for (let i = 0; i < importantTasks.length; i++) {
+            taskTitlesImp.push(importantTasks[i].title);
+          }
+
+          const arrayCustomized = taskTitlesImp.map((str) => str.replace(/\s/g, ''));
+          const titleCustomized = task.title.replace(/\s/g, '');
+
+          const includesValue = arrayCustomized.includes(titleCustomized);
+          const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+          if (includesValue) {
+            changeStatsImp(index);
+          } else {
+            false;
+          }
         }
-
-        const includesValue = allTitleValues.includes(customizedProject);
-        const index = allTitleValues.findIndex((item) => item === customizedProject);
-
-        if (includesValue) {
-          const arrNum = index;
-          updateCustomNums(arrNum);
-        }
-      } else if ((task.project !== 'All Entries' && taskProject.value !== 'none') && (task.project !== taskProject.value)) {
-        const customizedOriginal = task.project.replace(/\s/g, ''); // original value from details
-        const customizedCurrent = taskProject.value.replace(/\s/g, ''); // current value from form
-        const allTitleValues = [];
-        for (let i = 0; i < allLists.length; i++) {
-          const listTitle = allLists[i].title;
-          const customizedValues = listTitle.replace(/\s/g, '');
-          allTitleValues.push(customizedValues);
-        }
-
-        const includesValue = allTitleValues.includes(customizedOriginal);
-        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
-
-        const includesValue2 = allTitleValues.includes(customizedCurrent);
-        const index2 = allTitleValues.findIndex((item) => item === customizedCurrent);
-        if (includesValue) {
-          const arrNum = index;
-          removeCustomNum(arrNum);
-        }
-
-        if (includesValue2) {
-          const arrNum2 = index2;
-          updateCustomNums(arrNum2);
-        }
-        allTasks[num].project = taskProject.value;
-      } else if (task.project !== 'All Entries' && taskProject.value === 'none') {
-        const customizedOriginal = task.project.replace(/\s/g, '');
-        const allTitleValues = [];
-        for (let i = 0; i < allLists.length; i++) {
-          const listTitle = allLists[i].title;
-          const customizedValues = listTitle.replace(/\s/g, '');
-          allTitleValues.push(customizedValues);
-        }
-
-        const includesValue = allTitleValues.includes(customizedOriginal);
-        const index = allTitleValues.findIndex((item) => item === customizedOriginal);
-
-        if (includesValue) {
-          const arrNum = index;
-          removeCustomNum(arrNum);
-        }
-        allTasks[num].project = 'none';
-      }
-
-      if (taskImportance.checked === true) {
-        allTasks[num].importance = 'important';
-        importantTasks.push(allTasks[num]);
-        allTasks.splice(num, 1);
       } else {
-        allTasks[num].importance = 'not-important';
-      }
+        const userDate = taskDate.value;
+        const currentDate = new Date();
+        const dueDate = parseISO(userDate);
+        const difference = differenceInDays(dueDate, currentDate);
 
-      checkEveryDate();
-      removeMenu();
+        if (difference < 0) {
+          alert('The due date is older than the current date.');
+        } else {
+          if (task.importance === 'Not important task') {
+            const taskTitles = [];
+            for (let i = 0; i < allTasks.length; i++) {
+              taskTitles.push(allTasks[i].title);
+            }
+
+            const arrayCustomized = taskTitles.map((str) => str.replace(/\s/g, ''));
+            const titleCustomized = task.title.replace(/\s/g, '');
+
+            const includesValue = arrayCustomized.includes(titleCustomized);
+            const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+            if (includesValue) {
+              changeStatsNi(index);
+            } else {
+              false;
+            }
+          } else {
+            const taskTitlesImp = [];
+            for (let i = 0; i < importantTasks.length; i++) {
+              taskTitlesImp.push(importantTasks[i].title);
+            }
+
+            const arrayCustomized = taskTitlesImp.map((str) => str.replace(/\s/g, ''));
+            const titleCustomized = task.title.replace(/\s/g, '');
+
+            const includesValue = arrayCustomized.includes(titleCustomized);
+            const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+            if (includesValue) {
+              changeStatsImp(index);
+            } else {
+              false;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+const note = {};
+
+function noteEditor(originalTitle, originalDetails) {
+  note.title = originalTitle;
+  note.details = originalDetails;
+
+  noteEditButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    event.preventDefault();
+
+    const noteTitle = document.querySelector('.note-editor-title-input input');
+    const noteDetails = document.querySelector('.note-editor-details-input textarea');
+
+    prepareAll();
+
+    const allNoteInputs = document.querySelectorAll('.note-editor-form input');
+
+    allNoteInputs.forEach((input) => {
+      input.checkValidity();
+      input.reportValidity();
+    });
+
+    function removeMenu() {
+      document.querySelector('.creator-menu').classList.remove('active-menu');
+      document.querySelector('.note-editor').classList.remove('active-note-editor');
+      // REMOVES ALL CONTENT FROM FORMS
+      noteTitle.value = '';
+      noteDetails.value = '';
+    }
+
+    function changeNoteStats(num) {
+      allNotes[num].title = noteTitle.value;
+      allNotes[num].details = noteDetails.value;
+
       closeDetails();
+      removeMenu();
+    }
+
+    const allNoteTitles = [];
+
+    for (let i = 0; i < allNotes.length; i++) {
+      allNoteTitles.push(allNotes[i].title);
+    }
+
+    const arrayCustomized = allNoteTitles.map((str) => str.replace(/\s/g, ''));
+    const titleCustomized = note.title.replace(/\s/g, '');
+
+    const includesValue = arrayCustomized.includes(titleCustomized);
+    const index = arrayCustomized.findIndex((item) => item === titleCustomized);
+
+    if (includesValue) {
+      if (noteTitle.value === '') {
+        false;
+      } else {
+        changeNoteStats(index);
+      }
+    } else {
+      false;
     }
   });
 }
 
 startEditButton.addEventListener('click', () => {
-  const taskTitle = document.querySelector('.todo-editor-title-input input');
-  const taskDetails = document.querySelector('.todo-editor-details-input textarea');
-  const taskProjects = document.querySelector('.todo-editor-projects-input select');
-  const taskDate = document.querySelector('.todo-editor-date-input input');
-  const taskImportance = document.querySelector('.container-edit input');
+  const currentList = document.querySelector('.details-list p');
+  if (currentList.textContent === 'Notes') {
+    const noteTitle = document.querySelector('.note-editor-title-input input');
+    const noteDetails = document.querySelector('.note-editor-details-input textarea');
 
-  const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
-  const originalDetails = document.querySelector('.details-info-details-text p').textContent;
-  const originalDueDate = document.querySelector('.details-info-date-number p').textContent;
-  const originalStatus = document.querySelector('.details-info-status-text p').textContent;
-  const originalImportance = document.querySelector('.details-info-importance-text p').textContent;
-  const originalProject = document.querySelector('.details-list p').textContent;
+    const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
+    const originalDetails = document.querySelector('.details-info-details-text p').textContent;
 
-  taskTitle.value = originalTitle;
+    noteTitle.value = originalTitle;
 
-  if (originalDetails === 'This task has no description') {
-    taskDetails.value = '';
+    if (originalDetails === 'This note has no description') {
+      noteDetails.value = '';
+    } else {
+      noteDetails.value = originalDetails;
+    }
+
+    noteEditor(originalTitle, originalDetails);
   } else {
-    taskDetails.value = originalDetails;
-  }
+    const taskTitle = document.querySelector('.todo-editor-title-input input');
+    const taskDetails = document.querySelector('.todo-editor-details-input textarea');
+    const taskProjects = document.querySelector('.todo-editor-projects-input select');
+    const taskDate = document.querySelector('.todo-editor-date-input input');
+    const taskImportance = document.querySelector('.container-edit input');
 
-  if (originalDueDate === 'The date has not been set') {
-    taskDate.value = '';
-  } else {
-    taskDate.value = originalDueDate;
-  }
+    const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
+    const originalDetails = document.querySelector('.details-info-details-text p').textContent;
+    const originalDueDate = document.querySelector('.details-info-date-number p').textContent;
+    const originalStatus = document.querySelector('.details-info-status-text p').textContent;
+    const originalImportance = document.querySelector('.details-info-importance-text p').textContent;
+    const originalProject = document.querySelector('.details-list p').textContent;
 
-  if (originalImportance === 'Not important task') {
-    taskImportance.checked = false;
-  } else {
-    taskImportance.checked = true;
-  }
+    taskTitle.value = originalTitle;
 
-  if (originalProject === 'All Entries') {
-    taskProjects.value = 'none';
-  } else {
-    taskProjects.value = originalProject;
-  }
+    if (originalDetails === 'This task has no description') {
+      taskDetails.value = '';
+    } else {
+      taskDetails.value = originalDetails;
+    }
 
-  taskEditor(originalTitle, originalDetails, originalDueDate, originalImportance, originalProject, originalStatus);
+    if (originalDueDate === 'The date has not been set') {
+      taskDate.value = '';
+    } else {
+      taskDate.value = originalDueDate;
+    }
+
+    if (originalImportance === 'Not important task') {
+      taskImportance.checked = false;
+    } else {
+      taskImportance.checked = true;
+    }
+
+    if (originalProject === 'All Entries') {
+      taskProjects.value = 'none';
+    } else {
+      taskProjects.value = originalProject;
+    }
+
+    taskEditor(originalTitle, originalDetails, originalDueDate, originalImportance, originalProject, originalStatus);
+  }
 });
 
 noteDoneButton.addEventListener('click', (event) => {

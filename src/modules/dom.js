@@ -44,20 +44,30 @@ function callDom() {
   const todoSetter = document.querySelector('.todo-setter');
   const todoEditor = document.querySelector('.todo-editor');
   const noteSetter = document.querySelector('.note-setter');
+  const noteEditor = document.querySelector('.note-editor');
   const projectSetter = document.querySelector('.project-setter');
   const exitCreator = document.querySelector('.todo-setter-nav-arrow i');
+  const exitCreatorEdit = document.querySelector('.todo-editor-nav-arrow i');
   const todoEditCreator = document.querySelector('.fa-pen-to-square');
   const exitNoteCreator = document.querySelector('.note-setter-nav-arrow i');
+  const exitNoteEditor = document.querySelector('.note-editor-nav-arrow i');
   const exitProjectCreator = document.querySelector('.project-setter-nav-arrow i');
   const exitToMenu = document.querySelector('.todo-setter-nav-icons i');
+  const exitToMenuEdit = document.querySelector('.todo-editor-nav-icons i');
   const exitToMenuNote = document.querySelector('.note-setter-nav-icons i');
+  const exitToMenuNoteEdit = document.querySelector('.note-editor-nav-icons i');
   const exitToMenuProject = document.querySelector('.project-setter-nav-icons i');
 
   todoCreator.addEventListener('click', () => {
     todoSetter.classList.add('active-todo-setter');
   });
   todoEditCreator.addEventListener('click', () => {
-    todoEditor.classList.add('active-todo-editor');
+    const currentList = document.querySelector('.details-list p');
+    if (currentList.textContent === 'Notes') {
+      noteEditor.classList.add('active-note-editor');
+    } else {
+      todoEditor.classList.add('active-todo-editor');
+    }
   });
   noteCreator.addEventListener('click', () => {
     noteSetter.classList.add('active-note-setter');
@@ -69,8 +79,16 @@ function callDom() {
     todoSetter.classList.remove('active-todo-setter');
     menu.classList.add('active-menu');
   });
+  exitCreatorEdit.addEventListener('click', () => {
+    todoEditor.classList.remove('active-todo-editor');
+    menu.classList.add('active-menu');
+  });
   exitNoteCreator.addEventListener('click', () => {
     noteSetter.classList.remove('active-note-setter');
+    menu.classList.add('active-menu');
+  });
+  exitNoteEditor.addEventListener('click', () => {
+    noteEditor.classList.remove('active-note-editor');
     menu.classList.add('active-menu');
   });
   exitProjectCreator.addEventListener('click', () => {
@@ -81,8 +99,16 @@ function callDom() {
     todoSetter.classList.remove('active-todo-setter');
     menu.classList.remove('active-menu');
   });
+  exitToMenuEdit.addEventListener('click', () => {
+    todoEditor.classList.remove('active-todo-editor');
+    menu.classList.remove('active-menu');
+  });
   exitToMenuNote.addEventListener('click', () => {
     noteSetter.classList.remove('active-note-setter');
+    menu.classList.remove('active-menu');
+  });
+  exitToMenuNoteEdit.addEventListener('click', () => {
+    noteEditor.classList.remove('active-note-editor');
     menu.classList.remove('active-menu');
   });
   exitToMenuProject.addEventListener('click', () => {
