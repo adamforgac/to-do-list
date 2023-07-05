@@ -1085,7 +1085,7 @@ table {
     overflow: hidden;
 }
 
-.note-setter {
+.note-setter, .note-editor {
     transition: all 0.3s;
     width: 100vw;
     height: 100%;
@@ -1114,7 +1114,7 @@ table {
     overflow: hidden;
 }
 
-.active-todo-setter, .active-note-setter, .active-project-setter, .active-todo-editor {
+.active-todo-setter, .active-note-setter, .active-project-setter, .active-todo-editor, .active-note-editor {
     width: 100vw;
     height: 100%;
     background: black;
@@ -1128,7 +1128,7 @@ table {
     overflow: scroll;
 }
 
-.todo-setter-wrap, .note-setter-wrap, .project-setter-wrap, .todo-editor-wrap {
+.todo-setter-wrap, .note-setter-wrap, .project-setter-wrap, .todo-editor-wrap, .note-editor-wrap {
     display: grid;
     grid-template-rows: 1fr 9fr;
     min-height: 100%;
@@ -1146,26 +1146,26 @@ table {
 
 
 
-.todo-setter-nav, .note-setter-nav, .project-setter-nav, .todo-editor-nav {
+.todo-setter-nav, .note-setter-nav, .project-setter-nav, .todo-editor-nav, .note-editor-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
 }
 
-.todo-setter-nav-arrow i, .note-setter-nav-arrow i, .project-setter-nav-arrow i, .todo-editor-nav-arrow i {
+.todo-setter-nav-arrow i, .note-setter-nav-arrow i, .project-setter-nav-arrow i, .todo-editor-nav-arrow i, .note-editor-nav-arrow i {
     font-size: 2rem;
     color: white;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover, .project-setter-nav-arrow i:hover, .todo-editor-nav-arrow i:hover {
+.todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover, .project-setter-nav-arrow i:hover, .todo-editor-nav-arrow i:hover, .note-editor-nav-arrow i:hover {
     color: var(--round-active-purple);
     transition: 0.2s;
 }
 
-.todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img {
+.todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img, .note-editor-nav-logo img {
     width: 160px;
 }
 
@@ -1175,14 +1175,14 @@ table {
     font-size: 1.5rem;
 }
 
-.todo-setter-nav-icons i, .note-setter-nav-icons i, .project-setter-nav-icons i, .todo-editor-nav-icons i {
+.todo-setter-nav-icons i, .note-setter-nav-icons i, .project-setter-nav-icons i, .todo-editor-nav-icons i, .note-editor-nav-icons i {
     color: white;
     font-size: 1.8rem;
     transition: 0.2s;
     cursor: pointer;
 }
 
-.todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover, .project-setter-nav-icons i:hover, .todo-editor-nav-icons i:hover {
+.todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover, .project-setter-nav-icons i:hover, .todo-editor-nav-icons i:hover, .note-editor-nav-icons i:hover {
     color: var(--round-active-purple);
     transition: 0.2s;
 }
@@ -1228,7 +1228,7 @@ table {
 
 
 
-.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .todo-setter-date, .project-setter-title, .project-setter-color, .todo-editor-title, .todo-editor-projects, .todo-editor-date, .todo-editor-details {
+.todo-setter-title, .note-setter-title, .todo-setter-details, .note-setter-details, .todo-setter-projects, .todo-setter-date, .project-setter-title, .project-setter-color, .todo-editor-title, .todo-editor-projects, .todo-editor-date, .todo-editor-details, .note-editor-title, .note-editor-details {
     display: grid;
     grid-template-rows: 40px 1fr;
     gap: 5px;
@@ -1237,6 +1237,7 @@ table {
 input[type="color"] {
     border-radius: 30px;
     -webkit-appearance: none;
+    appearance: none;
     -moz-appearance: none;
     width: 100%;
     height: 40px;
@@ -1266,6 +1267,7 @@ input[type="color"]::-webkit-color-swatch {
     width: 100%;
     border-radius: 21px;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .setter-label {
@@ -1301,7 +1303,7 @@ form input:focus, form textarea:focus, form select:focus {
     border: 2px solid var(--round-active-purple);
 }
 
-.todo-setter-main-area, .note-setter-main-area, .project-setter-main-area, .todo-editor-main-area {
+.todo-setter-main-area, .note-setter-main-area, .project-setter-main-area, .todo-editor-main-area, .note-editor-main-area {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -1425,7 +1427,7 @@ form input:focus, form textarea:focus, form select:focus {
 
 
 
-.todo-setter-details-input input, .note-setter-details-input input, .todo-editor-details-input input {
+.todo-setter-details-input input, .note-setter-details-input input, .todo-editor-details-input input, .note-editor-details-input input {
     padding: 10px 25px;
 }
 
@@ -1501,14 +1503,14 @@ form input:focus, form textarea:focus, form select:focus {
 /* BUTTON */
 
 
-.todo-setter-accept, .note-setter-accept, .project-setter-accept, .todo-editor-accept {
+.todo-setter-accept, .note-setter-accept, .project-setter-accept, .todo-editor-accept, .note-editor-accept {
     display: grid;
     align-items: center;
     grid-template-columns: 1fr;
     position: relative;
 }
 
-.todo-setter-accept button, .note-setter-accept button, .project-setter-accept button, .todo-editor-accept button {
+.todo-setter-accept button, .note-setter-accept button, .project-setter-accept button, .todo-editor-accept button, .note-editor-accept button {
     height: 64px;
     width: 100%;
     border-radius: 30px;
@@ -1522,7 +1524,7 @@ form input:focus, form textarea:focus, form select:focus {
     cursor: pointer;
 }
 
-.todo-setter-accept button:hover, .note-setter-accept button:hover, .project-setter-accept button:hover, .todo-editor-accept button:hover {
+.todo-setter-accept button:hover, .note-setter-accept button:hover, .project-setter-accept button:hover, .todo-editor-accept button:hover, .note-editor-accept button:hover {
     box-shadow: rgba(73, 24, 156, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     transition: 0.7s;
     scale: 1.07;
@@ -1532,13 +1534,13 @@ form input:focus, form textarea:focus, form select:focus {
 /* ADD TODO IMAGE */
 
 
-.todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image  {
+.todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image, .note-editor-form-image {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img, .todo-editor-form-image img {
+.todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img, .todo-editor-form-image img, .note-editor-form-image img {
     width: clamp(400px, 70%, 500px);
     transform: translateY(-10%);
 }

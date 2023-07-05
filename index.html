@@ -252,7 +252,7 @@
                 <p>Random list</p>
 
                 <div class="details-list-icons">
-                    <i class="fa-regular fa-pen-to-square"></i>
+                    <i class="fa-regular fa-pen-to-square task-editing"></i>
                     <i class="fa-solid fa-trash"></i>
                 </div>
             </div>
@@ -490,6 +490,62 @@
 
                     <div class="todo-editor-form-image">
                         <img src="images/add-task-image.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="note-editor">
+            <div class="note-editor-wrap">
+                <div class="note-editor-nav">
+                <div class="note-editor-nav-arrow">
+                        <i class="fa-solid fa-arrow-left"></i>
+                </div>
+
+                <div class="note-editor-nav-logo">
+                        <img src="images/3D logo.png" alt="">
+                </div>
+
+                <div class="note-editor-nav-icons">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </div>
+                </div>
+
+                <div class="note-editor-main-area">
+                    <div class="note-editor-form">
+                        <form autocomplete="off" class="note-form" action="">
+                            <div class="note-editor-title">
+                                <div class="note-editor-title-label setter-label">
+                                    <label for="title_input">Task Title</label>
+                                </div>
+        
+                                <div class="note-editor-title-input setter-input">
+                                    <input required minlength="1" maxlength="100" type="text" id="title_input">
+                                </div>
+                            </div>
+        
+                            <div class="note-editor-details">
+                                <div class="note-editor-details-label setter-label">
+                                    <label for="details_input">Task Details</label>
+                                </div>
+        
+                                <div class="note-editor-details-input setter-input">
+                                    <textarea maxlength="800" name="text-details" id="details_input"></textarea>
+                                </div>
+                            </div>
+                    
+                            <div class="note-editor-accept">
+                                <div class="note-editor-accept-button">
+                                    <button type="submit">
+                                        Edit Note
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="note-editor-form-image">
+                        <img src="images/note main image.png" alt="">
                     </div>
                 </div>
             </div>
