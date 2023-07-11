@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="queries.css">
     <script src="https://kit.fontawesome.com/e4b054a4b4.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,6 +121,7 @@
 
                 <div class="list-heading">
                     <h5>Lists</h5>
+                    <i class="fa-solid fa-trash list-trash"></i>
                 </div>
     
                 <div class="projects">
@@ -152,7 +154,7 @@
 
                 <div class="task-board-options">
                     <div class="sort">
-                        <i class="fa-solid fa-filter"></i>
+                        <i class="fa-solid fa-trash-can"></i>
                     </div>
 
                     <div class="background-option">
@@ -253,7 +255,7 @@
 
                 <div class="details-list-icons">
                     <i class="fa-regular fa-pen-to-square task-editing"></i>
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash task-trash"></i>
                 </div>
             </div>
         </div>
@@ -516,7 +518,7 @@
                         <form autocomplete="off" class="note-form" action="">
                             <div class="note-editor-title">
                                 <div class="note-editor-title-label setter-label">
-                                    <label for="title_input">Task Title</label>
+                                    <label for="title_input">Note Title</label>
                                 </div>
         
                                 <div class="note-editor-title-input setter-input">
@@ -526,7 +528,7 @@
         
                             <div class="note-editor-details">
                                 <div class="note-editor-details-label setter-label">
-                                    <label for="details_input">Task Details</label>
+                                    <label for="details_input">Note Details</label>
                                 </div>
         
                                 <div class="note-editor-details-input setter-input">
@@ -572,7 +574,7 @@
                         <form autocomplete="off" class="note-form" action="">
                             <div class="note-setter-title">
                                 <div class="note-setter-title-label setter-label">
-                                    <label for="title_input">Task Title</label>
+                                    <label for="title_input">Note Title</label>
                                 </div>
         
                                 <div class="note-setter-title-input setter-input">
@@ -582,7 +584,7 @@
         
                             <div class="note-setter-details">
                                 <div class="note-setter-details-label setter-label">
-                                    <label for="details_input">Task Details</label>
+                                    <label for="details_input">Note Details</label>
                                 </div>
         
                                 <div class="note-setter-details-input setter-input">
@@ -659,6 +661,34 @@
                     <div class="project-setter-form-image">
                         <img src="images/main-folder-image.png" alt="">
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-deleter">
+            <div class="pd-wrapper">
+                <div class="logo-bar">
+                    <i class="fa-solid fa-xmark deleter-xmark"></i>
+
+                    <img src="images/3D logo.png" alt="">
+                </div>
+
+                <form action="" id="removal-form" class="choose-bar" autocomplete="off">
+                    <div class="pd-input-heading">
+                        <label for="list-removal">
+                            Which list do you want to remove?
+                        </label>
+                    </div>
+
+                    <div class="pd-input-input">
+                        <select name="list-removal" id="list-removal">
+                            <option class="none" value="none">none</option>
+                        </select>
+                    </div>
+                </form>
+
+                <div class="button-bar">
+                    <button form="removal-form" type="submit">remove</button>
                 </div>
             </div>
         </div>
