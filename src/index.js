@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
 /* eslint-disable no-lonely-if */
@@ -42,10 +43,11 @@ window.onload = function () {
 const allTasks = [];
 let allTasksTitles = [];
 let allListTitles = [];
-let allNotesTitles = [];
+const allNotesTitles = [];
 let todayTasksNi = [];
 let todayTasksImp = [];
 let weekTasksNi = [];
+let currentArrNums = [];
 let weekTasksImp = [];
 const importantTasks = [];
 const allNotes = [];
@@ -75,6 +77,7 @@ const noteEditButton = document.querySelector('.note-editor-accept-button');
 const startEditButton = document.querySelector('.fa-pen-to-square');
 const noteDoneButton = document.querySelector('.note-setter-accept-button');
 const listDoneButton = document.querySelector('.project-setter-accept-button');
+const listRemovalButton = document.querySelector('.button-bar button');
 
 // CATEGORY SMALL NUMBERS
 
@@ -87,6 +90,7 @@ const weekCount = document.querySelector('.week-count p');
 
 const selectInput = document.querySelector('#projects_input');
 const selectInputEdit = document.querySelector('#projects_input_edit');
+const selectInputRemoval = document.querySelector('#list-removal');
 const categoryHeading = document.querySelector('.category-name h2');
 const importantSection = document.querySelector('.important');
 const allSection = document.querySelector('.all');
@@ -479,6 +483,8 @@ function addOptionAttribute() {
   }
 }
 
+// SETS RIGHT ARRAYNUMBERS
+
 // WHOLE CONTENT GENERATORS (UPDATES CLASSES AND ATTRIBUTES)
 // WHOLE CONTENT GENERATORS (UPDATES CLASSES AND ATTRIBUTES)
 // WHOLE CONTENT GENERATORS (UPDATES CLASSES AND ATTRIBUTES)
@@ -595,6 +601,35 @@ function generateAllTasks() {
 
     addTaskAttribute();
   }
+}
+
+function generateAllLists() {
+  for (let i = 0; i < allLists.length; i++) {
+    // CREATES THE MAIN SHAPE
+
+    lists.appendChild(document.createElement('div')).classList.add('project-list');
+    const projectList = lists.querySelectorAll('.project-list');
+
+    projectList[i].appendChild(document.createElement('div')).classList.add('project-color');
+    projectList[i].appendChild(document.createElement('div')).classList.add('project-name');
+    projectList[i].appendChild(document.createElement('div')).classList.add('project-count');
+
+    // ADDS COMPLETE CHECKBOX
+
+    const projectColor = projectList[i].querySelector('.project-color');
+    projectColor.appendChild(document.createElement('div'));
+    const projectMark = projectList[i].querySelector('.project-color div');
+    projectMark.style.backgroundColor = allLists[i].color;
+
+    const projectName = projectList[i].querySelector('.project-name');
+    projectName.appendChild(document.createElement('h2')).textContent = allLists[i].title;
+
+    const projectCount = projectList[i].querySelector('.project-count');
+    projectCount.appendChild(document.createElement('p')).textContent = 0;
+
+    addListAttribute();
+  }
+  addArrNums();
 }
 
 function generateAllNotes() {
@@ -767,6 +802,25 @@ function prepareAll() {
   updateArrayNumbers();
 
   categoryHeading.textContent = 'All Entries';
+}
+
+function addArrNums() {
+  let futureArrNums = document.querySelectorAll('.project-count p');
+  for (let i = 0; i < futureArrNums.length; i++) {
+    futureArrNums[i].textContent = currentArrNums[i];
+  }
+
+  futureArrNums = [];
+  currentArrNums = [];
+}
+
+function prepareLists() {
+  const allNums = document.querySelectorAll('.project-count p');
+  for (let i = 0; i < allNums.length; i++) {
+    currentArrNums.push(allNums[i].textContent);
+  }
+  lists.innerHTML = '';
+  generateAllLists();
 }
 
 function prepareWithoutName() {
@@ -1608,6 +1662,7 @@ function noteEditor(originalTitle, originalDetails) {
     } else {
       false;
     }
+    prepareAll();
   });
 }
 
@@ -1722,6 +1777,55 @@ noteDoneButton.addEventListener('click', (event) => {
   }
 });
 
+function updateOptions() {
+  const listTitles = document.querySelectorAll('.project-name h2');
+  allListTitles = [];
+
+  for (let i = 0; i < listTitles.length; i++) {
+    allListTitles.push(listTitles[i].textContent);
+  }
+
+  selectInput.innerHTML = '';
+  selectInputEdit.innerHTML = '';
+  selectInputRemoval.innerHTML = '';
+
+  const noneElement = document.createElement('option');
+  const noneElementEdit = document.createElement('option');
+  const noneElementRemoval = document.createElement('option');
+
+  noneElement.value = 'none';
+  noneElement.textContent = 'none';
+  noneElementEdit.value = 'none';
+  noneElementEdit.textContent = 'none';
+  noneElementRemoval.value = 'none';
+  noneElementRemoval.textContent = 'none';
+  selectInput.appendChild(noneElement);
+  selectInputEdit.appendChild(noneElementEdit);
+  selectInputRemoval.appendChild(noneElementRemoval);
+
+  allListOptions = [];
+
+  for (let i = 0; i < allListTitles.length; i++) {
+    allListOptions.push(allListTitles[i]);
+  }
+
+  for (let i = 0; i < allListOptions.length; i++) {
+    const option = document.createElement('option');
+    const optionEdit = document.createElement('option');
+    const optionRemoval = document.createElement('option');
+    option.classList.add('list-item');
+    option.text = allListOptions[i];
+    optionEdit.text = allListOptions[i];
+    optionRemoval.text = allListOptions[i];
+    selectInput.add(option);
+    selectInputEdit.add(optionEdit);
+    selectInputRemoval.add(optionRemoval);
+  }
+
+  addOptionAttribute();
+  prepareLists();
+}
+
 listDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -1761,29 +1865,7 @@ listDoneButton.addEventListener('click', (event) => {
         projectTitle.value = '';
         projectColor.value = '#FFFFFF';
 
-        const listMenuOptions = document.querySelectorAll('.project-name h2');
-        allListOptions = [];
-        listMenuOptions.forEach((listOption) => {
-          allListOptions.push(listOption.textContent);
-        });
-
-        const option = document.createElement('option');
-        const optionOther = document.createElement('option');
-        option.classList.add('list-item');
-
-        allListOptions.forEach((optionText) => {
-          option.text = '';
-          option.text = optionText;
-          selectInput.appendChild(option);
-        });
-
-        allListOptions.forEach((optionText) => {
-          optionOther.text = '';
-          optionOther.text = optionText;
-          selectInputEdit.appendChild(optionOther);
-        });
-
-        addOptionAttribute();
+        updateOptions();
       }
     } else {
       addToAllLists(projectTitle.value, projectColor.value);
@@ -1792,29 +1874,7 @@ listDoneButton.addEventListener('click', (event) => {
         allListTitles.push(allLists[i].title);
       }
 
-      const listMenuOptions = document.querySelectorAll('.project-name h2');
-      allListOptions = [];
-      listMenuOptions.forEach((listOption) => {
-        allListOptions.push(listOption.textContent);
-      });
-
-      const option = document.createElement('option');
-      const optionOther = document.createElement('option');
-      option.classList.add('list-item');
-
-      allListOptions.forEach((optionText) => {
-        option.text = '';
-        option.text = optionText;
-        selectInput.appendChild(option);
-      });
-
-      allListOptions.forEach((optionText) => {
-        optionOther.text = '';
-        optionOther.text = optionText;
-        selectInputEdit.appendChild(optionOther);
-      });
-
-      addOptionAttribute();
+      updateOptions();
 
       // REMOVES MENUS
       document.querySelector('.creator-menu').classList.remove('active-menu');
@@ -1841,6 +1901,154 @@ listDoneButton.addEventListener('click', (event) => {
       false;
     }
   });
+});
+
+listRemovalButton.addEventListener('click', (event) => {
+  let allRemovedTitles = [];
+  event.preventDefault();
+  const importantIndexes = [];
+  const allIndexes = [];
+  const completedIndexes = [];
+
+  function removeAllIndexes() {
+    const sortedIndices = allIndexes.sort((a, b) => b - a);
+    sortedIndices.forEach((index) => {
+      allTasks.splice(index, 1);
+    });
+
+    const sortedIndicesImp = importantIndexes.sort((a, b) => b - a);
+    sortedIndicesImp.forEach((index) => {
+      importantTasks.splice(index, 1);
+    });
+
+    const sortedIndicesCompleted = completedIndexes.sort((a, b) => b - a);
+    sortedIndicesCompleted.forEach((index) => {
+      completedTasks.splice(index, 1);
+    });
+  }
+
+  projectDeleter.classList.remove('active-project-deleter');
+  body.style.overflow = 'visible';
+
+  const currentValue = selectInputRemoval.value;
+  const currentValueCustomized = currentValue.replace(/[ .]/g, '');
+
+  function removeAllTasks(num) {
+    allTasks.splice(num, 1);
+    prepareAll();
+  }
+
+  function removeImportant(num) {
+    importantTasks.splice(num, 1);
+    prepareAll();
+  }
+
+  function removeCompleted(num) {
+    completedTasks.splice(num, 1);
+    prepareAll();
+  }
+
+  function removeList(num) {
+    allLists.splice(num, 1);
+  }
+
+  for (let i = 0; i < allTasks.length; i++) {
+    const currentTaskProject = allTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      allRemovedTitles.push(allTasks[i].title);
+    }
+  }
+
+  for (let i = 0; i < importantTasks.length; i++) {
+    const currentTaskProject = importantTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      allRemovedTitles.push(importantTasks[i].title);
+    }
+  }
+
+  for (let i = 0; i < completedTasks.length; i++) {
+    const currentTaskProject = completedTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      allRemovedTitles.push(completedTasks[i].title);
+    }
+  }
+
+  for (let i = 0; i < allTasks.length; i++) {
+    const currentTaskProject = allTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      allIndexes.push(i);
+    }
+  }
+
+  for (let i = 0; i < importantTasks.length; i++) {
+    const currentTaskProject = importantTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      importantIndexes.push(i);
+    }
+  }
+
+  for (let i = 0; i < completedTasks.length; i++) {
+    const currentTaskProject = completedTasks[i].project.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      completedIndexes.push(i);
+    }
+  }
+
+  for (let i = 0; i < allLists.length; i++) {
+    const currentTaskProject = allLists[i].title.replace(/[ .]/g, '');
+    if (currentTaskProject === currentValueCustomized) {
+      removeList(i);
+    }
+  }
+
+  removeAllIndexes();
+
+  let customizedArr = [];
+  customizedArr = [];
+
+  for (let i = 0; i < allListTitles.length; i++) {
+    const customizedTitle = allListTitles[i].replace(/[ .]/g, '');
+    customizedArr.push(customizedTitle);
+  }
+
+  const keyIndex = customizedArr.indexOf(currentValueCustomized);
+  allListTitles.splice(keyIndex, 1);
+
+  // START
+
+  let customizedRemoved = allRemovedTitles.map((str) => str.replace(/\s/g, ''));
+
+  let customizedAll = allTasksTitles.map((str) => str.replace(/\s/g, ''));
+
+  console.log(customizedAll);
+  console.log(allRemovedTitles);
+
+  let arrayNums = [];
+
+  for (let i = 0; i < customizedRemoved.length; i++) {
+    if (customizedAll.includes(customizedRemoved[i])) {
+      const titleIndex = customizedAll.indexOf(customizedRemoved[i]);
+      arrayNums.push(titleIndex);
+    }
+  }
+
+  const sortedIndices = arrayNums.sort((a, b) => b - a);
+
+  sortedIndices.forEach((index) => {
+    allTasksTitles.splice(index, 1);
+  });
+
+  console.log(allTasksTitles);
+
+  console.log(arrayNums);
+
+  prepareLists();
+  updateOptions();
+  prepareAll();
+  allRemovedTitles = [];
+  customizedRemoved = [];
+  customizedAll = [];
+  arrayNums = [];
 });
 
 // MAKES THE TASK COMPLETED AFTER USER CLICKS THE TASK CHECKBOX
@@ -1910,6 +2118,9 @@ document.addEventListener('click', (event) => {
     clickedElement = clickedElement.parentNode;
   }
 
+  const audio = new Audio();
+  audio.src = '/dist/audio/apple.mp3';
+
   if (classArray.includes('not-important-round')) {
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
@@ -1934,6 +2145,8 @@ document.addEventListener('click', (event) => {
     if (wrapper.classList.contains('details')) {
       document.querySelector('.details-info-status-text p').textContent = 'Completed task';
     }
+
+    audio.play();
 
     generateImmediately();
 
@@ -2214,7 +2427,7 @@ textarea.addEventListener('keydown', (event) => {
 // REMOVES TODO
 // REMOVES TODO
 
-const trash = document.querySelector('.fa-trash');
+const trash = document.querySelector('.task-trash');
 trash.addEventListener('click', () => {
   const importanceStatus = document.querySelector('.details-info-importance-text p').textContent;
   const titleStatus = document.querySelector('.details-info-heading-text h2').textContent;
@@ -2230,6 +2443,9 @@ trash.addEventListener('click', () => {
     if (importanceStatus === 'Not important task') {
       for (let i = 0; i < allTasks.length; i++) {
         if (allTasks[i].title === currentTitle) {
+          const keyTitle = allTasks[i].title;
+          const impNum = allTasksTitles.indexOf(keyTitle);
+          allTasksTitles.splice(impNum, 1);
           allTasks.splice(i, 1);
           break;
         }
@@ -2237,6 +2453,9 @@ trash.addEventListener('click', () => {
     } else {
       for (let i = 0; i < importantTasks.length; i++) {
         if (importantTasks[i].title === currentTitle) {
+          const keyTitle = importantTasks[i].title;
+          const impNum = allTasksTitles.indexOf(keyTitle);
+          allTasksTitles.splice(impNum, 1);
           importantTasks.splice(i, 1);
           break;
         }
@@ -2245,6 +2464,9 @@ trash.addEventListener('click', () => {
   } else if (statusStatus === '') {
     for (let i = 0; i < allNotes.length; i++) {
       if (allNotes[i].title === currentTitle) {
+        const keyTitle = allNotes[i].title;
+        const impNum = allNotesTitles.indexOf(keyTitle);
+        allNotesTitles.splice(impNum, 1);
         allNotes.splice(i, 1);
         break;
       }
@@ -2252,6 +2474,9 @@ trash.addEventListener('click', () => {
   } else {
     for (let i = 0; i < completedTasks.length; i++) {
       if (completedTasks[i].title === currentTitle) {
+        const keyTitle = completedTasks[i].title;
+        const impNum = allTasksTitles.indexOf(keyTitle);
+        allTasksTitles.splice(impNum, 1);
         completedTasks.splice(i, 1);
         break;
       }
@@ -2259,6 +2484,7 @@ trash.addEventListener('click', () => {
   }
 
   const chosenProject = document.querySelector('.details-list p').textContent;
+  const chosenStatus = document.querySelector('.details-info-status-text p').textContent;
   if (chosenProject !== 'All Entries') {
     const customizedProject = chosenProject.replace(/\s/g, '');
 
@@ -2266,17 +2492,35 @@ trash.addEventListener('click', () => {
       const listTitle = allLists[i].title;
       const customizedTitle = listTitle.replace(/\s/g, '');
 
-      if (customizedTitle === customizedProject) {
+      if ((customizedTitle === customizedProject) && (chosenStatus === 'Not done yet')) {
         const arrNum = i;
         removeCustomNum(arrNum);
         break;
+      } else {
+        false;
       }
     }
   }
 
+  checkEveryDate();
   generateImmediately();
-  allTasksTitles = [];
-  allListTitles = [];
-  allNotesTitles = [];
   closeDetails();
+});
+
+// REMOVES THE LIST
+
+const projectTrash = document.querySelector('.list-trash');
+const projectDeleter = document.querySelector('.project-deleter');
+const body = document.querySelector('body');
+const deleterXmark = document.querySelector('.deleter-xmark');
+
+projectTrash.addEventListener('click', () => {
+  closeDetails();
+  projectDeleter.classList.add('active-project-deleter');
+  body.style.overflow = 'hidden';
+});
+
+deleterXmark.addEventListener('click', () => {
+  projectDeleter.classList.remove('active-project-deleter');
+  body.style.overflow = 'visible';
 });

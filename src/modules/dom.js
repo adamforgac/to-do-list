@@ -2,7 +2,17 @@ function callDom() {
   const menu = document.querySelector('.creator-menu');
   const creator = document.querySelector('.project-creator');
 
+  function closeDetails() {
+    const taskDetails = document.querySelector('.task-details');
+    const wrapper = document.querySelector('.wrapper');
+    setTimeout(() => {
+      wrapper.classList.remove('details');
+    }, 250);
+    taskDetails.classList.remove('active-task-details');
+  }
+
   creator.addEventListener('click', () => {
+    closeDetails();
     menu.classList.add('active-menu');
     document.querySelector('body').classList.add('menu-active');
   });
