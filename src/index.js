@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
@@ -20,6 +21,34 @@ callDom();
 
 createPhoneMenu();
 
+// ALERT
+
+const customAlert = document.querySelector('.custom-alert');
+const alertSubheading = document.querySelector('.alert-subheading p');
+
+function showAlert(msg) {
+  const wrapper = document.querySelector('.wrapper');
+  customAlert.classList.add('visible-error');
+  alertSubheading.textContent = msg;
+
+  wrapper.style.overflow = 'hidden';
+  wrapper.style.filter = 'brightness(0.5)';
+  wrapper.style.pointerEvents = 'none';
+  document.querySelector('.todo-setter').style.pointerEvents = 'none';
+
+  const audio = new Audio('/dist/audio/wrong-message.mp3');
+  audio.play();
+}
+
+const alertButton = document.querySelector('.alert-button button');
+alertButton.addEventListener('click', () => {
+  wrapper.style.overflow = 'visible';
+  wrapper.style.filter = 'brightness(1)';
+  wrapper.style.pointerEvents = 'all';
+  document.querySelector('.todo-setter').style.pointerEvents = 'all';
+  customAlert.classList.remove('visible-error');
+});
+
 // DATE
 
 window.onload = function () {
@@ -40,19 +69,19 @@ window.onload = function () {
 
 // DEFAULT ARRAYS
 
-const allTasks = [];
+let allTasks = [];
 let allTasksTitles = [];
 let allListTitles = [];
-const allNotesTitles = [];
+let allNotesTitles = [];
 let todayTasksNi = [];
 let todayTasksImp = [];
 let weekTasksNi = [];
 let currentArrNums = [];
 let weekTasksImp = [];
-const importantTasks = [];
-const allNotes = [];
-const completedTasks = [];
-const allLists = [];
+let importantTasks = [];
+let allNotes = [];
+let completedTasks = [];
+let allLists = [];
 let allListOptions = [];
 let generateArray = [];
 let notImportantDataCards = [];
@@ -173,7 +202,14 @@ function loopAllDaysNotImportant() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[a].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[a].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'not-important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'not-important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -235,7 +271,14 @@ function loopAllWeekNotImportant() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[a].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[a].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'not-important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'not-important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -295,7 +338,14 @@ function loopAllDaysImportant() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[a].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[a].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -357,7 +407,14 @@ function loopAllWeekImportant() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[a].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[a].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -503,7 +560,14 @@ function generateImportant() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[i].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -541,8 +605,21 @@ function generateCompleted() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round');
-    task[i].querySelector('.round').style.backgroundColor = 'green';
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[i].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round');
+    const checkIcon = task[i].querySelector('.check-icon');
+    checkIcon.classList.add('round');
+
+    const statusLabel = task[i].querySelector('.task-status label');
+
+    checkIcon.style.display = 'block';
+    statusLabel.style.animation = 'none';
+    statusLabel.style.borderColor = '#5cb85c';
+    statusLabel.style.backgroundColor = 'black';
 
     // ADDS TITLE AND CATEGORY
 
@@ -579,7 +656,14 @@ function generateAllTasks() {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[i].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'not-important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'not-important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -704,7 +788,14 @@ function generateCustom(projectName) {
       // ADDS COMPLETE CHECKBOX
 
       const taskStatus = task[i].querySelector('.task-status');
-      taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+      taskStatus.appendChild(document.createElement('label'));
+
+      const taskLabel = task[i].querySelector('.task-status label');
+      taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+      taskLabel.classList.add('round', 'not-important-round');
+      const checkIcon = document.querySelector('.check-icon');
+      checkIcon.classList.add('round', 'not-important-round');
 
       // ADDS TITLE AND CATEGORY
 
@@ -752,7 +843,14 @@ function generateCustom(projectName) {
       // ADDS COMPLETE CHECKBOX
 
       const taskStatus = task[i].querySelector('.task-status');
-      taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+      taskStatus.appendChild(document.createElement('label'));
+
+      const taskLabel = task[i].querySelector('.task-status label');
+      taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+      taskLabel.classList.add('round', 'not-important-round');
+      const checkIcon = document.querySelector('.check-icon');
+      checkIcon.classList.add('round', 'not-important-round');
 
       // ADDS TITLE AND CATEGORY
 
@@ -949,7 +1047,14 @@ function loopThroughtTasks(num) {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'not-important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[i].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'not-important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'not-important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -1054,7 +1159,14 @@ function loopThroughtImportant(num) {
     // ADDS COMPLETE CHECKBOX
 
     const taskStatus = task[i].querySelector('.task-status');
-    taskStatus.appendChild(document.createElement('div')).classList.add('round', 'important-round');
+    taskStatus.appendChild(document.createElement('label'));
+
+    const taskLabel = task[i].querySelector('.task-status label');
+    taskLabel.appendChild(document.createElement('div')).classList.add('check-icon');
+
+    taskLabel.classList.add('round', 'important-round');
+    const checkIcon = document.querySelector('.check-icon');
+    checkIcon.classList.add('round', 'important-round');
 
     // ADDS TITLE AND CATEGORY
 
@@ -1163,12 +1275,12 @@ taskDoneButton.addEventListener('click', (event) => {
       const dueDate = parseISO(userDate);
       const difference = differenceInDays(dueDate, currentDate);
       if (difference < 0) {
-        alert('The due date is older than the current date.');
+        showAlert('The due date is older than the current date.');
       } else {
         if (allTasksTitles.length > 0) {
           const titleValue = taskTitle.value;
           if (allTasksTitles.some((item) => item === titleValue)) {
-            alert('This task already exists');
+            showAlert('This task already exists.');
           } else {
             if (taskProjects.value !== 'none') {
               const chosenProject = taskProjects.value;
@@ -1231,12 +1343,12 @@ taskDoneButton.addEventListener('click', (event) => {
       const dueDate = parseISO(userDate);
       const difference = differenceInDays(dueDate, currentDate);
       if (difference < 0) {
-        alert('The due date is older than the current date.');
+        showAlert('The due date is older than the current date.');
       } else {
         if (allTasksTitles.length > 0) {
           const titleValue = taskTitle.value;
           if (allTasksTitles.some((item) => item === titleValue)) {
-            alert('This task already exists');
+            showAlert('This task already exists.');
           } else {
             if (taskProjects.value !== 'none') {
               const chosenProject = taskProjects.value;
@@ -1559,7 +1671,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
         const difference = differenceInDays(dueDate, currentDate);
 
         if (difference < 0) {
-          alert('The due date is older than the current date.');
+          showAlert('The due date is older than the current date.');
         } else {
           if (task.importance === 'Not important task') {
             const taskTitles = [];
@@ -1749,7 +1861,7 @@ noteDoneButton.addEventListener('click', (event) => {
     if (allNotesTitles.length > 0) {
       const noteValue = noteTitle.value;
       if (allNotesTitles.some((item) => item === noteValue)) {
-        alert('This note already exists');
+        showAlert('This note already exists');
       } else {
         addToAllNotes(noteTitle.value, noteDetails.value);
         for (let i = 0; i < allNotes.length; i++) {
@@ -1850,7 +1962,7 @@ listDoneButton.addEventListener('click', (event) => {
       const customizedListValues = listValue.replace(/\s/g, '');
       const modifiedArray = allListTitles.map((str) => str.replace(/\s/g, ''));
       if (modifiedArray.some((item) => item === customizedListValues)) {
-        alert('This list already exists');
+        showAlert('This list already exists');
       } else {
         addToAllLists(projectTitle.value, projectColor.value);
 
@@ -1932,21 +2044,6 @@ listRemovalButton.addEventListener('click', (event) => {
 
   const currentValue = selectInputRemoval.value;
   const currentValueCustomized = currentValue.replace(/[ .]/g, '');
-
-  function removeAllTasks(num) {
-    allTasks.splice(num, 1);
-    prepareAll();
-  }
-
-  function removeImportant(num) {
-    importantTasks.splice(num, 1);
-    prepareAll();
-  }
-
-  function removeCompleted(num) {
-    completedTasks.splice(num, 1);
-    prepareAll();
-  }
 
   function removeList(num) {
     allLists.splice(num, 1);
@@ -2118,10 +2215,18 @@ document.addEventListener('click', (event) => {
     clickedElement = clickedElement.parentNode;
   }
 
-  const audio = new Audio();
-  audio.src = '/dist/audio/apple.mp3';
+  const audio = new Audio('/dist/audio/apple.mp3');
+  let isPlaying = false;
 
   if (classArray.includes('not-important-round')) {
+    const statusLabel = document.querySelector('.task-status label');
+    const checkIcon = document.querySelector('.check-icon');
+
+    checkIcon.style.display = 'block';
+    statusLabel.style.animation = 'none';
+    statusLabel.style.borderColor = '#5cb85c';
+    console.log('zmrd');
+
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = allTasks[roundAtt];
     const chosenProject = allTasks[roundAtt].project;
@@ -2146,19 +2251,39 @@ document.addEventListener('click', (event) => {
       document.querySelector('.details-info-status-text p').textContent = 'Completed task';
     }
 
+    if (isPlaying) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
     audio.play();
+    isPlaying = true;
 
-    generateImmediately();
-
+    setTimeout(generateImmediately, 1000);
     updateArrayNumbers();
   } else if (classArray.includes('important-round')) {
+    const statusLabel = document.querySelector('.task-status label');
+    const checkIcon = document.querySelector('.check-icon');
+
+    checkIcon.style.display = 'block';
+    statusLabel.style.animation = 'none';
+    statusLabel.style.borderColor = '#5cb85c';
+    console.log('zmrd');
+
+    if (isPlaying) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    audio.play();
+    isPlaying = true;
+
     const roundAtt = clickedElement2.getAttribute('data-card');
     const movingObject = importantTasks[roundAtt];
     completedTasks.push(movingObject);
     importantTasks.splice(roundAtt, 1);
 
-    generateImmediately();
-
+    setTimeout(generateImmediately, 1000);
     updateArrayNumbers();
   }
 
@@ -2523,4 +2648,98 @@ projectTrash.addEventListener('click', () => {
 deleterXmark.addEventListener('click', () => {
   projectDeleter.classList.remove('active-project-deleter');
   body.style.overflow = 'visible';
+});
+
+// ADDS ALL OPTIONS TO SEARCH OPTION ARRAY
+
+const searchInput = document.getElementById('normal_search');
+const content = document.querySelector('.options');
+const project = document.querySelector('.projects');
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+  const allDefOptions = content.getElementsByTagName('h2');
+  const allCustomLists = project.getElementsByTagName('h2');
+
+  Array.from(allDefOptions).forEach((option) => {
+    option.innerHTML = option.innerText;
+  });
+
+  Array.from(allCustomLists).forEach((option) => {
+    option.innerHTML = option.innerText;
+  });
+
+  if (query) {
+    Array.from(allDefOptions).forEach((option) => {
+      const regex = new RegExp(`(${query})`, 'gi');
+      option.innerHTML = option.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    });
+
+    Array.from(allCustomLists).forEach((option) => {
+      const regex = new RegExp(`(${query})`, 'gi');
+      option.innerHTML = option.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    });
+  }
+});
+
+// REMOVE EVERYTHING
+// REMOVE EVERYTHING
+// REMOVE EVERYTHING
+
+const allTrash = document.querySelector('.all-remove');
+const trashAlert = document.querySelector('.custom-alert-all');
+const trashCancel = document.querySelector('.cancel-all');
+const removeTrash = document.querySelector('.remove-all');
+
+allTrash.addEventListener('click', () => {
+  trashAlert.classList.add('visible-error');
+
+  wrapper.style.overflow = 'hidden';
+  wrapper.style.filter = 'brightness(0.5)';
+  wrapper.style.pointerEvents = 'none';
+
+  const audio = new Audio('/dist/audio/wrong-message.mp3');
+  audio.play();
+});
+
+trashCancel.addEventListener('click', () => {
+  wrapper.style.overflow = 'visible';
+  wrapper.style.filter = 'brightness(1)';
+  wrapper.style.pointerEvents = 'all';
+  trashAlert.classList.remove('visible-error');
+});
+
+removeTrash.addEventListener('click', () => {
+  allTasks = [];
+  allTasksTitles = [];
+  allListTitles = [];
+  allNotesTitles = [];
+  todayTasksNi = [];
+  todayTasksImp = [];
+  weekTasksNi = [];
+  currentArrNums = [];
+  weekTasksImp = [];
+  importantTasks = [];
+  allNotes = [];
+  completedTasks = [];
+  allLists = [];
+  allListOptions = [];
+  generateArray = [];
+  notImportantDataCards = [];
+  niDateAttributes = [];
+  niWeekAttributes = [];
+  impDateAttributes = [];
+  impWeekAttributes = [];
+  importantDataCards = [];
+  generateArrayImportant = [];
+
+  prepareLists();
+  updateOptions();
+  checkEveryDate();
+  prepareAll();
+
+  wrapper.style.overflow = 'visible';
+  wrapper.style.filter = 'brightness(1)';
+  wrapper.style.pointerEvents = 'all';
+  trashAlert.classList.remove('visible-error');
 });

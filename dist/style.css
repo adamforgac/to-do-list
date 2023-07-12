@@ -91,6 +91,8 @@ table {
     display: grid;
     grid-template-columns: minmax(275px, 1fr) 5fr;
     transition: 0.3s;
+    filter: brightness(1);
+    pointer-events: all;
 }
 
 .details {
@@ -352,6 +354,10 @@ table {
 
 }
 
+.highlight {
+    background-color: var(--round-active-purple);
+}
+
 .project-count i {
     color: white;
     font-size: 0.7rem;
@@ -524,13 +530,77 @@ table {
     align-items: center;
 }
 
-.round {
+/* .round {
     width: 23px;
     height: 23px;
     border-radius: 50%;
     background-color: transparent;
     border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* ANIMATION TRYOUT */
+
+.task-status label {
+    height: 23px;
+    width: 23px;
+    display: inline-block;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: relative;
+    transition: border 0.5s ease-out;
 }
+
+.task-status label .check-icon {
+    display: none;
+}
+
+.task-status label .check-icon:after {
+    position: absolute;
+    content: "";
+    height: 10px;
+    width: 5px;
+    top: 85%;
+    left: 6px;
+    border-top: 2px solid #5cb85c;
+    border-right: 2px solid #5cb85c;
+    transform-origin: left top;
+    animation: check-icon 0.8s ease;
+    transform: translate(-50%, -50%) scaleX(-1) rotate(135deg);
+}
+
+@keyframes check-icon {
+    0% {
+        height: 0;
+        width: 0;
+        opacity: 0;
+        transform: translate(-50%, -80%) scaleX(-1) rotate(135deg);
+    }
+
+    20% {
+        height: 0;
+        width: 2px;
+        opacity: 1;
+    }
+
+    40% {
+        height: 10px;
+        width: 5px;
+        opacity: 1;
+        transform: translate(-50%, -70%) scaleX(-1) rotate(135deg);
+    }
+
+    100% {
+        height: 10px;
+        width: 5px;
+        opacity: 1;
+        transform: translate(-50%, -50%) scaleX(-1) rotate(135deg);
+    }
+}
+
+/* ANIMATION TRYOUT END */
 
 .task-importance, .note-importance {
     display: flex;
@@ -1619,9 +1689,9 @@ form input:focus, form textarea:focus, form select:focus {
     height: 16px;
     width: 16px;
     position: absolute;
-    top: 2px;
+    top: 12px;
     right: 2px;
-    height: 40px;
+    height: 35px;
     width: 60px;
     border-radius: 0 30px 30px 0;
     pointer-events: none;
@@ -1738,6 +1808,109 @@ form input:focus, form textarea:focus, form select:focus {
 
 html.is-animating .transition-fade {
     opacity: 0;
+}
+
+/* ALERT */
+/* ALERT */
+/* ALERT */
+
+
+.custom-alert, .custom-alert-all {
+    width: 450px;
+    height: 300px;
+    pointer-events: none;
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    display: grid;
+    grid-template-rows: auto 60px;
+    z-index: 500;
+    transition: 0.5s;
+    background-color: white;
+}
+
+.remove-trash-alert {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+}
+
+.alert-button-all {
+    display: flex;
+}
+
+.cancel-all {
+    margin-right: 3px;
+}
+
+.visible-error {
+    scale: 1;
+    pointer-events: all;
+    visibility: visible;
+    transition: 0.5s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.alert-text {
+    display: grid;
+    grid-template-rows: 1fr 0.5fr 1fr;
+    background-color: white;
+    padding: 0 10px;
+}
+
+.alert-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-heading h2 {
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: #45555D;
+}
+
+.alert-subheading p, .alert-subheading-all p {
+    text-align: center;
+    line-height: 25px;
+    font-size: 1.3rem;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+
+.alert-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-icon i {
+    font-size: 4rem;
+    color: #E4342E;
+}
+
+.alert-button button, .alert-button-all button {
+    width: 100%;
+    height: 100%;
+    font-size: 1.25rem;
+    background-color: #E4342E;
+    border: none;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 200;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.alert-button button:hover, .alert-button-all button:hover {
+    background-color: #ea4f4a;
+    transition: 0.3s;
 }
 
 
