@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Document</title>
@@ -154,11 +154,11 @@
 
                 <div class="task-board-options">
                     <div class="sort">
-                        <i class="fa-solid fa-trash-can"></i>
+                        <a href="mailto:aforg@email.cz"><i class="fa-solid fa-envelope"></i></a>
                     </div>
 
                     <div class="background-option">
-                        <i class="fa-solid fa-image"></i>
+                        <i class="fa-solid fa-trash-can all-remove"></i>
                     </div>
 
                     <div class="mobile-menu">
@@ -694,8 +694,45 @@
         </div>
     </div>
 
-    <div class="message">
-        <img src="images/turning-phone.png" alt="">
+    <div class="custom-alert">
+        <div class="alert-text">
+            <div class="alert-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="alert-heading">
+                <h2>Oh snap!</h2>
+            </div>
+
+            <div class="alert-subheading">
+                <p>An errror has occured while<br>creating an error report.</p>
+            </div>
+        </div>
+
+        <div class="alert-button">
+            <button>Dismiss</button>
+        </div>
+    </div>
+
+    <div class="custom-alert-all">
+        <div class="alert-text">
+            <div class="alert-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="alert-heading">
+                <h2>Are you sure?</h2>
+            </div>
+
+            <div class="alert-subheading-all">
+                <p>This action removes every list, task and note from the app.</p>
+            </div>
+        </div>
+
+        <div class="alert-button-all">
+            <button class="cancel-all">Cancel</button>
+            <button class="remove-all">Remove all</button>
+        </div>
     </div>
 </body>
 <script type="module" src="main.js"></script>
