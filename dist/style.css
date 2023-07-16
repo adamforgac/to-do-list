@@ -33,7 +33,7 @@ body {
 	line-height: 1;
     max-width: 100vw;
     overflow-x: hidden;
-    min-height: 100vh;
+    height: 100vh;
     background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
     background-color: black;
 }
@@ -93,6 +93,7 @@ table {
     transition: 0.3s;
     filter: brightness(1);
     pointer-events: all;
+    min-height: 100vh;
 }
 
 .details {
@@ -182,10 +183,6 @@ table {
    width: 100%;
    padding: 0 15px 0 25px;
    cursor: default;
-}
-
-.all-options-section > div > div:hover {
-    background-color: rgba(256, 256, 256, 0.3);
 }
 
 .options {
@@ -379,12 +376,6 @@ table {
     margin: 0 10px;
 }
 
-.project-creator:hover {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    transition: 0.3s;
-    scale: 1.05;
-}
-
 .project-creator h2 {
     color: white;
     font-family: 'Roboto', sans-serif;
@@ -444,10 +435,14 @@ table {
 
 .sort {
     margin-right: 20px;
+    cursor: pointer;
+    transition: .3s;
 }
 
 .background-option {
     margin-right: 20px;
+    cursor: pointer;
+    transition: .3s;
 }
 
 .sort, .background-option {
@@ -502,11 +497,6 @@ table {
     transition: 0.3s;
     cursor: pointer;
     border: 0.5px solid transparent;
-}
-
-.task:hover, .note:hover {
-    transition: 0.3s;
-    border: 0.5px solid var(--heading-box-purple);
 }
 
 .active-task {
@@ -576,7 +566,6 @@ table {
         height: 0;
         width: 0;
         opacity: 0;
-        transform: translate(-50%, -80%) scaleX(-1) rotate(135deg);
     }
 
     20% {
@@ -589,14 +578,12 @@ table {
         height: 10px;
         width: 5px;
         opacity: 1;
-        transform: translate(-50%, -70%) scaleX(-1) rotate(135deg);
     }
 
     100% {
         height: 10px;
         width: 5px;
         opacity: 1;
-        transform: translate(-50%, -50%) scaleX(-1) rotate(135deg);
     }
 }
 
@@ -617,6 +604,7 @@ table {
     color: white;
     font-size: 1.3rem;
     padding: 8px;
+    position: relative;
 }
 
 .note-icon i {
@@ -656,32 +644,37 @@ table {
 .task-details {
     display: grid;
     grid-template-rows: 1fr 50px;
-    padding: 13px 25px 0px 25px;
     border-left: 0.5px solid var(--heading-box-purple);
     pointer-events: none;
-    opacity: 0;
     height: 0;
-    overflow: auto;
+    overflow: hidden;
     visibility: hidden;
     transition: 0.3s;
+    z-index: 1100;
+    top: 0;
+    opacity: 0;
 }
 
 .active-task-details {
-    opacity: 1;
     pointer-events: all;
     visibility: visible;
     height: 100vh;
     transition: 0.3s;
+    opacity: 1;
+    overflow: visible;
 }
 
 .details-info {
     display: grid;
     grid-template-rows: minmax(85px, min-content) min-content min-content;
     gap: 120px;
-    overflow: auto;
     scrollbar-width: none; 
     -ms-overflow-style: none; 
-    padding: 20px 0;
+    padding: 13px 25px 0px 25px;
+    margin-top: 30px;
+    margin-left: 10px;
+    overflow: auto;
+    margin-right: 10px;
 }
 
 .details-info::-webkit-scrollbar {
@@ -697,15 +690,16 @@ table {
 .details-xmark {
     cursor: pointer;
     transition: 300ms;
+    position: relative;
 }
 
-.details-xmark:hover {
-    color: red;
-    transition: 300ms;
-}
-
-.details-info > div {
-    /* border: 2px solid red; */
+.details-xmark:after {
+    content: "";
+    position: absolute;
+    left: -9px;
+    top: -6px;
+    width: 45px;
+    height: 45px;
 }
 
 .details-info-heading {
@@ -817,6 +811,8 @@ table {
     justify-content: space-between;
     align-items: center;
     border-top: 0.5px solid var(--heading-box-purple);
+    padding: 0px 15px 0px 15px;
+    margin: 0 10px;
 }
 
 .details-list p {
@@ -839,16 +835,6 @@ table {
 
 .fa-trash {
     margin-left: 20px;
-}
-
-.fa-pen-to-square:hover {
-    color: var(--round-active-purple);
-    transition: 0.3s;
-}
-
-.fa-trash:hover {
-    transition: 0.3s;
-    color: red;
 }
 
 .details-info-status {
@@ -926,6 +912,16 @@ table {
 .mobile-adder {
     display: none;
     z-index: 300;
+    position: relative;
+}
+
+.mobile-adder:after {
+    content: "";
+    position: absolute;
+    left: -9px;
+    top: -9px;
+    width: 55px;
+    height: 55px;
 }
 
 .todo-create-mobile, .project-create-mobile, .note-create-mobile {
@@ -980,11 +976,6 @@ table {
 .todo-create-mobile , .project-create-mobile , .note-create-mobile  {
     cursor: pointer;
     transition: 0.1s;
-}
-
-.todo-create-mobile:hover , .project-create-mobile:hover , .note-create-mobile:hover  {
-    transition: 0.1s;
-    background-color: var(--round-active-purple);
 }
 
 .todo-create-mobile.active-todo-mobile {
@@ -1092,11 +1083,6 @@ table {
     color: var(--round-active-purple)
 }
 
-.leave-creator i:hover {
-    color: var(--heading-box-purple);
-    transition: 0.3s;
-}
-
 .leave-creator i {
     font-size: 2.5rem;
     color: white;
@@ -1113,21 +1099,6 @@ table {
 
 .one {
     transition: 0.4s;
-}
-
-.todo-create:hover .one {
-    color: var(--round-active-purple);
-    transition: 0.2s;
-}
-
-.note-create:hover .three {
-    color: var(--round-active-purple);
-    transition: 0.2s;
-}
-
-.project-create:hover .two {
-    color: var(--round-active-purple);
-    transition: 0.2s;
 }
 
 .creator-options p {
@@ -1233,16 +1204,16 @@ table {
 
 .project-deleter {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: transparent;
     visibility: hidden;
     pointer-events: none;
     opacity: 0;
     scale: 0;
     transition: all 0.5s;
-    position: fixed;
+    position: absolute;
+    top: 0;
     overflow: scroll;
-   
 }
 
 .active-project-deleter {
@@ -1255,11 +1226,10 @@ table {
     scale: 1;
     transition: all 0.5s;
     z-index: 500;
-    position: fixed;
+    position: absolute;
     top: 0%;
     left: 0%;
     transform: translate(0%, 0%);
-    overflow: hidden;
 }
 
 .pd-wrapper {
@@ -1352,26 +1322,19 @@ table {
     cursor: pointer;
 }
 
-.button-bar button:hover {
-    background: white;
-    color: black;
-    transition: .2s;
-}
-
 .deleter-xmark {
     transition: .2s;
     cursor: pointer;
 }
 
-.deleter-xmark:hover {
-    color: red;
-    transition: .2s;
-}
-
 .list-trash {
+    padding: 10px;
+    margin: -10px;
+    transform: translateY(-5px);
+    font-size: 1.5rem;
     cursor: pointer;
+    position: relative;
 }
-
 
 /* NAV */
 /* NAV */
@@ -1386,16 +1349,16 @@ table {
 
 }
 
+.all-options-section > div > div:hover {
+    background-color: rgba(256, 256, 256, 0.3);
+}
+
 .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .project-setter-nav-arrow i, .todo-editor-nav-arrow i, .note-editor-nav-arrow i {
     font-size: 2rem;
     color: white;
     cursor: pointer;
     transition: 0.2s;
-}
-
-.todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover, .project-setter-nav-arrow i:hover, .todo-editor-nav-arrow i:hover, .note-editor-nav-arrow i:hover {
-    color: var(--round-active-purple);
-    transition: 0.2s;
+    padding: 10px;
 }
 
 .todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img, .note-editor-nav-logo img {
@@ -1413,14 +1376,8 @@ table {
     font-size: 1.8rem;
     transition: 0.2s;
     cursor: pointer;
+    padding: 10px;
 }
-
-.todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover, .project-setter-nav-icons i:hover, .todo-editor-nav-icons i:hover, .note-editor-nav-icons i:hover {
-    color: var(--round-active-purple);
-    transition: 0.2s;
-}
-
-
 
 
 /* FORM */
@@ -1579,7 +1536,7 @@ form input:focus, form textarea:focus, form select:focus {
     transform: translate(0, 0);
 }
 
-.container, .container-edit {
+.container, .container-edit, .container-phone, .container-edit-phone {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -1594,7 +1551,7 @@ form input:focus, form textarea:focus, form select:focus {
     font-family: 'Lato', sans-serif;
 }
   
-.container input, .container-edit input {
+.container input, .container-phone input, .container-edit-phone input, .container-edit input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -1602,7 +1559,7 @@ form input:focus, form textarea:focus, form select:focus {
     width: 0;
 }
   
-.checkmark {
+.checkmark, .checkmark-phone {
     position: absolute;
     top: 0;
     left: 110%;
@@ -1612,25 +1569,20 @@ form input:focus, form textarea:focus, form select:focus {
     border-radius: 5px;
 }
   
-.container:hover input ~ .checkmark, .container-edit:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-  
-.container input:checked ~ .checkmark, .container-edit input:checked ~ .checkmark {
+.container input:checked ~ .checkmark, .container-edit input:checked ~ .checkmark, .container-phone input:checked ~ .checkmark-phone, .container-edit-phone input:checked ~ .checkmark-phone {
     background-color: var(--round-active-purple);
 }
   
-.checkmark:after {
+.checkmark:after, .checkmark-phone:after {
     content: "";
     position: absolute;
-    display: none;
 }
   
-.container input:checked ~ .checkmark:after, .container-edit input:checked ~ .checkmark:after {
+.container input:checked ~ .checkmark:after, .container-edit input:checked ~ .checkmark:after, .container-phone input:checked ~ .checkmark-phone:after, .container-edit-phone input:checked ~ .checkmark-phone:after {
     display: block;
 }
   
-.container .checkmark:after, .container-edit .checkmark:after {
+.container .checkmark:after, .container-edit .checkmark:after, .container-phone .checkmark-phone:after, .container-edit-phone .checkmark-phone:after {
     left: 9px;
     top: 5px;
     width: 5px;
@@ -1757,15 +1709,7 @@ form input:focus, form textarea:focus, form select:focus {
     cursor: pointer;
 }
 
-.todo-setter-accept button:hover, .note-setter-accept button:hover, .project-setter-accept button:hover, .todo-editor-accept button:hover, .note-editor-accept button:hover {
-    box-shadow: rgba(73, 24, 156, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    transition: 0.7s;
-    scale: 1.07;
-}
-
-
 /* ADD TODO IMAGE */
-
 
 .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image, .note-editor-form-image {
     display: flex;
@@ -1884,6 +1828,10 @@ html.is-animating .transition-fade {
     font-weight: 300;
 }
 
+.alert-subheading p {
+    margin-top: 10px;
+}
+
 .alert-icon {
     display: flex;
     justify-content: center;
@@ -1908,9 +1856,28 @@ html.is-animating .transition-fade {
     transition: 0.3s;
 }
 
-.alert-button button:hover, .alert-button-all button:hover {
-    background-color: #ea4f4a;
-    transition: 0.3s;
+
+/* ANIMATION */
+
+
+@keyframes moveOut {
+    0% {
+        transform: translateX(0);
+    } 50% {
+        transform: translateX(-80px);
+    } 100% {
+        transform: translateX(2000px);
+    } 
+}
+
+
+.animate-it {
+    animation-name: moveOut;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
 

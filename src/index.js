@@ -65,11 +65,23 @@ window.onload = function () {
 
   const formattedDate = `${days[currentDate.getDay()]}, ${currentDate.getDate()} ${months[currentDate.getMonth()]}`;
   dateElement.textContent = formattedDate;
+
+  checkEveryDate();
+  prepareAll();
+  updateOptions();
+  prepareLists();
 };
 
 // DEFAULT ARRAYS
 
-let allTasks = [];
+function saveTodos() {
+  localStorage.setItem('allTasks', JSON.stringify(allTasks));
+  localStorage.setItem('importantTasks', JSON.stringify(importantTasks));
+}
+
+const storedTodos = localStorage.getItem('allTasks');
+const storedImportant = localStorage.getItem('importantTasks');
+let allTasks = storedTodos ? JSON.parse(storedTodos) : [];
 let allTasksTitles = [];
 let allListTitles = [];
 let allNotesTitles = [];
@@ -78,7 +90,7 @@ let todayTasksImp = [];
 let weekTasksNi = [];
 let currentArrNums = [];
 let weekTasksImp = [];
-let importantTasks = [];
+let importantTasks = storedImportant ? JSON.parse(storedImportant) : [];
 let allNotes = [];
 let completedTasks = [];
 let allLists = [];
@@ -128,6 +140,14 @@ const notesSection = document.querySelector('.notes');
 const todaySection = document.querySelector('.today');
 const weekSection = document.querySelector('.week');
 
+const mobileMenu = document.querySelector('.creator-menu-mobile');
+const mobileTodoIcon = document.querySelector('.todo-create-mobile');
+const mobileProjectIcon = document.querySelector('.project-create-mobile');
+const mobileNoteIcon = document.querySelector('.note-create-mobile');
+const todoPar = document.querySelector('.todo-create-mobile p');
+const projectPar = document.querySelector('.project-create-mobile p');
+const notePar = document.querySelector('.note-create-mobile p');
+
 // CONSTRUCTORS
 
 function Task(title, details, project, date, importance) {
@@ -170,6 +190,8 @@ function updateArrayNumbers() {
 
   const totalWeek = weekTasksImp.length + weekTasksNi.length;
   weekCount.textContent = totalWeek;
+
+  saveTodos();
 }
 
 // FUNCTION THAT CHECKS FOR ALL DATES
@@ -189,6 +211,7 @@ function checkForDateNotImportant() {
     }
   }
   updateArrayNumbers();
+  saveTodos();
 }
 
 function loopAllDaysNotImportant() {
@@ -258,6 +281,7 @@ function checkForWeekNotImportant() {
     }
   }
   updateArrayNumbers();
+  saveTodos();
 }
 
 function loopAllWeekNotImportant() {
@@ -325,6 +349,7 @@ function checkForDateImportant() {
     }
   }
   updateArrayNumbers();
+  saveTodos();
 }
 
 function loopAllDaysImportant() {
@@ -394,6 +419,7 @@ function checkForWeekImportant() {
     }
   }
   updateArrayNumbers();
+  saveTodos();
 }
 
 function loopAllWeekImportant() {
@@ -453,6 +479,7 @@ function checkEveryDate() {
   checkForDateNotImportant();
   checkForWeekImportant();
   checkForWeekNotImportant();
+  saveTodos();
 }
 
 // ADDS / UPDATES ATTRIBUTE TO DIFFERENT CATEGORIES
@@ -891,6 +918,7 @@ function generateCustom(projectName) {
 // FUNCTIONS FOR PREPARING DIFFERENT SECTIONS
 
 function prepareAll() {
+  moveBackgroundLeft();
   todos.innerHTML = '';
   generateImportant();
   generateAllTasks();
@@ -900,6 +928,7 @@ function prepareAll() {
   updateArrayNumbers();
 
   categoryHeading.textContent = 'All Entries';
+  saveTodos();
 }
 
 function addArrNums() {
@@ -910,6 +939,7 @@ function addArrNums() {
 
   futureArrNums = [];
   currentArrNums = [];
+  saveTodos();
 }
 
 function prepareLists() {
@@ -919,6 +949,7 @@ function prepareLists() {
   }
   lists.innerHTML = '';
   generateAllLists();
+  saveTodos();
 }
 
 function prepareWithoutName() {
@@ -930,6 +961,7 @@ function prepareWithoutName() {
   checkEveryDate();
 
   updateArrayNumbers();
+  saveTodos();
 }
 
 function prepareImportant() {
@@ -939,6 +971,7 @@ function prepareImportant() {
 
   updateArrayNumbers();
   categoryHeading.textContent = 'Important Tasks';
+  saveTodos();
 }
 
 function prepareNotes() {
@@ -948,6 +981,7 @@ function prepareNotes() {
 
   updateArrayNumbers();
   categoryHeading.textContent = 'All Notes';
+  saveTodos();
 }
 
 function prepareCompleted() {
@@ -965,6 +999,7 @@ function prepareCompleted() {
 
   updateArrayNumbers();
   categoryHeading.textContent = 'Completed Tasks';
+  saveTodos();
 }
 
 // CLOSES THE PART WITH DETAILS
@@ -975,11 +1010,15 @@ function closeDetails() {
     wrapper.classList.remove('details');
   }, 250);
   taskDetails.classList.remove('active-task-details');
+  const mobileAdder = document.querySelector('.mobile-adder');
+  mobileAdder.style.display = 'flex';
+  saveTodos();
 }
 
 // GENERATES THE CONTENT FOR DIFFERENT CATEGORIES
 
 importantSection.addEventListener('click', () => {
+  removeBackground();
   prepareImportant();
   closeDetails();
 });
@@ -987,6 +1026,7 @@ importantSection.addEventListener('click', () => {
 // ADDS CONTENT TO TODAY SECTION
 
 todaySection.addEventListener('click', () => {
+  moveBackgroundRight();
   todos.innerHTML = '';
   closeDetails();
   checkEveryDate();
@@ -998,6 +1038,7 @@ todaySection.addEventListener('click', () => {
 // ADDS CONTENT TO WEEK SECTION
 
 weekSection.addEventListener('click', () => {
+  removeBackground();
   todos.innerHTML = '';
   closeDetails();
   checkEveryDate();
@@ -1009,6 +1050,7 @@ weekSection.addEventListener('click', () => {
 // ADDS CONTENT TO ALL
 
 allSection.addEventListener('click', () => {
+  moveBackgroundLeft();
   prepareAll();
   closeDetails();
 });
@@ -1016,6 +1058,7 @@ allSection.addEventListener('click', () => {
 // ADDS CONTENT TO COMPLETED SECTION
 
 completedSection.addEventListener('click', () => {
+  removeBackground();
   prepareCompleted();
   closeDetails();
 });
@@ -1023,6 +1066,7 @@ completedSection.addEventListener('click', () => {
 // ADDS CONTENT TO NOTES SECTION
 
 notesSection.addEventListener('click', () => {
+  removeBackground();
   prepareNotes();
   closeDetails();
 });
@@ -1196,19 +1240,22 @@ function loopThroughtImportant(num) {
 // ADDS INFO TO RIGHT ARRAY
 // ADDS INFO TO RIGHT ARRAY
 
-function addToAllTasks(title, details, project, date, importance) {
-  allTasks.push(new Task(title, details, project, date, importance));
+function addToAllTasks(title, details, project, date, importance, phoneImportance) {
+  allTasks.push(new Task(title, details, project, date, importance, phoneImportance));
+  saveTodos();
   loopThroughtTasks(allTasks.length);
   allTasksTitles = [];
 }
 
 function addToAllNotes(title, details) {
   allNotes.push(new Note(title, details));
+  saveTodos();
   loopThroughtNotes(allNotes.length);
 }
 
-function addToImportant(title, details, project, date, importance) {
-  importantTasks.push(new Task(title, details, project, date, importance));
+function addToImportant(title, details, project, date, importance, phoneImportance) {
+  importantTasks.push(new Task(title, details, project, date, importance, phoneImportance));
+  saveTodos();
   loopThroughtImportant(importantTasks.length);
   allTasksTitles = [];
 }
@@ -1216,6 +1263,7 @@ function addToImportant(title, details, project, date, importance) {
 function addToAllLists(title, color) {
   allLists.push(new List(title, color));
   loopThroughtLists(allLists.length);
+  saveTodos();
   allListTitles = [];
 }
 
@@ -1225,6 +1273,22 @@ function addToAllLists(title, color) {
 
 taskDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
+
+  body.classList.remove('menu-active');
+
+  const mobileMenu = document.querySelector('.creator-menu-mobile');
+
+  mobileMenu.classList.remove('active-menu-mobile');
+
+  document.querySelector('.mobile-adder i').classList.remove('rotated');
+
+  mobileTodoIcon.classList.remove('active-todo-mobile');
+  mobileProjectIcon.classList.remove('active-project-mobile');
+  mobileNoteIcon.classList.remove('active-note-mobile');
+
+  todoPar.classList.remove('options-appear');
+  projectPar.classList.remove('options-appear');
+  notePar.classList.remove('options-appear');
 
   // SWITCHES TO ALL SECTION
   prepareAll();
@@ -1239,6 +1303,7 @@ taskDoneButton.addEventListener('click', (event) => {
   const taskProjects = document.querySelector('.todo-setter-projects-input select');
   const taskDate = document.querySelector('.todo-setter-date-input input');
   const taskImportance = document.querySelector('.container input');
+  const taskImportancePhone = document.querySelector('.container-phone input');
 
   function removeMenu() {
     document.querySelector('.creator-menu').classList.remove('active-menu');
@@ -1248,6 +1313,7 @@ taskDoneButton.addEventListener('click', (event) => {
     taskDetails.value = '';
     taskDate.value = '';
     taskImportance.checked = false;
+    taskImportancePhone.checked = false;
   }
 
   // TAKES LIST NAME IF NOT EMPTY
@@ -1268,8 +1334,9 @@ taskDoneButton.addEventListener('click', (event) => {
     false;
   } else {
     // SETTING TODOS INTO RIGHT ARRAY
-    if (taskImportance.checked === true) {
+    if ((taskImportance.checked === true) || (taskImportancePhone.checked === true)) {
       taskImportance.value = 'important';
+      taskImportancePhone.value = 'important';
       const userDate = taskDate.value;
       const currentDate = new Date();
       const dueDate = parseISO(userDate);
@@ -1324,7 +1391,7 @@ taskDoneButton.addEventListener('click', (event) => {
               }
             }
           }
-          addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          addToImportant(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value, taskImportancePhone.value);
           for (let i = 0; i < importantTasks.length; i++) {
             allTasksTitles.push(importantTasks[i].title);
           }
@@ -1336,8 +1403,9 @@ taskDoneButton.addEventListener('click', (event) => {
           removeMenu();
         }
       }
-    } else if (taskImportance.checked === false) {
+    } else if ((taskImportance.checked === false) || (taskImportancePhone.checked === false)) {
       taskImportance.value = 'not-important';
+      taskImportancePhone.value = 'not-important';
       const userDate = taskDate.value;
       const currentDate = new Date();
       const dueDate = parseISO(userDate);
@@ -1365,7 +1433,7 @@ taskDoneButton.addEventListener('click', (event) => {
                 }
               }
             }
-            addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+            addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value, taskImportancePhone.value);
             for (let i = 0; i < importantTasks.length; i++) {
               allTasksTitles.push(importantTasks[i].title);
             }
@@ -1392,7 +1460,7 @@ taskDoneButton.addEventListener('click', (event) => {
               }
             }
           }
-          addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value);
+          addToAllTasks(taskTitle.value, taskDetails.value, taskProjects.value, taskDate.value, taskImportance.value, taskImportancePhone.value);
           for (let i = 0; i < importantTasks.length; i++) {
             allTasksTitles.push(importantTasks[i].title);
           }
@@ -1440,6 +1508,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
     const taskProject = document.querySelector('.todo-editor-projects-input select');
     const taskDate = document.querySelector('.todo-editor-date-input input');
     const taskImportance = document.querySelector('.container-edit input');
+    const taskImportancePhone = document.querySelector('.container-edit-phone input');
 
     function removeMenu() {
       document.querySelector('.creator-menu').classList.remove('active-menu');
@@ -1449,6 +1518,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
       taskDetails.value = '';
       taskDate.value = '';
       taskImportance.checked = false;
+      taskImportancePhone.checked = false;
     }
 
     // ADDS ONE TO CHOSEN PROJECT
@@ -1529,7 +1599,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
         allTasks[num].project = 'none';
       }
 
-      if (taskImportance.checked === true) {
+      if ((taskImportance.checked === true) || (taskImportancePhone.checked === true)) {
         allTasks[num].importance = 'important';
         importantTasks.push(allTasks[num]);
         allTasks.splice(num, 1);
@@ -1612,7 +1682,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
         importantTasks[num].project = 'none';
       }
 
-      if (taskImportance.checked === false) {
+      if ((taskImportance.checked === false) || (taskImportancePhone.checked === false)) {
         importantTasks[num].importance = 'not-important';
         allTasks.push(importantTasks[num]);
         importantTasks.splice(num, 1);
@@ -1779,6 +1849,7 @@ function noteEditor(originalTitle, originalDetails) {
 }
 
 startEditButton.addEventListener('click', () => {
+  closeDetails();
   const currentList = document.querySelector('.details-list p');
   if (currentList.textContent === 'Notes') {
     const noteTitle = document.querySelector('.note-editor-title-input input');
@@ -1802,6 +1873,7 @@ startEditButton.addEventListener('click', () => {
     const taskProjects = document.querySelector('.todo-editor-projects-input select');
     const taskDate = document.querySelector('.todo-editor-date-input input');
     const taskImportance = document.querySelector('.container-edit input');
+    const taskImportancePhone = document.querySelector('.container-edit-phone input');
 
     const originalTitle = document.querySelector('.details-info-heading-text h2').textContent;
     const originalDetails = document.querySelector('.details-info-details-text p').textContent;
@@ -1826,8 +1898,10 @@ startEditButton.addEventListener('click', () => {
 
     if (originalImportance === 'Not important task') {
       taskImportance.checked = false;
+      taskImportancePhone.checked = false;
     } else {
       taskImportance.checked = true;
+      taskImportancePhone.checked = true;
     }
 
     if (originalProject === 'All Entries') {
@@ -1842,6 +1916,21 @@ startEditButton.addEventListener('click', () => {
 
 noteDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
+
+  body.classList.remove('menu-active');
+  const mobileMenu = document.querySelector('.creator-menu-mobile');
+
+  mobileMenu.classList.remove('active-menu-mobile');
+
+  document.querySelector('.mobile-adder i').classList.remove('rotated');
+
+  mobileTodoIcon.classList.remove('active-todo-mobile');
+  mobileProjectIcon.classList.remove('active-project-mobile');
+  mobileNoteIcon.classList.remove('active-note-mobile');
+
+  todoPar.classList.remove('options-appear');
+  projectPar.classList.remove('options-appear');
+  notePar.classList.remove('options-appear');
 
   // SWITCHES TO ALL SECTION
   prepareAll();
@@ -1941,6 +2030,19 @@ function updateOptions() {
 listDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
 
+  body.classList.remove('menu-active');
+  mobileMenu.classList.remove('active-menu-mobile');
+
+  document.querySelector('.mobile-adder i').classList.remove('rotated');
+
+  mobileTodoIcon.classList.remove('active-todo-mobile');
+  mobileProjectIcon.classList.remove('active-project-mobile');
+  mobileNoteIcon.classList.remove('active-note-mobile');
+
+  todoPar.classList.remove('options-appear');
+  projectPar.classList.remove('options-appear');
+  notePar.classList.remove('options-appear');
+
   // SWITCHES TO ALL SECTION
   prepareAll();
 
@@ -2002,6 +2104,7 @@ listDoneButton.addEventListener('click', (event) => {
     e.stopImmediatePropagation();
     e.stopPropagation();
     if (clickedElement.classList.contains('project-list')) {
+      removeBackground();
       const heading = clickedElement.querySelector('h2').textContent;
       categoryHeading.textContent = heading;
       todos.innerHTML = '';
@@ -2016,6 +2119,7 @@ listDoneButton.addEventListener('click', (event) => {
 });
 
 listRemovalButton.addEventListener('click', (event) => {
+  wrapper.style.display = 'grid';
   let allRemovedTitles = [];
   event.preventDefault();
   const importantIndexes = [];
@@ -2219,15 +2323,28 @@ document.addEventListener('click', (event) => {
   let isPlaying = false;
 
   if (classArray.includes('not-important-round')) {
-    const statusLabel = document.querySelector('.task-status label');
-    const checkIcon = document.querySelector('.check-icon');
+    closeDetails();
+    if (isPlaying) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
 
-    checkIcon.style.display = 'block';
-    statusLabel.style.animation = 'none';
-    statusLabel.style.borderColor = '#5cb85c';
-    console.log('zmrd');
-
+    audio.play();
+    isPlaying = true;
     const roundAtt = clickedElement2.getAttribute('data-card');
+
+    // ANIMATION
+
+    const keyElement = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
+    const realCheckIcon = keyElement.querySelector('.check-icon');
+    const realStatusLabel = keyElement.querySelector('.task-status label');
+
+    realCheckIcon.style.display = 'block';
+    realStatusLabel.style.animation = 'none';
+    realStatusLabel.style.borderColor = '#5cb85c';
+
+    keyElement.classList.add('animate-it');
+    keyElement.style.pointerEvents = 'none';
     const movingObject = allTasks[roundAtt];
     const chosenProject = allTasks[roundAtt].project;
     if (chosenProject !== 'none') {
@@ -2251,25 +2368,10 @@ document.addEventListener('click', (event) => {
       document.querySelector('.details-info-status-text p').textContent = 'Completed task';
     }
 
-    if (isPlaying) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    audio.play();
-    isPlaying = true;
-
-    setTimeout(generateImmediately, 1000);
+    setTimeout(generateImmediately, 2100);
     updateArrayNumbers();
   } else if (classArray.includes('important-round')) {
-    const statusLabel = document.querySelector('.task-status label');
-    const checkIcon = document.querySelector('.check-icon');
-
-    checkIcon.style.display = 'block';
-    statusLabel.style.animation = 'none';
-    statusLabel.style.borderColor = '#5cb85c';
-    console.log('zmrd');
-
+    closeDetails();
     if (isPlaying) {
       audio.pause();
       audio.currentTime = 0;
@@ -2279,11 +2381,24 @@ document.addEventListener('click', (event) => {
     isPlaying = true;
 
     const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const keyElement = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
+
+    const statusLabel = keyElement.querySelector('.task-status label');
+    const checkIcon = keyElement.querySelector('.check-icon');
+
+    checkIcon.style.display = 'block';
+    statusLabel.style.animation = 'none';
+    statusLabel.style.borderColor = '#5cb85c';
+
+    keyElement.classList.add('animate-it');
+    keyElement.style.pointerEvents = 'none';
+
     const movingObject = importantTasks[roundAtt];
     completedTasks.push(movingObject);
     importantTasks.splice(roundAtt, 1);
 
-    setTimeout(generateImmediately, 1000);
+    setTimeout(generateImmediately, 2100);
     updateArrayNumbers();
   }
 
@@ -2401,6 +2516,8 @@ document.addEventListener('click', (event) => {
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
+    const mobileAdder = document.querySelector('.mobile-adder');
+    mobileAdder.style.display = 'none';
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -2438,6 +2555,8 @@ document.addEventListener('click', (event) => {
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
+    const mobileAdder = document.querySelector('.mobile-adder');
+    mobileAdder.style.display = 'none';
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -2472,6 +2591,8 @@ document.addEventListener('click', (event) => {
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
+    const mobileAdder = document.querySelector('.mobile-adder');
+    mobileAdder.style.display = 'none';
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -2510,6 +2631,8 @@ document.addEventListener('click', (event) => {
     const taskDetails = document.querySelector('.task-details');
     wrapper.classList.add('details');
     taskDetails.classList.add('active-task-details');
+    const mobileAdder = document.querySelector('.mobile-adder');
+    mobileAdder.style.display = 'none';
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -2642,12 +2765,13 @@ const deleterXmark = document.querySelector('.deleter-xmark');
 projectTrash.addEventListener('click', () => {
   closeDetails();
   projectDeleter.classList.add('active-project-deleter');
-  body.style.overflow = 'hidden';
+  wrapper.style.display = 'none';
+  body.style.overflow = 'visible';
 });
 
 deleterXmark.addEventListener('click', () => {
   projectDeleter.classList.remove('active-project-deleter');
-  body.style.overflow = 'visible';
+  wrapper.style.display = 'grid';
 });
 
 // ADDS ALL OPTIONS TO SEARCH OPTION ARRAY
@@ -2682,9 +2806,32 @@ searchInput.addEventListener('input', () => {
   }
 });
 
-// REMOVE EVERYTHING
-// REMOVE EVERYTHING
-// REMOVE EVERYTHING
+// FOR PHONE
+// FOR PHONE
+// FOR PHONE
+
+const searchInputPhone = document.getElementById('search_phone');
+const contentPhone = document.querySelector('.todos');
+
+searchInputPhone.addEventListener('input', () => {
+  const query = searchInputPhone.value.trim().toLowerCase();
+  const allDefOptions = contentPhone.getElementsByTagName('h2');
+
+  Array.from(allDefOptions).forEach((option) => {
+    option.innerHTML = option.innerText;
+  });
+
+  if (query) {
+    Array.from(allDefOptions).forEach((option) => {
+      const regex = new RegExp(`(${query})`, 'gi');
+      option.innerHTML = option.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    });
+  }
+});
+
+// REMOVES EVERYTHING
+// REMOVES EVERYTHING
+// REMOVES EVERYTHING
 
 const allTrash = document.querySelector('.all-remove');
 const trashAlert = document.querySelector('.custom-alert-all');
@@ -2742,4 +2889,44 @@ removeTrash.addEventListener('click', () => {
   wrapper.style.filter = 'brightness(1)';
   wrapper.style.pointerEvents = 'all';
   trashAlert.classList.remove('visible-error');
+});
+
+// SWAPPER BUTTONS
+
+const swapperAll = document.querySelector('.swapper-all');
+const swapperToday = document.querySelector('.swapper-today');
+const buttonBg = document.querySelector('#btn');
+
+function moveBackgroundRight() {
+  buttonBg.style.borderRadius = '0 4px 4px 0';
+  buttonBg.style.opacity = '1';
+  buttonBg.style.left = '121px';
+}
+
+function moveBackgroundLeft() {
+  buttonBg.style.opacity = '1';
+  buttonBg.style.left = '3px';
+  buttonBg.style.borderRadius = '4px 0 0 4px';
+}
+
+function removeBackground() {
+  buttonBg.style.opacity = '0';
+  buttonBg.style.left = '3px';
+  buttonBg.style.right = 'auto';
+}
+
+swapperAll.addEventListener('click', () => {
+  moveBackgroundLeft();
+  prepareAll();
+  closeDetails();
+});
+
+swapperToday.addEventListener('click', () => {
+  moveBackgroundRight();
+  todos.innerHTML = '';
+  closeDetails();
+  checkEveryDate();
+  loopAllDaysImportant();
+  loopAllDaysNotImportant();
+  categoryHeading.textContent = 'Today\'s Tasks';
 });
