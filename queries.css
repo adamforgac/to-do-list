@@ -1,24 +1,102 @@
-/* Landscape Mode Styles */
-/* @media screen and (orientation: landscape) and (max-width: 600px) {
-    .wrapper {
-      display: none;
+@media (hover: hover) {
+    .project-creator:hover {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        transition: 0.3s;
+        scale: 1.05;
     }
 
-    .message {
-        display: flex;
-        pointer-events: all;
-        opacity: 1;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Lato', sans-serif;
-        font-size: 1rem;
-        flex-direction: column;
+    .background-option:hover {
+        background-color: #E4342E;
+        transition: .3s;
+    }
+    
+    .sort:hover {
+        background-color: var(--round-active-purple);
+        transition: .3s;
     }
 
-    .message h2 {
-        color: white;
+    .task:hover, .note:hover {
+        transition: 0.3s;
+        border: 0.5px solid var(--heading-box-purple);
     }
-} */
+
+    .details-xmark:hover {
+        color: red;
+        transition: 300ms;
+    }
+
+    .fa-pen-to-square:hover {
+        color: var(--round-active-purple);
+        transition: 0.3s;
+    }
+    
+    .fa-trash:hover {
+        transition: 0.3s;
+        color: red;
+    }
+
+    .todo-create-mobile:hover , .project-create-mobile:hover , .note-create-mobile:hover  {
+        transition: 0.1s;
+        background-color: var(--round-active-purple);
+    }
+
+    .leave-creator i:hover {
+        color: var(--heading-box-purple);
+        transition: 0.3s;
+    }
+
+    .todo-create:hover .one {
+        color: var(--round-active-purple);
+        transition: 0.2s;
+    }
+    
+    .note-create:hover .three {
+        color: var(--round-active-purple);
+        transition: 0.2s;
+    }
+    
+    .project-create:hover .two {
+        color: var(--round-active-purple);
+        transition: 0.2s;
+    }
+
+    .button-bar button:hover {
+        background: white;
+        color: black;
+        transition: .2s;
+    }
+
+    .deleter-xmark:hover {
+        color: red;
+        transition: .2s;
+    }
+    
+    .todo-setter-nav-arrow i:hover, .note-setter-nav-arrow i:hover, .project-setter-nav-arrow i:hover, .todo-editor-nav-arrow i:hover, .note-editor-nav-arrow i:hover {
+        color: var(--round-active-purple);
+        transition: 0.2s;
+    }
+
+    .todo-setter-nav-icons i:hover, .note-setter-nav-icons i:hover, .project-setter-nav-icons i:hover, .todo-editor-nav-icons i:hover, .note-editor-nav-icons i:hover {
+        color: var(--round-active-purple);
+        transition: 0.2s;
+    }
+
+    .todo-setter-accept button:hover, .note-setter-accept button:hover, .project-setter-accept button:hover, .todo-editor-accept button:hover, .note-editor-accept button:hover {
+        box-shadow: rgba(73, 24, 156, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        transition: 0.7s;
+        scale: 1.07;
+    }
+
+    .alert-button button:hover, .alert-button-all button:hover {
+        background-color: #ea4f4a;
+        transition: 0.3s;
+    }
+
+    .mobile-menu:hover {
+        background-color: var(--round-active-purple);
+        transition: 0.3s;
+    }
+}
 
 @media only screen and (max-height: 770px) {
     .options {
@@ -124,7 +202,188 @@
     }   
 }
 
+@media only screen and (max-width: 1280px) {
+    .details {
+        grid-template-columns: minmax(275px, 1fr) 5fr 400px;
+    }
+
+    .fa-xmark {
+        padding: 10px;
+    }
+
+    .task-importance i:after {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: -11px;
+        width: 60px;
+        height: 70px;
+    }
+
+    .list-trash:after {
+        content: "";
+        position: absolute;
+        left: -10px;
+        top: -10px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .task-status label:after {
+        content: "";
+        position: absolute;
+        left: -20px;
+        top: -23px;
+        width: 50px;
+        height: 63px;
+    }
+
+    .task-importance i {
+        padding: 15px;
+    }
+}
+
+@media only screen and (max-width: 1050px) {
+    .details {
+        grid-template-columns: minmax(275px, 1fr) 5fr 0px;
+    }
+
+    .active-task-details {
+        position: fixed;
+        background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
+        right: 0;
+        width: 500px;
+        height: calc(100vh - calc(100vh - 100%))
+    }
+
+    .task-details {
+        position: fixed;
+        right: 0;
+    }
+
+    .projects {
+        margin-bottom: 70px;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    .active-task-details {
+        width: 360px;
+    }
+}
+
+
+@media only screen and (max-width: 1160px) {
+    .choose-bar {
+        grid-template-columns: 100px auto 100px;
+    }
+
+    .pd-input-heading label {
+        white-space: normal;
+        font-size: 2rem;
+    }
+
+    .pd-input-input select {
+        font-size: 2rem;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .choose-bar {
+        grid-template-columns: 30px auto 30px;
+    }
+
+    .pd-input-heading label {
+        white-space: normal;
+        font-size: 2rem;
+    }
+
+    .pd-input-input select {
+        font-size: 2rem;
+    }
+
+    .logo-bar img {
+        width: 115px;
+    }
+
+    .logo-bar i {
+        font-size: 1.8rem;
+    }
+
+    .button-bar button {
+        font-size: 1rem;
+        width: 110px;
+        height: 40px;
+    }
+
+    .pd-input-heading label {
+        white-space: normal;
+        font-size: 1.6rem;
+        line-height: 35px;
+    }
+
+    .pd-input-input select {
+        font-size: 1.6rem;
+    }
+}
+
+@media only screen and (max-width: 510px) {
+    .choose-bar {
+        grid-template-columns: 0px auto 0px;
+    }
+
+    .pd-input-heading label {
+        white-space: normal;
+        font-size: 1.3rem;
+        line-height: 35px;
+    }
+
+    .pd-input-input select {
+        font-size: 1.3rem;
+        height: 40px;
+    }
+
+    .pd-wrapper {
+        padding: 0 10px;
+    }
+
+    .logo-bar {
+        padding: 0 20px;
+    }
+
+    .button-bar {
+        padding: 0 20px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .pd-wrapper {
+        padding: 0px;
+    }
+}
+
+@media only screen and (max-width: 270px) {
+    .pd-input-heading label {
+        font-size: 1rem;
+        line-height: 30px;
+    }
+
+    .pd-input-input select {
+        font-size: 1rem;
+        height: 30px;
+    }
+}
+
 @media only screen and (max-width: 1060px) {
+    .task-importance i:after {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: -7px;
+        width: 60px;
+        height: 60px;
+    }
+
     .task-heading h2, .note-heading h2 {
         font-size: 1rem;
     }   
@@ -178,12 +437,35 @@
 }
 
 @media only screen and (max-width: 940px) {
-    .todos {
-        grid-auto-rows: 50px;
+    .task-importance i:after {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: -6px;
+        width: 60px;
+        height: 54px;
     }
 
-    .task-text, .note-text {
-        margin-top: 16px;
+    .task-status label:after {
+        content: "";
+        position: absolute;
+        left: -18px;
+        top: -13px;
+        width: 43px;
+        height: 40px;
+    }
+
+    .active-task-details {
+        width: 400px;
+    }
+
+    .todos {
+        grid-auto-rows: 64px;
+    }
+
+    .task-heading, .note-heading {
+        margin-top: -2px;
+        margin-bottom: 5px;
     }
 
     .task, .note {
@@ -196,8 +478,53 @@
     }
 
     .round {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
+    }
+
+    .task-status label  {
+        width: 20px;
+        height: 20px;
+    }
+
+    .task-status label .check-icon:after {
+        position: absolute;
+        content: "";
+        height: 8px;
+        width: 4px;
+        top: 85%;
+        left: 5px;
+        border-top: 2px solid #5cb85c;
+        border-right: 2px solid #5cb85c;
+        transform-origin: left top;
+        animation: check-icon 0.8s ease;
+        transform: translate(-50%, -50%) scaleX(-1) rotate(135deg);
+    }
+
+    @keyframes check-icon {
+        0% {
+            height: 0;
+            width: 0;
+            opacity: 0;
+        }
+    
+        20% {
+            height: 0;
+            width: 2px;
+            opacity: 1;
+        }
+    
+        40% {
+            height: 8px;
+            width: 4px;
+            opacity: 1;
+        }
+    
+        100% {
+            height: 8px;
+            width: 4px;
+            opacity: 1;
+        }
     }
 
     .task-heading h2, .note-heading h2 {
@@ -230,7 +557,12 @@
     }
 
     .task-category, .note-category {
-        display: none;
+        margin-left: 15px;
+        margin-top: -5px;
+    }
+
+    .task-category p, .note-category p {
+        font-size: 0.67rem;
     }
 
     .project-creator h2 {
@@ -321,23 +653,76 @@
     .board-date p {
         font-size: 0.8rem;
     }
+}
 
-    .task-board-options i {
-        font-size: 0.9rem;
+@media only screen and (max-width: 450px) {
+    .wrapper {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .todos {
+        overflow: visible;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .wrapper {
+        min-height: 100vh;
+    }
+
+    .todos {
+        overflow: visible;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .wrapper {
+        min-height: 100%;
+        
+    }
+
+    .todos {
+        overflow: visible;
     }
 }
 
 @media only screen and (max-width: 700px) {
+    .task-text, .note-text {
+        margin-top: 0px;
+        display: flex;
+        justify-content: center;
+    }
+    .task-heading, .note-heading {
+        margin-top: 0px;
+        margin-bottom: 7px;
+    }
+
+    .task-status label:after {
+        content: "";
+        position: absolute;
+        left: -15px;
+        top: -17px;
+        width: 40px;
+        height: 50px;
+    }
+
+    .active-task-details {
+        width: 100vw;
+    }
+
+    .task-details {
+        border-left: 0;
+        width: 100vw;
+    }
+
     .creator-options p {
         font-size: 5rem;
     }
 
-    .task-text, .note-text {
-        margin-top: 21px;
-    }
-
     .todos {
-        overflow:visible;
+        /* overflow:visible; */
         grid-auto-rows: 60px;
         gap: 10px;
         padding-right: 0;
@@ -345,7 +730,7 @@
     }
 
     .wrapper {
-        height: 100%;
+        min-height: 100%;
         display: grid;
         grid-template-columns: 1fr;
     }
@@ -396,22 +781,31 @@
     }
 
     .background-option {
+        background-color: transparent;
+        padding: 8px;
+    }
+
+    .sort {
         display: none;
+        background-color: transparent;
+        border: 2px solid red;
     }
 
     .mobile-menu {
         display: unset;
-        padding: 7px;
+        padding: 8px;
+        border-radius: 10px;
     }
 
     .sort {
         padding: 0;
         background-color: transparent;
-        padding: 7px;
+        padding: 8px;
+
     }
 
     .sort i, .mobile-menu i {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         cursor: pointer;
 
     }
@@ -420,9 +814,30 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 
-    .swapper-options div {
+    .button-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    #btn {
+        left: 3px;
+        top: 2px;
+        position: absolute;
+        height: 26px;
+        background: var(--clicked-purple);
+        transition: .5s;
+        width: 116px;
+        border-radius: 4px 0 0 4px;
+        opacity: 0;
+        transition: left 0.5s;
+    }
+
+    .swapper-options button {
         border-top: 2px solid var(--clicked-purple);
         border-bottom: 2px solid var(--clicked-purple);
         width: 120px;
@@ -431,26 +846,25 @@
         justify-content: center;
         align-items: center;
         padding: 10px 12px;
+        color: white;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.8rem;
+        position: relative;
     }
 
     .swapper-all {
         border-radius: 7px 0 0 7px;
         border-right: 1.5px solid var(--clicked-purple);
         border-left: 3px solid var(--clicked-purple);
-    }
+        background: transparent;
+    } 
 
     .swapper-today {
         border-radius: 0 7px 7px 0;
         border-left: 1.5px solid var(--clicked-purple);
         border-right: 3px solid var(--clicked-purple);
-    }
-
-    .swapper-options p  {
-        color: white;
-        text-align: center;
-        font-family: 'Roboto', sans-serif;
-        transform: translateY(5%);
-        font-size: 0.8rem;
+        background: transparent;
     }
 
     .search-bar-mobile {
@@ -547,9 +961,107 @@
     
 }
 
+@media only screen and (max-width: 420px) {
+    .custom-alert-all {
+        width: 250px;
+        height: 190px;
+        grid-template-rows: auto 35px;
+    }
+
+    .custom-alert {
+        width: 270px;
+        height: 180px;
+        grid-template-rows: auto 35px;
+    }
+
+    .alert-heading h2 {
+        font-size: 1.1rem;
+    }
+    
+    .alert-subheading-all p {
+        line-height: 15px;
+        font-size: 0.8rem;
+        padding: 0 5px;
+    }
+
+    .alert-subheading p {
+        line-height: 15px;
+        font-size: 1.1rem;
+        padding: 0 5px;
+    }
+    
+    .alert-icon i {
+        font-size: 1.8rem;
+    }
+
+    .alert-button-all button {
+        font-size: 0.8rem;
+    }
+
+    .alert-button button {
+        font-size: 0.8rem;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .custom-alert-all {
+        width: 180px;
+        height: 140px;
+        grid-template-rows: auto 32px;
+    }
+
+    .custom-alert {
+        width: 180px;
+        height: 140px;
+        grid-template-rows: auto 32px;
+    }
+
+    .alert-heading h2 {
+        font-size: 0.85rem;
+        letter-spacing: normal;
+    }
+    
+    .alert-subheading-all p {
+        line-height: 13px;
+        font-size: 0.7rem;
+        padding: 0 3px;
+    }
+
+    .alert-subheading p {
+        line-height: 13px;
+        font-size: 0.85rem;
+        padding: 0 3px;
+    }
+    
+    .alert-icon i {
+        font-size: 1.4rem;
+    }
+
+    .alert-button-all button {
+        font-size: 0.6rem;
+    }
+
+    .cancel-all {
+        margin-right: 2px;
+    }
+}
+
 @media only screen and (max-width: 450px) {
     .task-heading h2, .note-heading h2 {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .task-heading, .note-heading {
+        margin-top: 0px;
+        margin-bottom: 3px;
+    }
+
+    .task-category p, .note-category p {
+        font-size: 0.6rem;
+    }
+
+    .task-text, .note-text {
+        margin-top: -3px;
     }
 }
 
@@ -623,13 +1135,13 @@
         font-size: 0.95rem;
     }
 
-    .swapper-options div {
+    .swapper-options button {
         width: 80px;
         height: 20px;
         padding: 10px 12px;
     }
 
-    .swapper-today p, .swapper-all p {
+    .swapper-today, .swapper-all {
         font-size: 0.6rem;
     }
 }
@@ -641,70 +1153,104 @@
 
 
 @media only screen and (max-width: 1160px) {
-    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img, .todo-editor-form-image img, .note-editor-form-image img {
         width: 350px;
     }
 }
 
 @media only screen and (max-width: 1040px) {
-    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img, .todo-editor-form-image img, .note-editor-form-image img {
         width: 330px;
     }
 
-    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area, .todo-editor-main-area, .note-editor-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image, .note-editor-form-image {
         justify-content: flex-end;
     }
 }
 
 @media only screen and (max-width: 980px) {
-    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img {
+    .todo-setter-form-image img, .note-setter-form-image img, .project-setter-form-image img, .todo-editor-form-image img, .note-editor-form-image img {
         width: 280px;
     }
 
-    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area, .todo-editor-main-area, .note-editor-main-area {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image  {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image, .note-editor-form-image  {
         justify-content: flex-end;
     }
 
-    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap, .todo-editor-wrap, .note-editor-wrap {
         padding: 20px 20px;
     }
 }
 
 @media only screen and (max-width: 870px) {
-    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area {
+    .todo-setter-main-area, .note-setter-main-area, .project-setter-main-area, .todo-editor-main-area, .note-editor-main-area {
         display: grid;
         grid-template-columns: 1fr;
     }
 
-    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image {
+    .todo-setter-form-image, .note-setter-form-image, .project-setter-form-image, .todo-editor-form-image, .note-editor-form-image {
         display: none;
     }
 
-    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap,  .todo-editor-wrap, .note-editor-wrap {
         padding: 20px 60px;
     }
 
-    .todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2 {
+    .todo-setter-nav-logo h2, .note-setter-nav-logo h2, .project-setter-nav-logo h2, .todo-editor-nav-logo h2, .note-editor-nav-logo h2 {
         font-size: 2rem;
     }
 
-    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .note-setter-nav-icons i, .project-setter-nav-arrow i, .project-setter-nav-icons i {
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-arrow i, .note-setter-nav-icons i, .project-setter-nav-arrow i, .project-setter-nav-icons i, .todo-editor-nav-icons i, .todo-editor-nav-arrow i, .note-editor-nav-arrow i, .note-editor-nav-icons i {
         font-size: 1.6rem;
     }
 }
 
 @media only screen and (max-width: 650px) {
-    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
+    .custom-arrow {
+        top: 5px;
+    }
+
+    .custom-alert-all {
+        width: 380px;
+        height: 250px;
+        grid-template-rows: auto 50px;
+    }
+
+    .custom-alert {
+        width: 380px;
+        height: 220px;
+        grid-template-rows: auto 50px;
+    }
+
+    .alert-heading h2 {
+        font-size: 1.2rem;
+    }
+    
+    .alert-subheading-all p {
+        line-height: 25px;
+        font-size: 1.2rem;
+        padding: 0 10px;
+    }
+    
+    .alert-icon i {
+        font-size: 3rem;
+    }
+
+    .alert-button-all button {
+        font-size: 1.1rem;
+    }
+
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap, .todo-editor-wrap, .note-editor-wrap {
         padding: 20px 20px;
     }
     
@@ -712,16 +1258,16 @@
         font-size: 1.2rem;
     }
 
-    .container {
+    .container, .container-edit, .container-phone, .container-edit-phone {
         font-size: 1.2rem;
     }
 
-    .checkmark {
+    .checkmark, .checkmark-phone {
         height: 18px;
         width: 18px;
     }
 
-    .container .checkmark:after {
+    .container .checkmark:after, .container-edit .checkmark:after, .container-edit-phone .checkmark-phone:after, .container-phone .checkmark-phone:after {
         left: 7px;
         top: 3px;
         width: 2px;
@@ -762,21 +1308,21 @@
         grid-template-rows: 90px minmax(180px, 1.5fr)  90px 90px 50px 1fr;
     }
 
-    .todo-setter-importance {
+    .todo-setter-importance, .todo-editor-importance {
         display: none;
     }
 
-    .todo-setter-importance-phone {
+    .todo-setter-importance-phone, .todo-editor-importance-phone {
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
 
-    .container {
+    .container, .container-edit, .container-edit-phone, .container-phone {
         padding-left: 10px;
     }
 
-    .todo-setter-area, .note-setter-area, .project-setter-area {
+    .todo-setter-area, .note-setter-area, .project-setter-area, .todo-editor-area, .note-editor-area {
         display: grid;
         grid-template-columns: 1fr;
     }
@@ -791,7 +1337,7 @@
         font-size: 1rem;
     }
 
-    .todo-setter-accept button, .note-setter-accept button, .project-setter-accept button {
+    .todo-setter-accept button, .note-setter-accept button, .project-setter-accept button, .todo-editor-accept button, .note-editor-accept {
         height: 50px;
         font-size: 1.1rem;
     }
@@ -805,16 +1351,16 @@
         gap: 10px;
     }
 
-    .todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img {
+    .todo-setter-nav-logo img, .note-setter-nav-logo img, .project-setter-nav-logo img, .todo-editor-nav-logo img, .note-editor-nav-logo img {
         margin-top: 5px;
         width: 120px;
     }
 
-    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i, .project-setter-nav-icons i, .project-setter-nav-arrow i {
+    .todo-setter-nav-icons i, .todo-setter-nav-arrow i, .note-setter-nav-icons i, .note-setter-nav-arrow i, .project-setter-nav-icons i, .project-setter-nav-arrow i, .todo-editor-nav-icons i, .todo-editor-nav-arrow i, .note-editor-nav-icons i, .note-editor-nav-arrow i {
         font-size: 1.3rem;
     }
 
-    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap {
+    .todo-setter-wrap, .note-setter-wrap, .project-setter-wrap, .todo-editor-wrap, .note-editor-wrap {
         grid-template-rows: 0.8fr 9fr;
     }
 }

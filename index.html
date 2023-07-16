@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Document</title>
+    <title>no delay - todo list app</title>
 </head>
 <body>
     <div class="wrapper transition-fade">
@@ -162,18 +162,21 @@
                     </div>
 
                     <div class="mobile-menu">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        <i class="fa-solid fa-compass"></i>
                     </div>
                 </div>
             </div>
 
             <div class="swapper-options">
-                <div class="swapper-all">
-                    <p>All</p>
-                </div>
+                <div class="button-group">
+                    <div id="btn"></div>
+                    <button class="swapper-all">
+                        All
+                    </button>
 
-                <div class="swapper-today">
-                    <p>Today</p>
+                    <button class="swapper-today">
+                        Today
+                    </button>
                 </div>
             </div>
 
@@ -374,9 +377,9 @@
 
                             <div class="todo-setter-importance-phone">
                                 <div class="todo-setter-importance-area">
-                                    <label for="phone_checkbox" class="container">Important task
+                                    <label for="phone_checkbox" class="container-phone">Important task
                                         <input id="phone_checkbox" type="checkbox">
-                                        <span class="checkmark"></span>
+                                        <span class="checkmark-phone"></span>
                                     </label>
                                 </div>
                             </div>
@@ -473,9 +476,9 @@
 
                             <div class="todo-editor-importance-phone">
                                 <div class="todo-editor-importance-area">
-                                    <label for="phone_checkbox" class="container-edit">Important task
-                                        <input id="phone_checkbox" type="checkbox">
-                                        <span class="checkmark"></span>
+                                    <label for="phone_checkbox_editor" class="container-edit-phone">Important task
+                                        <input id="phone_checkbox_editor" type="checkbox">
+                                        <span class="checkmark-phone"></span>
                                     </label>
                                 </div>
                             </div>
@@ -664,34 +667,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="project-deleter">
-            <div class="pd-wrapper">
-                <div class="logo-bar">
-                    <i class="fa-solid fa-xmark deleter-xmark"></i>
-
-                    <img src="images/3D logo.png" alt="">
-                </div>
-
-                <form action="" id="removal-form" class="choose-bar" autocomplete="off">
-                    <div class="pd-input-heading">
-                        <label for="list-removal">
-                            Which list do you want to remove?
-                        </label>
-                    </div>
-
-                    <div class="pd-input-input">
-                        <select name="list-removal" id="list-removal">
-                            <option class="none" value="none">none</option>
-                        </select>
-                    </div>
-                </form>
-
-                <div class="button-bar">
-                    <button form="removal-form" type="submit">remove</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="custom-alert">
@@ -705,7 +680,7 @@
             </div>
 
             <div class="alert-subheading">
-                <p>An errror has occured while<br>creating an error report.</p>
+                <p>This task already exists.</p>
             </div>
         </div>
 
@@ -732,6 +707,34 @@
         <div class="alert-button-all">
             <button class="cancel-all">Cancel</button>
             <button class="remove-all">Remove all</button>
+        </div>
+    </div>
+
+    <div class="project-deleter">
+        <div class="pd-wrapper">
+            <div class="logo-bar">
+                <i class="fa-solid fa-xmark deleter-xmark"></i>
+
+                <img src="images/3D logo.png" alt="">
+            </div>
+
+            <form action="" id="removal-form" class="choose-bar" autocomplete="off">
+                <div class="pd-input-heading">
+                    <label for="list-removal">
+                        Which list do you want to remove?
+                    </label>
+                </div>
+
+                <div class="pd-input-input">
+                    <select name="list-removal" id="list-removal">
+                        <option class="none" value="none">none</option>
+                    </select>
+                </div>
+            </form>
+
+            <div class="button-bar">
+                <button form="removal-form" type="submit">remove</button>
+            </div>
         </div>
     </div>
 </body>
