@@ -474,6 +474,7 @@ table {
     gap: 4px;
     padding-right: 10px;
     border-radius: 20px;
+    position: relative;
 }
 
 .todos::-webkit-scrollbar, .todos::-webkit-scrollbar {
@@ -497,6 +498,7 @@ table {
     transition: 0.3s;
     cursor: pointer;
     border: 0.5px solid transparent;
+    transform: translateY(0);
 }
 
 .active-task {
@@ -540,7 +542,7 @@ table {
     border: 2px solid white;
     border-radius: 50%;
     position: relative;
-    transition: border 0.5s ease-out;
+    transition: border 0.3s ease-out;
 }
 
 .task-status label .check-icon {
@@ -557,8 +559,22 @@ table {
     border-top: 2px solid #5cb85c;
     border-right: 2px solid #5cb85c;
     transform-origin: left top;
-    animation: check-icon 0.8s ease;
+    animation: check-icon 0.5s ease;
     transform: translate(-50%, -50%) scaleX(-1) rotate(135deg);
+}
+
+.disable-pointer-events {
+    pointer-events: none;
+}
+
+.animate-up {
+    transform: translateY(-82px);
+    transition: 0.3s;
+}
+
+.animate-down {
+    transform: translateY(82px);
+    transition: 0.3s;
 }
 
 @keyframes check-icon {
@@ -1873,7 +1889,7 @@ html.is-animating .transition-fade {
 
 .animate-it {
     animation-name: moveOut;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-delay: 1s;
     animation-iteration-count: 1;
     animation-direction: normal;
