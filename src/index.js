@@ -66,10 +66,15 @@ window.onload = function () {
   const formattedDate = `${days[currentDate.getDay()]}, ${currentDate.getDate()} ${months[currentDate.getMonth()]}`;
   dateElement.textContent = formattedDate;
 
+  generateAllLists();
+  updateOptions();
   checkEveryDate();
   prepareAll();
-  updateOptions();
-  prepareLists();
+
+  const allNumbers = document.querySelectorAll('.project-count p');
+  for (let i = 0; i < allNumbers.length; i++) {
+    allNumbers[i].textContent = customListArrNumbers[i];
+  }
 };
 
 // DEFAULT ARRAYS
@@ -77,10 +82,23 @@ window.onload = function () {
 function saveTodos() {
   localStorage.setItem('allTasks', JSON.stringify(allTasks));
   localStorage.setItem('importantTasks', JSON.stringify(importantTasks));
+  localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+  localStorage.setItem('allNotes', JSON.stringify(allNotes));
+  localStorage.setItem('allLists', JSON.stringify(allLists));
+  localStorage.setItem('currentArrNums', JSON.stringify(currentArrNums));
+  localStorage.setItem('customListArrNumbers', JSON.stringify(customListArrNumbers));
+  localStorage.setItem('customNumStorage', JSON.stringify(customNumStorage));
 }
 
 const storedTodos = localStorage.getItem('allTasks');
 const storedImportant = localStorage.getItem('importantTasks');
+const storedCompleted = localStorage.getItem('completedTasks');
+const storedNotes = localStorage.getItem('allNotes');
+const storedLists = localStorage.getItem('allLists');
+const storedArrNums = localStorage.getItem('currentArrNums');
+const storedCustomNums = localStorage.getItem('customListArrNumbers');
+const storedNumStorage = localStorage.getItem('customNumStorage');
+
 let allTasks = storedTodos ? JSON.parse(storedTodos) : [];
 let allTasksTitles = [];
 let allListTitles = [];
@@ -88,12 +106,12 @@ let allNotesTitles = [];
 let todayTasksNi = [];
 let todayTasksImp = [];
 let weekTasksNi = [];
-let currentArrNums = [];
+let currentArrNums = storedArrNums ? JSON.parse(storedArrNums) : [];
 let weekTasksImp = [];
 let importantTasks = storedImportant ? JSON.parse(storedImportant) : [];
-let allNotes = [];
-let completedTasks = [];
-let allLists = [];
+let allNotes = storedNotes ? JSON.parse(storedNotes) : [];
+let completedTasks = storedCompleted ? JSON.parse(storedCompleted) : [];
+let allLists = storedLists ? JSON.parse(storedLists) : [];
 let allListOptions = [];
 let generateArray = [];
 let notImportantDataCards = [];
@@ -103,6 +121,9 @@ let impDateAttributes = [];
 let impWeekAttributes = [];
 let importantDataCards = [];
 let generateArrayImportant = [];
+let keyIndexCustom;
+let customListArrNumbers = storedCustomNums ? JSON.parse(storedCustomNums) : [];
+let customNumStorage = storedNumStorage ? JSON.parse(storedNumStorage) : [];
 
 // BOARDS VARIABLES
 
@@ -166,6 +187,19 @@ function Note(title, details) {
 function List(title, color) {
   this.title = title;
   this.color = color;
+}
+
+// FUNCTION FOR RETRIEVING CUSTOM ARRAY NUMBERS
+// FUNCTION FOR RETRIEVING CUSTOM ARRAY NUMBERS
+// FUNCTION FOR RETRIEVING CUSTOM ARRAY NUMBERS
+
+function retrieveCustom() {
+  customListArrNumbers = [];
+  const allNums = document.querySelectorAll('.project-count p');
+  for (let i = 0; i < allNums.length; i++) {
+    customListArrNumbers.push(allNums[i].textContent);
+  }
+  saveTodos();
 }
 
 // UPDATES ARRAYS NUMBERS
@@ -943,10 +977,23 @@ function addArrNums() {
 }
 
 function prepareLists() {
+  currentArrNums = [];
   const allNums = document.querySelectorAll('.project-count p');
   for (let i = 0; i < allNums.length; i++) {
     currentArrNums.push(allNums[i].textContent);
   }
+  lists.innerHTML = '';
+  generateAllLists();
+  saveTodos();
+}
+
+function prepareListsRemoval() {
+  currentArrNums = [];
+  const allNums = document.querySelectorAll('.project-count p');
+  for (let i = 0; i < allNums.length; i++) {
+    currentArrNums.push(allNums[i].textContent);
+  }
+  currentArrNums.splice(keyIndexCustom, 1);
   lists.innerHTML = '';
   generateAllLists();
   saveTodos();
@@ -1474,7 +1521,52 @@ taskDoneButton.addEventListener('click', (event) => {
       }
     }
   }
+  retrieveCustom();
 });
+
+// FUNCTION FOR DISABLING POINTER EVENTS
+
+function disablePointerEvents() {
+  const allItems = document.querySelectorAll('.item');
+  allItems.forEach((item) => {
+    item.classList.add('disable-pointer-events');
+    setTimeout(() => {
+      item.classList.remove('disable-pointer-events');
+    }, 2100);
+  });
+}
+
+function animateUp() {
+  const allItems = document.querySelectorAll('.item');
+  allItems.forEach((item) => {
+    item.classList.add('animate-up');
+    setTimeout(() => {
+      item.classList.remove('animate-up');
+    }, 2100);
+  });
+}
+
+function animateDownNi(num) {
+  const allItems = document.querySelectorAll('.item');
+
+  const mathMove = ((allItems.length - 1) * 82) + 5;
+
+  for (let i = 0; i < allItems.length; i++) {
+    const dataCard = allItems[i].getAttribute('data-card');
+
+    if ((dataCard === num) && (allItems[i].classList.contains("important-task"))) {
+      allItems[i].style.transform = `translateY(-${mathMove}px)`;
+      setTimeout(() => {
+        allItems[i].style.transform = 'translateY(0)';
+      }, 2100);
+    } else {
+      allItems[i].classList.add('animate-down');
+      setTimeout(() => {
+        allItems[i].classList.remove('animate-down');
+      }, 2100);
+    }
+  }
+}
 
 // EDITS THE TASK
 // EDITS THE TASK
@@ -1781,6 +1873,7 @@ function taskEditor(originalTitle, originalDetails, originalDueDate, originalImp
         }
       }
     }
+    retrieveCustom();
   });
 }
 
@@ -1912,6 +2005,7 @@ startEditButton.addEventListener('click', () => {
 
     taskEditor(originalTitle, originalDetails, originalDueDate, originalImportance, originalProject, originalStatus);
   }
+  retrieveCustom();
 });
 
 noteDoneButton.addEventListener('click', (event) => {
@@ -2027,6 +2121,54 @@ function updateOptions() {
   prepareLists();
 }
 
+function updateOptionsRemoval() {
+  const listTitles = document.querySelectorAll('.project-name h2');
+  allListTitles = [];
+
+  for (let i = 0; i < listTitles.length; i++) {
+    allListTitles.push(listTitles[i].textContent);
+  }
+
+  selectInput.innerHTML = '';
+  selectInputEdit.innerHTML = '';
+  selectInputRemoval.innerHTML = '';
+
+  const noneElement = document.createElement('option');
+  const noneElementEdit = document.createElement('option');
+  const noneElementRemoval = document.createElement('option');
+
+  noneElement.value = 'none';
+  noneElement.textContent = 'none';
+  noneElementEdit.value = 'none';
+  noneElementEdit.textContent = 'none';
+  noneElementRemoval.value = 'none';
+  noneElementRemoval.textContent = 'none';
+  selectInput.appendChild(noneElement);
+  selectInputEdit.appendChild(noneElementEdit);
+  selectInputRemoval.appendChild(noneElementRemoval);
+
+  allListOptions = [];
+
+  for (let i = 0; i < allListTitles.length; i++) {
+    allListOptions.push(allListTitles[i]);
+  }
+
+  for (let i = 0; i < allListOptions.length; i++) {
+    const option = document.createElement('option');
+    const optionEdit = document.createElement('option');
+    const optionRemoval = document.createElement('option');
+    option.classList.add('list-item');
+    option.text = allListOptions[i];
+    optionEdit.text = allListOptions[i];
+    optionRemoval.text = allListOptions[i];
+    selectInput.add(option);
+    selectInputEdit.add(optionEdit);
+    selectInputRemoval.add(optionRemoval);
+  }
+
+  addOptionAttribute();
+}
+
 listDoneButton.addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -2098,24 +2240,7 @@ listDoneButton.addEventListener('click', (event) => {
       projectColor.value = '#FFFFFF';
     }
   }
-
-  document.addEventListener('click', (e) => {
-    const clickedElement = e.target;
-    e.stopImmediatePropagation();
-    e.stopPropagation();
-    if (clickedElement.classList.contains('project-list')) {
-      removeBackground();
-      const heading = clickedElement.querySelector('h2').textContent;
-      categoryHeading.textContent = heading;
-      todos.innerHTML = '';
-      const originalText = heading;
-      const customizedText = originalText.replace(/[ .]/g, '');
-      generateCustom(customizedText);
-      closeDetails();
-    } else {
-      false;
-    }
-  });
+  retrieveCustom();
 });
 
 listRemovalButton.addEventListener('click', (event) => {
@@ -2148,6 +2273,24 @@ listRemovalButton.addEventListener('click', (event) => {
 
   const currentValue = selectInputRemoval.value;
   const currentValueCustomized = currentValue.replace(/[ .]/g, '');
+  let allTitlesArr = [];
+  allTitlesArr = [];
+
+  // START
+
+  for (let i = 0; i < allLists.length; i++) {
+    allTitlesArr.push(allLists[i].title);
+  }
+
+  const listNoSpaces = allTitlesArr.map((str) => str.replace(/\s/g, ''));
+
+  for (let i = 0; i < allLists.length; i++) {
+    if (listNoSpaces[i] === currentValueCustomized) {
+      keyIndexCustom = i;
+    }
+  }
+
+  // END
 
   function removeList(num) {
     allLists.splice(num, 1);
@@ -2221,9 +2364,6 @@ listRemovalButton.addEventListener('click', (event) => {
 
   let customizedAll = allTasksTitles.map((str) => str.replace(/\s/g, ''));
 
-  console.log(customizedAll);
-  console.log(allRemovedTitles);
-
   let arrayNums = [];
 
   for (let i = 0; i < customizedRemoved.length; i++) {
@@ -2239,17 +2379,15 @@ listRemovalButton.addEventListener('click', (event) => {
     allTasksTitles.splice(index, 1);
   });
 
-  console.log(allTasksTitles);
-
-  console.log(arrayNums);
-
-  prepareLists();
-  updateOptions();
-  prepareAll();
   allRemovedTitles = [];
   customizedRemoved = [];
   customizedAll = [];
   arrayNums = [];
+
+  prepareListsRemoval();
+  updateOptionsRemoval();
+  prepareAll();
+  retrieveCustom();
 });
 
 // MAKES THE TASK COMPLETED AFTER USER CLICKS THE TASK CHECKBOX
@@ -2329,6 +2467,9 @@ document.addEventListener('click', (event) => {
       audio.currentTime = 0;
     }
 
+    disablePointerEvents();
+    setTimeout(animateUp, 2100);
+
     audio.play();
     isPlaying = true;
     const roundAtt = clickedElement2.getAttribute('data-card');
@@ -2368,8 +2509,9 @@ document.addEventListener('click', (event) => {
       document.querySelector('.details-info-status-text p').textContent = 'Completed task';
     }
 
-    setTimeout(generateImmediately, 2100);
+    setTimeout(generateImmediately, 2400);
     updateArrayNumbers();
+    retrieveCustom();
   } else if (classArray.includes('important-round')) {
     closeDetails();
     if (isPlaying) {
@@ -2379,6 +2521,9 @@ document.addEventListener('click', (event) => {
 
     audio.play();
     isPlaying = true;
+
+    disablePointerEvents();
+    setTimeout(animateUp, 2100);
 
     const roundAtt = clickedElement2.getAttribute('data-card');
 
@@ -2398,8 +2543,9 @@ document.addEventListener('click', (event) => {
     completedTasks.push(movingObject);
     importantTasks.splice(roundAtt, 1);
 
-    setTimeout(generateImmediately, 2100);
+    setTimeout(generateImmediately, 2400);
     updateArrayNumbers();
+    retrieveCustom();
   }
 
   if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
@@ -2420,39 +2566,41 @@ document.addEventListener('click', (event) => {
       taskSpecial.classList.add('important-task');
     }
     // VISUAL
+    console.log(roundAtt);
+    animateDownNi(roundAtt);
     importantTasks.push(movingObject);
     allTasks.splice(roundAtt, 1);
 
     if (categoryHeading.textContent === 'All Entries') {
-      setTimeout(prepareAll, 250);
+      setTimeout(prepareAll, 1000);
     } else if (categoryHeading.textContent === 'Important Tasks') {
-      setTimeout(prepareImportant, 250);
+      setTimeout(prepareImportant, 1000);
     } else if (categoryHeading.textContent === 'All Notes') {
-      setTimeout(prepareNotes, 250);
+      setTimeout(prepareNotes, 1000);
     } else if (categoryHeading.textContent === 'Today\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllDaysImportant();
         loopAllDaysNotImportant();
-      }, 250);
+      }, 1000);
     } else if (categoryHeading.textContent === 'Week\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllWeekImportant();
         loopAllWeekNotImportant();
-      }, 250);
+      }, 1000);
     } else {
       setTimeout(() => {
         prepareWithoutName();
         todos.innerHTML = '';
-      }, 250);
+      }, 1000);
       const currentText = categoryHeading.textContent;
       const currentTextCustomized = currentText.replace(/[ .]/g, '');
       setTimeout(() => {
         generateCustom(currentTextCustomized);
-      }, 250);
+      }, 1000);
     }
     updateArrayNumbers();
   } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
@@ -2654,6 +2802,22 @@ document.addEventListener('click', (event) => {
       infoDetails.textContent = 'This note has no description';
     }
   }
+
+  const clickedElementDetails = event.target;
+  event.stopImmediatePropagation();
+  event.stopPropagation();
+  if (clickedElementDetails.classList.contains('project-list')) {
+    removeBackground();
+    const heading = clickedElementDetails.querySelector('h2').textContent;
+    categoryHeading.textContent = heading;
+    todos.innerHTML = '';
+    const originalText = heading;
+    const customizedText = originalText.replace(/[ .]/g, '');
+    generateCustom(customizedText);
+    closeDetails();
+  } else {
+    false;
+  }
 });
 
 const detailsCross = document.querySelector('.details-xmark');
@@ -2753,6 +2917,7 @@ trash.addEventListener('click', () => {
   checkEveryDate();
   generateImmediately();
   closeDetails();
+  retrieveCustom();
 });
 
 // REMOVES THE LIST
@@ -2847,6 +3012,7 @@ allTrash.addEventListener('click', () => {
 
   const audio = new Audio('/dist/audio/wrong-message.mp3');
   audio.play();
+  retrieveCustom();
 });
 
 trashCancel.addEventListener('click', () => {
@@ -2879,9 +3045,9 @@ removeTrash.addEventListener('click', () => {
   impWeekAttributes = [];
   importantDataCards = [];
   generateArrayImportant = [];
+  customListArrNumbers = [];
 
   prepareLists();
-  updateOptions();
   checkEveryDate();
   prepareAll();
 
@@ -2889,6 +3055,8 @@ removeTrash.addEventListener('click', () => {
   wrapper.style.filter = 'brightness(1)';
   wrapper.style.pointerEvents = 'all';
   trashAlert.classList.remove('visible-error');
+
+  retrieveCustom();
 });
 
 // SWAPPER BUTTONS
