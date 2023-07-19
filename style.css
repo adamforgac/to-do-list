@@ -569,12 +569,12 @@ table {
 }
 
 .animate-up {
-    transform: translateY(-82px);
+    transform: translateY(-84px);
     transition: 0.3s;
 }
 
 .animate-down {
-    transform: translateY(83px);
+    transform: translateY(84px);
     transition: 0.3s;
 }
 
