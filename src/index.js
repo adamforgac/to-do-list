@@ -1590,9 +1590,15 @@ function animateDownNi(num) {
     }
   }
 
-  console.log(itemsBeforeFirst);
+  const taskMeasure = document.querySelector('.task');
+  const taskHeight = taskMeasure.clientHeight;
+  console.log(taskHeight);
 
-  const mathMove = (itemsBeforeFirst.length * 84);
+  let mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 6));
+
+  if (window.innerWidth <= 700) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 12));
+  }
 
   console.log(mathMove);
 
@@ -1628,7 +1634,17 @@ function animateDownImp(num) {
 
   console.log(itemsBeforeFirst);
 
-  const mathMove = (itemsBeforeFirst.length * 84);
+  const taskMeasure = document.querySelector('.task');
+  const taskHeight = taskMeasure.clientHeight;
+  console.log(taskHeight);
+
+  let mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 6));
+
+  if (window.innerWidth <= 700) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 12));
+  }
+
+  console.log(mathMove);
 
   const dataItem = document.querySelector(`[data-item="${num}"]`);
   dataItem.style.transform = `translateY(${mathMove}px)`;
