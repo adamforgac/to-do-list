@@ -1,3 +1,4 @@
+/* eslint-disable no-inner-declarations */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-shadow */
@@ -245,6 +246,7 @@ function checkForDateNotImportant() {
     }
   }
   updateArrayNumbers();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -297,6 +299,7 @@ function loopAllDaysNotImportant() {
     });
   }
   updateArrayNumbers();
+  setAttributeToBoard();
 }
 
 function checkForWeekNotImportant() {
@@ -315,6 +318,7 @@ function checkForWeekNotImportant() {
     }
   }
   updateArrayNumbers();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -367,6 +371,7 @@ function loopAllWeekNotImportant() {
     });
   }
   updateArrayNumbers();
+  setAttributeToBoard();
 }
 
 function checkForDateImportant() {
@@ -383,6 +388,7 @@ function checkForDateImportant() {
     }
   }
   updateArrayNumbers();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -434,6 +440,7 @@ function loopAllDaysImportant() {
       child.setAttribute('data-card', impDateAttributes[c]);
     });
   }
+  setAttributeToBoard();
   updateArrayNumbers();
 }
 
@@ -453,6 +460,7 @@ function checkForWeekImportant() {
     }
   }
   updateArrayNumbers();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -505,6 +513,7 @@ function loopAllWeekImportant() {
     });
   }
   updateArrayNumbers();
+  setAttributeToBoard();
 }
 
 function checkEveryDate() {
@@ -513,6 +522,7 @@ function checkEveryDate() {
   checkForDateNotImportant();
   checkForWeekImportant();
   checkForWeekNotImportant();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -650,6 +660,7 @@ function generateImportant() {
 
     addImportantAttribute();
   }
+  setAttributeToBoard();
 }
 
 function generateCompleted() {
@@ -702,6 +713,7 @@ function generateCompleted() {
 
     addCompletedAttribute();
   }
+  setAttributeToBoard();
 }
 
 function generateAllTasks() {
@@ -746,6 +758,7 @@ function generateAllTasks() {
 
     addTaskAttribute();
   }
+  setAttributeToBoard();
 }
 
 function generateAllLists() {
@@ -775,6 +788,7 @@ function generateAllLists() {
     addListAttribute();
   }
   addArrNums();
+  setAttributeToBoard();
 }
 
 function generateAllNotes() {
@@ -810,6 +824,13 @@ function generateAllNotes() {
     itemCategory.appendChild(document.createElement('p')).textContent = 'Notes';
 
     addNoteAttribute();
+  }
+}
+
+function setAttributeToBoard() {
+  const allItems = document.querySelectorAll('.item');
+  for (let i = 0; i < allItems.length; i++) {
+    allItems[i].setAttribute('data-item', `${i}`);
   }
 }
 
@@ -888,6 +909,7 @@ function generateCustom(projectName) {
         child.setAttribute('data-card', notImportantDataCards[c]);
       });
     }
+    setAttributeToBoard();
   }
 
   function generateImportantInner() {
@@ -945,6 +967,7 @@ function generateCustom(projectName) {
 
   generateImportantInner();
   generateNotImportantInner();
+  setAttributeToBoard();
 }
 
 // FUNCTIONS FOR PREPARING DIFFERENT SECTIONS
@@ -960,7 +983,7 @@ function prepareAll() {
   checkEveryDate();
 
   updateArrayNumbers();
-
+  setAttributeToBoard();
   categoryHeading.textContent = 'All Entries';
   saveTodos();
 }
@@ -984,6 +1007,7 @@ function prepareLists() {
   }
   lists.innerHTML = '';
   generateAllLists();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -996,6 +1020,7 @@ function prepareListsRemoval() {
   currentArrNums.splice(keyIndexCustom, 1);
   lists.innerHTML = '';
   generateAllLists();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -1008,6 +1033,7 @@ function prepareWithoutName() {
   checkEveryDate();
 
   updateArrayNumbers();
+  setAttributeToBoard();
   saveTodos();
 }
 
@@ -1017,6 +1043,7 @@ function prepareImportant() {
   checkEveryDate();
 
   updateArrayNumbers();
+  setAttributeToBoard();
   categoryHeading.textContent = 'Important Tasks';
   saveTodos();
 }
@@ -1026,6 +1053,7 @@ function prepareNotes() {
   generateAllNotes();
   checkEveryDate();
 
+  setAttributeToBoard();
   updateArrayNumbers();
   categoryHeading.textContent = 'All Notes';
   saveTodos();
@@ -1045,6 +1073,7 @@ function prepareCompleted() {
   }
 
   updateArrayNumbers();
+  setAttributeToBoard();
   categoryHeading.textContent = 'Completed Tasks';
   saveTodos();
 }
@@ -1548,21 +1577,70 @@ function animateUp() {
 
 function animateDownNi(num) {
   const allItems = document.querySelectorAll('.item');
+  const itemsBeforeFirst = [];
 
-  const mathMove = ((allItems.length - 1) * 82) + 5;
+  console.log(num);
 
   for (let i = 0; i < allItems.length; i++) {
-    const dataCard = allItems[i].getAttribute('data-card');
+    if (i < num) {
+      const dataItem = document.querySelector(`[data-item="${i}"]`);
+      if (dataItem.classList.contains('not-important')) {
+        itemsBeforeFirst.push(i);
+      }
+    }
+  }
 
-    if ((dataCard === num) && (allItems[i].classList.contains("important-task"))) {
-      allItems[i].style.transform = `translateY(-${mathMove}px)`;
+  console.log(itemsBeforeFirst);
+
+  const mathMove = (itemsBeforeFirst.length * 84);
+
+  console.log(mathMove);
+
+  const dataItem = document.querySelector(`[data-item="${num}"]`);
+  console.log(dataItem);
+  dataItem.style.transform = `translateY(-${mathMove}px)`;
+  setTimeout(() => {
+    dataItem.style.transform = 'translateY(0)';
+  }, 2100);
+
+  for (let i = 0; i < allItems.length; i++) {
+    if (i < num) {
+      const dataItem = document.querySelector(`[data-item="${i}"]`);
+      if (dataItem.classList.contains('not-important')) {
+        allItems[i].classList.add('animate-down');
+        setTimeout(() => {
+          allItems[i].classList.remove('animate-down');
+        }, 2100);
+      }
+    }
+  }
+}
+
+function animateDownImp(num) {
+  const allItems = document.querySelectorAll('.item');
+  const itemsBeforeFirst = [];
+
+  for (let i = 0; i < allItems.length; i++) {
+    if (i > num) {
+      itemsBeforeFirst.push(i);
+    }
+  }
+
+  console.log(itemsBeforeFirst);
+
+  const mathMove = (itemsBeforeFirst.length * 84);
+
+  const dataItem = document.querySelector(`[data-item="${num}"]`);
+  dataItem.style.transform = `translateY(${mathMove}px)`;
+  setTimeout(() => {
+    dataItem.style.transform = 'translateY(0)';
+  }, 2100);
+
+  for (let i = 0; i < allItems.length; i++) {
+    if (i > num) {
+      allItems[i].classList.add('animate-up');
       setTimeout(() => {
-        allItems[i].style.transform = 'translateY(0)';
-      }, 2100);
-    } else {
-      allItems[i].classList.add('animate-down');
-      setTimeout(() => {
-        allItems[i].classList.remove('animate-down');
+        allItems[i].classList.remove('animate-up');
       }, 2100);
     }
   }
@@ -2549,7 +2627,10 @@ document.addEventListener('click', (event) => {
   }
 
   if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
+    disablePointerEvents();
     const roundAtt = clickedElement2.getAttribute('data-card');
+    const dataCardTask = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
+    const itemAtt = dataCardTask.getAttribute('data-item');
     const movingObject = allTasks[roundAtt];
     movingObject.importance = 'important';
     const task = todos.querySelectorAll('.not-important');
@@ -2557,17 +2638,27 @@ document.addEventListener('click', (event) => {
     if (wrapper.classList.contains('details')) {
       document.querySelector('.details-info-importance-text p').textContent = 'Important task';
     }
-    // VISUAL
-    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
-      task[roundAtt].classList.remove('not-important');
-      task[roundAtt].classList.add('important-task');
-    } else {
+
+    function runSpecial() {
       taskSpecial.classList.remove('not-important');
       taskSpecial.classList.add('important-task');
     }
+
+    function runCategories() {
+      task[roundAtt].classList.remove('not-important');
+      task[roundAtt].classList.add('important-task');
+    }
+
     // VISUAL
-    console.log(roundAtt);
-    animateDownNi(roundAtt);
+    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
+      task[roundAtt].querySelector('.fa-star').style.color = 'yellow';
+      setTimeout(runCategories, 1000);
+    } else {
+      taskSpecial.querySelector('.fa-star').style.color = 'yellow';
+      setTimeout(runSpecial, 1000);
+    }
+    // VISUAL
+    animateDownNi(itemAtt);
     importantTasks.push(movingObject);
     allTasks.splice(roundAtt, 1);
 
@@ -2603,57 +2694,75 @@ document.addEventListener('click', (event) => {
       }, 1000);
     }
     updateArrayNumbers();
+    setTimeout(setAttributeToBoard, 1000);
   } else if (parentClasses.includes('fa-star') && parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
+    disablePointerEvents();
     const roundAtt = clickedElement2.getAttribute('data-card');
+    const dataCardTask = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
+    const itemAtt = dataCardTask.getAttribute('data-item');
     const movingObject = importantTasks[roundAtt];
     movingObject.importance = 'not-important';
-    allTasks.push(movingObject);
-    importantTasks.splice(roundAtt, 1);
     const task = todos.querySelectorAll('.important-task');
     const taskSpecial = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
     if (wrapper.classList.contains('details')) {
       document.querySelector('.details-info-importance-text p').textContent = 'Not important task';
     }
-    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
-      task[roundAtt].classList.remove('important-task');
-      task[roundAtt].classList.add('not-important');
-    } else {
+
+    function runSpecial() {
       taskSpecial.classList.remove('important-task');
       taskSpecial.classList.add('not-important');
     }
 
+    function runCategories() {
+      task[roundAtt].classList.remove('important-task');
+      task[roundAtt].classList.add('not-important');
+    }
+
+    if (categoryHeading.textContent === 'All Entries' || categoryHeading.textContent === 'Important Tasks' || categoryHeading.textContent === 'All Notes') {
+      setTimeout(runCategories, 1000);
+      task[roundAtt].querySelector('.fa-star').style.color = 'white';
+    } else {
+      setTimeout(runSpecial, 1000);
+      taskSpecial.querySelector('.fa-star').style.color = 'white';
+    }
+
+    animateDownImp(itemAtt);
+    allTasks.push(movingObject);
+    importantTasks.splice(roundAtt, 1);
+
     if (categoryHeading.textContent === 'All Entries') {
-      setTimeout(prepareAll, 250);
+      setTimeout(prepareAll, 1000);
     } else if (categoryHeading.textContent === 'Important Tasks') {
-      setTimeout(prepareImportant, 250);
+      setTimeout(prepareImportant, 1000);
     } else if (categoryHeading.textContent === 'All Notes') {
-      setTimeout(prepareNotes, 250);
+      setTimeout(prepareNotes, 1000);
     } else if (categoryHeading.textContent === 'Today\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllDaysImportant();
         loopAllDaysNotImportant();
-      }, 250);
+      }, 1000);
     } else if (categoryHeading.textContent === 'Week\'s Tasks') {
       checkEveryDate();
       setTimeout(() => {
         todos.innerHTML = '';
         loopAllWeekImportant();
         loopAllWeekNotImportant();
-      }, 250);
+      }, 1000);
     } else {
       setTimeout(() => {
         prepareWithoutName();
         todos.innerHTML = '';
-      }, 250);
+      }, 1000);
       const currentText = categoryHeading.textContent;
       const currentTextCustomized = currentText.replace(/[ .]/g, '');
       setTimeout(() => {
         generateCustom(currentTextCustomized);
-      }, 250);
+      }, 1000);
     }
     updateArrayNumbers();
+    setTimeout(setAttributeToBoard, 1000);
   }
 
   // SHOWS TASK DETAILS

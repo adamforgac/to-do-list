@@ -499,6 +499,7 @@ table {
     cursor: pointer;
     border: 0.5px solid transparent;
     transform: translateY(0);
+    position: relative;
 }
 
 .active-task {
@@ -573,7 +574,7 @@ table {
 }
 
 .animate-down {
-    transform: translateY(82px);
+    transform: translateY(83px);
     transition: 0.3s;
 }
 
