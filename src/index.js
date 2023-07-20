@@ -1556,6 +1556,7 @@ taskDoneButton.addEventListener('click', (event) => {
       }
     }
   }
+  prepareAll();
   retrieveCustom();
 });
 
@@ -1662,7 +1663,7 @@ function animateDownImp(num) {
   }, 1500);
 
   for (let i = 0; i < allItems.length; i++) {
-    if (i > num && !allItems[i].classList.contains("note")) {
+    if (i > num && !allItems[i].classList.contains('note')) {
       allItems[i].classList.add('animate-up');
       setTimeout(() => {
         allItems[i].classList.remove('animate-up');
