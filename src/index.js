@@ -89,6 +89,9 @@ function saveTodos() {
   localStorage.setItem('currentArrNums', JSON.stringify(currentArrNums));
   localStorage.setItem('customListArrNumbers', JSON.stringify(customListArrNumbers));
   localStorage.setItem('customNumStorage', JSON.stringify(customNumStorage));
+  localStorage.setItem('allTasksTitles', JSON.stringify(allTasksTitles));
+  localStorage.setItem('allNotesTitles', JSON.stringify(allNotesTitles));
+  localStorage.setItem('allListTitles', JSON.stringify(allListTitles));
 }
 
 const storedTodos = localStorage.getItem('allTasks');
@@ -99,11 +102,14 @@ const storedLists = localStorage.getItem('allLists');
 const storedArrNums = localStorage.getItem('currentArrNums');
 const storedCustomNums = localStorage.getItem('customListArrNumbers');
 const storedNumStorage = localStorage.getItem('customNumStorage');
+const storedTaskTitles = localStorage.getItem('allTasksTitles');
+const storedNoteTitles = localStorage.getItem('allNotesTitles');
+const storedListTitles = localStorage.getItem('allListTitles');
 
 let allTasks = storedTodos ? JSON.parse(storedTodos) : [];
-let allTasksTitles = [];
-let allListTitles = [];
-let allNotesTitles = [];
+let allTasksTitles = storedTaskTitles ? JSON.parse(storedTaskTitles) : [];
+let allListTitles = storedListTitles ? JSON.parse(storedListTitles) : [];
+let allNotesTitles = storedNoteTitles ? JSON.parse(storedNoteTitles) : [];
 let todayTasksNi = [];
 let todayTasksImp = [];
 let weekTasksNi = [];
@@ -1560,7 +1566,7 @@ function disablePointerEvents() {
   wrapper.classList.add('disable-pointer-events');
   setTimeout(() => {
     wrapper.classList.remove('disable-pointer-events');
-  }, 2100);
+  }, 1500);
 }
 
 function animateUp(num) {
@@ -1573,7 +1579,7 @@ function animateUp(num) {
       allItems[i].classList.add('animate-up');
       setTimeout(() => {
         allItems[i].classList.remove('animate-up');
-      }, 2100);
+      }, 1500);
     }
   }
 }
@@ -1608,7 +1614,7 @@ function animateDownNi(num) {
   dataItem.style.transform = `translateY(-${mathMove}px)`;
   setTimeout(() => {
     dataItem.style.transform = 'translateY(0)';
-  }, 2100);
+  }, 1500);
 
   for (let i = 0; i < allItems.length; i++) {
     if (i < num) {
@@ -1617,7 +1623,7 @@ function animateDownNi(num) {
         allItems[i].classList.add('animate-down');
         setTimeout(() => {
           allItems[i].classList.remove('animate-down');
-        }, 2100);
+        }, 1500);
       }
     }
   }
@@ -1628,8 +1634,11 @@ function animateDownImp(num) {
   const itemsBeforeFirst = [];
 
   for (let i = 0; i < allItems.length; i++) {
+    const dataItem = document.querySelector(`[data-item="${i}"]`);
     if (i > num) {
-      itemsBeforeFirst.push(i);
+      if (!dataItem.classList.contains('note')) {
+        itemsBeforeFirst.push(i);
+      }
     }
   }
 
@@ -1650,14 +1659,14 @@ function animateDownImp(num) {
   dataItem.style.transform = `translateY(${mathMove}px)`;
   setTimeout(() => {
     dataItem.style.transform = 'translateY(0)';
-  }, 2100);
+  }, 1500);
 
   for (let i = 0; i < allItems.length; i++) {
-    if (i > num) {
+    if (i > num && !allItems[i].classList.contains("note")) {
       allItems[i].classList.add('animate-up');
       setTimeout(() => {
         allItems[i].classList.remove('animate-up');
-      }, 2100);
+      }, 1500);
     }
   }
 }
@@ -2164,6 +2173,7 @@ noteDoneButton.addEventListener('click', (event) => {
       noteDetails.value = '';
     }
   }
+  prepareAll();
 });
 
 function updateOptions() {
@@ -2569,7 +2579,7 @@ document.addEventListener('click', (event) => {
     const itemAtt = dataItem.getAttribute('data-item');
 
     disablePointerEvents();
-    setTimeout(() => animateUp(itemAtt), 2100);
+    setTimeout(() => animateUp(itemAtt), 1500);
 
     // ANIMATION
 
@@ -2624,7 +2634,7 @@ document.addEventListener('click', (event) => {
     const itemAtt = dataItem.getAttribute('data-item');
 
     disablePointerEvents();
-    setTimeout(() => animateUp(itemAtt), 2100);
+    setTimeout(() => animateUp(itemAtt), 1500);
 
     const keyElement = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
 
