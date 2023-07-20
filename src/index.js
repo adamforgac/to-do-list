@@ -1556,30 +1556,31 @@ taskDoneButton.addEventListener('click', (event) => {
 // FUNCTION FOR DISABLING POINTER EVENTS
 
 function disablePointerEvents() {
-  const allItems = document.querySelectorAll('.item');
-  allItems.forEach((item) => {
-    item.classList.add('disable-pointer-events');
-    setTimeout(() => {
-      item.classList.remove('disable-pointer-events');
-    }, 2100);
-  });
+  const wrapper = document.querySelector('.wrapper');
+  wrapper.classList.add('disable-pointer-events');
+  setTimeout(() => {
+    wrapper.classList.remove('disable-pointer-events');
+  }, 2100);
 }
 
-function animateUp() {
+function animateUp(num) {
   const allItems = document.querySelectorAll('.item');
-  allItems.forEach((item) => {
-    item.classList.add('animate-up');
-    setTimeout(() => {
-      item.classList.remove('animate-up');
-    }, 2100);
-  });
+
+  console.log(num);
+
+  for (let i = 0; i < allItems.length; i++) {
+    if (i > num) {
+      allItems[i].classList.add('animate-up');
+      setTimeout(() => {
+        allItems[i].classList.remove('animate-up');
+      }, 2100);
+    }
+  }
 }
 
 function animateDownNi(num) {
   const allItems = document.querySelectorAll('.item');
   const itemsBeforeFirst = [];
-
-  console.log(num);
 
   for (let i = 0; i < allItems.length; i++) {
     if (i < num) {
@@ -1592,7 +1593,6 @@ function animateDownNi(num) {
 
   const taskMeasure = document.querySelector('.task');
   const taskHeight = taskMeasure.clientHeight;
-  console.log(taskHeight);
 
   let mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 6));
 
@@ -1600,10 +1600,7 @@ function animateDownNi(num) {
     mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 12));
   }
 
-  console.log(mathMove);
-
   const dataItem = document.querySelector(`[data-item="${num}"]`);
-  console.log(dataItem);
   dataItem.style.transform = `translateY(-${mathMove}px)`;
   setTimeout(() => {
     dataItem.style.transform = 'translateY(0)';
@@ -1632,19 +1629,18 @@ function animateDownImp(num) {
     }
   }
 
-  console.log(itemsBeforeFirst);
-
   const taskMeasure = document.querySelector('.task');
   const taskHeight = taskMeasure.clientHeight;
-  console.log(taskHeight);
 
   let mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 6));
 
-  if (window.innerWidth <= 700) {
-    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 12));
+  if (window.innerWidth <= 1200) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 5));
   }
 
-  console.log(mathMove);
+  if (window.innerWidth <= 500) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 11));
+  }
 
   const dataItem = document.querySelector(`[data-item="${num}"]`);
   dataItem.style.transform = `translateY(${mathMove}px)`;
@@ -2561,12 +2557,15 @@ document.addEventListener('click', (event) => {
       audio.currentTime = 0;
     }
 
-    disablePointerEvents();
-    setTimeout(animateUp, 2100);
-
     audio.play();
     isPlaying = true;
     const roundAtt = clickedElement2.getAttribute('data-card');
+
+    const dataItem = document.querySelector(`.not-important[data-card="${roundAtt}"]`);
+    const itemAtt = dataItem.getAttribute('data-item');
+
+    disablePointerEvents();
+    setTimeout(() => animateUp(itemAtt), 2100);
 
     // ANIMATION
 
@@ -2616,10 +2615,12 @@ document.addEventListener('click', (event) => {
     audio.play();
     isPlaying = true;
 
-    disablePointerEvents();
-    setTimeout(animateUp, 2100);
-
     const roundAtt = clickedElement2.getAttribute('data-card');
+    const dataItem = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
+    const itemAtt = dataItem.getAttribute('data-item');
+
+    disablePointerEvents();
+    setTimeout(() => animateUp(itemAtt), 2100);
 
     const keyElement = document.querySelector(`.important-task[data-card="${roundAtt}"]`);
 
@@ -2640,6 +2641,7 @@ document.addEventListener('click', (event) => {
     setTimeout(generateImmediately, 2400);
     updateArrayNumbers();
     retrieveCustom();
+    setTimeout(setAttributeToBoard, 1000);
   }
 
   if (parentClasses.includes('fa-star') && !parentClasses.includes('important-task') && !parentClasses.includes('completed-task')) {
