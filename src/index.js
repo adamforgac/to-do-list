@@ -1596,8 +1596,12 @@ function animateDownNi(num) {
 
   let mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 6));
 
-  if (window.innerWidth <= 700) {
-    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 12));
+  if (window.innerWidth <= 1200) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 5));
+  }
+
+  if (window.innerWidth <= 500) {
+    mathMove = ((itemsBeforeFirst.length * taskHeight) + (itemsBeforeFirst.length * 11));
   }
 
   const dataItem = document.querySelector(`[data-item="${num}"]`);
