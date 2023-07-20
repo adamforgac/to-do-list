@@ -38,6 +38,15 @@ body {
     background-color: black;
 }
 
+html {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 ol, ul {
 	list-style: none;
 }
@@ -90,7 +99,7 @@ table {
 .wrapper {
     display: grid;
     grid-template-columns: minmax(275px, 1fr) 5fr;
-    transition: 0.3s;
+    transition: 0.33s;
     filter: brightness(1);
     pointer-events: all;
     min-height: 100vh;
@@ -98,7 +107,7 @@ table {
 
 .details {
     grid-template-columns: minmax(275px, 1fr) 5fr 500px;
-    transition: 0.3s;
+    transition: 0.33s;
 }
 
 /* NAV */
@@ -370,7 +379,7 @@ table {
     background-color: var(--round-active-purple);
     border-radius: 20px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.33s;
     scale: 1;
     height: 50px;
     margin: 0 10px;
@@ -402,7 +411,7 @@ table {
     padding: 13px 25px 10px 25px;
     gap: 42px;
     height: 100vh;
-    transition: 1s;
+    transition: 0.33s;
     overflow: auto;
 }
 
@@ -436,13 +445,13 @@ table {
 .sort {
     margin-right: 20px;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.33s;
 }
 
 .background-option {
     margin-right: 20px;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.33s;
 }
 
 .sort, .background-option {
@@ -495,7 +504,7 @@ table {
     grid-template-columns: 70px auto 70px;
     background-color: var(--clicked-purple);
     border-radius: 20px;
-    transition: 0.3s;
+    transition: 0.33s;
     cursor: pointer;
     border: 0.5px solid transparent;
     transform: translateY(0);
@@ -543,7 +552,7 @@ table {
     border: 2px solid white;
     border-radius: 50%;
     position: relative;
-    transition: border 0.3s ease-out;
+    transition: border 0.33s ease-out;
 }
 
 .task-status label .check-icon {
@@ -570,12 +579,12 @@ table {
 
 .animate-up {
     transform: translateY(-84px);
-    transition: 0.3s;
+    transition: 0.33s;
 }
 
 .animate-down {
     transform: translateY(84px);
-    transition: 0.3s;
+    transition: 0.33s;
 }
 
 @keyframes check-icon {
@@ -666,7 +675,7 @@ table {
     height: 0;
     overflow: hidden;
     visibility: hidden;
-    transition: 0.3s;
+    transition: 0.33s;
     z-index: 1100;
     top: 0;
     opacity: 0;
@@ -676,7 +685,7 @@ table {
     pointer-events: all;
     visibility: visible;
     height: 100vh;
-    transition: 0.3s;
+    transition: 0.33s;
     opacity: 1;
     overflow: visible;
 }
@@ -706,7 +715,7 @@ table {
 
 .details-xmark {
     cursor: pointer;
-    transition: 300ms;
+    transition: 0.33s;
     position: relative;
 }
 
@@ -846,7 +855,7 @@ table {
 .details-list i {
     color: white;
     font-size: 1.2rem;
-    transition: 0.3s;
+    transition: 0.33s;
     cursor: pointer;
 }
 
@@ -953,7 +962,7 @@ table {
     position: fixed;
     bottom: 15px;
     right: 15px;
-    transition: 1s;  
+    transition: 0.33s;
 }
 
 .todo-create-mobile p, .project-create-mobile p, .note-create-mobile p {
@@ -964,14 +973,14 @@ table {
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition: 0.5s;
+    transition: 0.33s;
 }
 
 .todo-create-mobile p.options-appear, .project-create-mobile p.options-appear, .note-create-mobile p.options-appear {
     pointer-events: all;
     visibility: visible;
     opacity: 1;
-    transition: 0.5s;
+    transition: 0.33s;
 }
 
 .todo-create-mobile p {
@@ -992,27 +1001,27 @@ table {
 
 .todo-create-mobile , .project-create-mobile , .note-create-mobile  {
     cursor: pointer;
-    transition: 0.1s;
+    transition: 0.33s;
 }
 
 .todo-create-mobile.active-todo-mobile {
     bottom: 90px;
-    transition: 1s;
+    transition: 0.33s;
 }
 
 .project-create-mobile.active-project-mobile {
     bottom: 150px;
-    transition: 1s;
+    transition: 0.33s;
 }
 
 .note-create-mobile.active-note-mobile {
     bottom: 210px;
-    transition: 1s;
+    transition: 0.33s;
 }
 
 .rotated {
     transform: rotate(45deg);
-    transition: 0.5s;
+    transition: 0.33s;
     z-index: 300;
 }
 
@@ -1025,7 +1034,7 @@ table {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: 0.5s;
+    transition: 0.33s;
     width: 0;
     height: 0;
     display: none;
@@ -1038,7 +1047,7 @@ table {
     left: 0%;
     top: 0%;
     opacity: 1;
-    transition: 0.3s all;
+    transition: 0.33s all;
     visibility: visible;
     pointer-events: all;
     display: unset;
@@ -1060,7 +1069,7 @@ table {
     background: linear-gradient(13deg, #000000 0%, #0f021d 46%, #000000 100%);
     grid-template-rows: 1fr 10fr;
     padding: 20px 10px;
-    transition: 0.3s;
+    transition: 0.33s;
     display: grid;
     opacity: 0;
     visibility: hidden;
@@ -1070,7 +1079,7 @@ table {
 }
 
 .active-menu {
-    transition: all 0.3s;
+    transition: all 0.33s;
     top: 0;
     left: 0;
     opacity: 1;
@@ -1115,7 +1124,7 @@ table {
 }
 
 .one {
-    transition: 0.4s;
+    transition: 0.33s;
 }
 
 .creator-options p {
@@ -1147,7 +1156,7 @@ table {
 
 
 .todo-setter, .todo-editor {
-    transition: all 0.3s;
+    transition: all 0.33s;
     width: 100vw;
     height: 100%;
     opacity: 0;
@@ -1161,7 +1170,7 @@ table {
 }
 
 .note-setter, .note-editor {
-    transition: all 0.3s;
+    transition: all 0.33s;
     width: 100vw;
     height: 100%;
     opacity: 0;
@@ -1175,7 +1184,7 @@ table {
 }
 
 .project-setter {
-    transition: all 0.3s;
+    transition: all 0.33s;
     width: 100vw;
     height: 100%;
     opacity: 0;
@@ -1197,7 +1206,7 @@ table {
     pointer-events: all;
     opacity: 1;
     scale: 1;
-    transition: all 0.3s;
+    transition: all 0.33s;
     z-index: 500;
     position: fixed;
     overflow: scroll;
@@ -1227,7 +1236,7 @@ table {
     pointer-events: none;
     opacity: 0;
     scale: 0;
-    transition: all 0.5s;
+    transition: all 0.33s;
     position: absolute;
     top: 0;
     overflow: scroll;
@@ -1241,7 +1250,7 @@ table {
     pointer-events: all;
     opacity: 1;
     scale: 1;
-    transition: all 0.5s;
+    transition: all 0.33s;
     z-index: 500;
     position: absolute;
     top: 0%;
@@ -1335,12 +1344,12 @@ table {
     font-size: 1.3rem;
     font-family: 'Rubik', sans-serif;
     font-weight: 200;
-    transition: .2s;
+    transition: 0.33s;
     cursor: pointer;
 }
 
 .deleter-xmark {
-    transition: .2s;
+    transition: 0.33s;
     cursor: pointer;
 }
 
@@ -1374,7 +1383,7 @@ table {
     font-size: 2rem;
     color: white;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.33s;
     padding: 10px;
 }
 
@@ -1391,7 +1400,7 @@ table {
 .todo-setter-nav-icons i, .note-setter-nav-icons i, .project-setter-nav-icons i, .todo-editor-nav-icons i, .note-editor-nav-icons i {
     color: white;
     font-size: 1.8rem;
-    transition: 0.2s;
+    transition: 0.33s;
     cursor: pointer;
     padding: 10px;
 }
@@ -1722,7 +1731,7 @@ form input:focus, form textarea:focus, form select:focus {
     color: white;
     font-weight: 700;
     border: none;
-    transition: 0.7s;
+    transition: 0.33s;
     cursor: pointer;
 }
 
@@ -1764,7 +1773,7 @@ form input:focus, form textarea:focus, form select:focus {
 
 .transition-fade {
     opacity: 1;
-    transition: 500ms;
+    transition: 0.33s;
 }
 
 html.is-animating .transition-fade {
@@ -1788,7 +1797,7 @@ html.is-animating .transition-fade {
     display: grid;
     grid-template-rows: auto 60px;
     z-index: 500;
-    transition: 0.5s;
+    transition: 0.33s;
     background-color: white;
 }
 
@@ -1810,7 +1819,7 @@ html.is-animating .transition-fade {
     scale: 1;
     pointer-events: all;
     visibility: visible;
-    transition: 0.5s;
+    transition: 0.33s;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
@@ -1870,7 +1879,7 @@ html.is-animating .transition-fade {
     font-family: 'Rubik', sans-serif;
     font-weight: 200;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.33s;
 }
 
 

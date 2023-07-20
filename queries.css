@@ -773,7 +773,7 @@
         left: -300px;
         width: 0;
         opacity: 1;
-        transition: 1s;
+        transition: 0.5s;
         z-index: 400;
         background-color: black;
         grid-template-rows: min-content min-content 1fr;
@@ -862,11 +862,10 @@
         position: absolute;
         height: 26px;
         background: var(--clicked-purple);
-        transition: .5s;
+        transition: 0.25s;
         width: 116px;
         border-radius: 4px 0 0 4px;
         opacity: 0;
-        transition: left 0.5s;
     }
 
     .swapper-options button {
