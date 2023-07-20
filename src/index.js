@@ -2551,7 +2551,7 @@ document.addEventListener('click', (event) => {
     clickedElement = clickedElement.parentNode;
   }
 
-  const audio = new Audio('/dist/audio/apple.mp3');
+  const audio = new Audio('/audio/apple.mp3');
   let isPlaying = false;
 
   if (classArray.includes('not-important-round')) {
@@ -3141,7 +3141,7 @@ allTrash.addEventListener('click', () => {
   wrapper.style.filter = 'brightness(0.5)';
   wrapper.style.pointerEvents = 'none';
 
-  const audio = new Audio('/dist/audio/wrong-message.mp3');
+  const audio = new Audio('/audio/wrong-message.mp3');
   audio.play();
   retrieveCustom();
 });
